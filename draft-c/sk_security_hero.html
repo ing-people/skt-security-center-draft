@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>SK텔레콤 Security Center · Hero</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  @font-face{ font-family:'SKT Sans Display'; src:url('fonts/SKTSans제목체-Light.otf'); font-weight:300; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Display'; src:url('fonts/SKTSans제목체-Regular.otf'); font-weight:400; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Display'; src:url('fonts/SKTSans제목체-Bold.otf'); font-weight:700; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Display'; src:url('fonts/SKTSans제목체-ExtraBold.otf'); font-weight:800; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Text'; src:url('fonts/SKTSans본문체-Regular.otf'); font-weight:400; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Text'; src:url('fonts/SKTSans본문체-SemiBold.otf'); font-weight:600; font-display:swap; }
+  @font-face{ font-family:'SKT Sans Text'; src:url('fonts/SKTSans본문체-Bold.otf'); font-weight:700; font-display:swap; }
+
+  :root{
+    --w: 1440px;
+    --h: 800px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{
+    margin:0; padding:0;
+    background:#e9e9ea;
+    font-family:'SKT Sans Text','Pretendard', -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .sp-sec{ scroll-margin-top:70px; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+  .sp-h, .logo, .hero3 h1, #sp-03 .sp-big, #sp-03 .sp-tagline, #sp-02 .sp-steps span{
+    font-family:'SKT Sans Display','Pretendard', -apple-system, sans-serif;
+  }
+
+  /* ---------- header (GNB) : only the bug-bounty button shows over hero, rest revealed on sub-scroll ---------- */
+  .hd{
+    position:fixed; top:0; left:0; width:100%; height:70px;
+    background:#fff; z-index:500;
+    box-shadow:none;
+    transition:box-shadow .32s ease;
+  }
+  .hd.visible{
+    box-shadow:0 1px 0 rgba(0,0,0,.06);
+  }
+  .hd-inner{
+    width:1440px; height:100%; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 50px;
+  }
+  .hd-left{ display:flex; align-items:flex-end; gap:8px; }
+  .logo{ display:flex; align-items:baseline; gap:2px; line-height:1; }
+  .logo b{ font-size:18px; font-weight:800; color:#000; letter-spacing:-0.02em; }
+  .logo span{ font-size:15px; font-weight:600; color:#000; letter-spacing:-0.01em; }
+  .hd-left .sep{ width:1px; height:14px; background:#d4d4d4; margin:0 2px; }
+  .hd-left .sc{ font-size:14px; font-weight:600; color:#000; letter-spacing:-0.016em; }
+
+  .hd-right{ display:flex; align-items:center; gap:24px; }
+
+  .hd-nav{ display:flex; align-items:center; gap:40px; color:#1b1b1b; }
+  .hd-nav a{
+    font-family:'Pretendard', -apple-system, sans-serif;
+    font-size:14px; font-weight:600; color:inherit;
+    text-decoration:none; letter-spacing:-0.016em;
+  }
+
+  .hd-divider{ width:1px; height:10px; background:#d2d2d2; }
+
+  .hd-bounty{
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:'Pretendard', -apple-system, sans-serif;
+    font-size:13px; font-weight:500; color:#1b1b1b;
+    text-decoration:none; white-space:nowrap;
+    border:1px solid #dddddd; border-radius:16px;
+    padding:8px 16px;
+  }
+
+  /* hide logo/nav/divider while over the hero; reveal once GNB.visible is toggled on sub-scroll */
+  .hd-left, .hd-nav, .hd-divider{
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .32s ease;
+  }
+  .hd.visible .hd-left, .hd.visible .hd-nav, .hd.visible .hd-divider{
+    opacity:1; visibility:visible; pointer-events:auto;
+  }
+
+  /* ---------- hero_03 : headline + auto-rotating image strip ---------- */
+  .hero3{ width:1440px; min-height:850px; margin:0 auto; box-sizing:border-box; padding:120px 0 0; text-align:center; overflow:visible; }
+  .hero3-eyebrow{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size:14px; color:#4d4d4d; margin-bottom:40px;
+  }
+  .hero3-eyebrow b{ font-weight:800; color:#000; }
+  .hero3-eyebrow .sep{ width:1px; height:12px; background:#d4d4d4; }
+  .hero3 h1{
+    font-size:44px; font-weight:800; line-height:1.4; letter-spacing:-0.02em;
+    color:#000; margin:20px 0 32px;
+  }
+  .hero3-sub{
+    font-family:'SKT Sans Display','Pretendard', -apple-system, sans-serif;
+    font-size:20px; font-weight:400; line-height:37px; letter-spacing:0;
+    color:#000; margin:0;
+  }
+  .hero3-track-wrap{
+    width:100%; overflow:hidden;
+    margin-top:80px; padding:20px 0;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .hero3-track{
+    display:flex; align-items:center; gap:24px;
+    width:max-content;
+    animation:hero3Scroll 26s linear infinite;
+  }
+  .hero3-track:hover{ animation-play-state:paused; }
+  .hero3-track img{
+    width:161px; height:216px;
+    object-fit:cover; border-radius:4px;
+    display:block; flex:none;
+    cursor:pointer;
+    transition:transform .25s ease;
+  }
+  .hero3-track img:hover{ transform:rotate(5deg); }
+  @keyframes hero3Scroll{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero3-track{ animation:none; }
+  }
+
+  /* ============ subpage (content below hero) ============ */
+  .sp{ width:1440px; margin:0 auto; background:#fff; color:#000; }
+  .sp p{ margin:0; }
+  .sp-sec{ padding:110px 130px; border-top:1px solid #f0f0f0; }
+  .sp-eyebrow{ color:#a5a5a5; font-size:17px; margin:0 0 18px; }
+  .sp-accent{ color:#3617ce; }
+
+  /* sub_01 governance */
+  #sp-01{ display:flex; gap:90px; align-items:flex-start; }
+  #sp-01 .sp-left{ width:390px; flex:none; position:sticky; top:80px; height:850px; display:flex; flex-direction:column; justify-content:flex-start; }
+  #sp-01 .sp-h{ font-size:42px; font-weight:800; line-height:1.35; margin:0 0 22px; }
+  #sp-01 .sp-lead{ font-size:15px; line-height:1.75; color:#000; margin-bottom:56px; }
+  #sp-01 .sp-list-item{ display:flex; align-items:baseline; gap:12px; font-size:19px; padding:14px 0; border-top:1px solid #e4e4e4; }
+  #sp-01 .sp-list-item:first-child{ border-top:none; }
+  #sp-01 .sp-list-item b{ font-weight:800; white-space:nowrap; }
+  #sp-01 .sp-list-item span{ color:#5d5c5c; font-size:15px; }
+  #sp-01 .sp-right{ flex:1; min-width:0; }
+  #sp-01 .sp-photo{ height:280px; border-radius:4px; margin-bottom:56px; overflow:hidden; }
+  #sp-01 .sp-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #sp-01 .sp-copy{ font-size:21px; line-height:1.8; color:#484848; margin-bottom:44px; }
+  #sp-01 .sp-copy b{ color:#141414; font-weight:600; }
+  #sp-01 .sp-pill{ display:inline-flex; align-items:center; gap:6px; border:1px solid #cfcfcf; border-radius:20px; padding:9px 20px; font-size:14px; color:#494949; margin-bottom:56px; }
+  #sp-01 .sp-culture-eyebrow{ font-size:14px; color:#797070; letter-spacing:.05em; margin-bottom:14px; }
+  #sp-01 .sp-linkrow{ display:flex; align-items:center; justify-content:space-between; padding:22px 0; border-top:1px solid #ececec; font-size:26px; font-weight:300; color:#6e6e6e; }
+
+  /* sub_02 architecture intro */
+  #sp-02{ text-align:center; padding-top:130px; padding-bottom:130px; }
+  #sp-02 .sp-h{ font-size:44px; font-weight:800; line-height:1.4; margin:0 auto 28px; max-width:900px; }
+  #sp-02 .sp-h .thin{ font-weight:400; display:block; font-size:38px; margin-bottom:6px; }
+  #sp-02 .sp-copy{ font-size:16px; color:#464646; line-height:1.8; max-width:820px; margin:0 auto; }
+  #sp-02 .sp-steps{ display:flex; justify-content:center; gap:48px; margin-top:90px; }
+  #sp-02 .sp-steps span{ font-size:46px; font-weight:300; color:#9a9a9a; }
+
+  /* sub_03_01 tab detail */
+  #sp-03{ padding-top:70px; }
+  #sp-03 .sp-tabs{ display:flex; justify-content:flex-end; gap:22px; font-size:14px; color:#b7b7b7; margin-bottom:56px; }
+  #sp-03 .sp-tabs .on{ color:#000; font-weight:700; }
+  #sp-03 .sp-head{ margin-bottom:36px; }
+  #sp-03 .sp-eyebrow2{ font-size:15px; color:#8a8a8a; margin:0 0 6px; }
+  #sp-03 .sp-head-row{ display:flex; align-items:center; gap:28px; }
+  #sp-03 .sp-big{ font-size:76px; font-weight:800; line-height:1; }
+  #sp-03 .sp-head-text{ display:flex; flex-direction:column; gap:10px; }
+  #sp-03 .sp-sub{ font-size:14px; color:#8a8a8a; margin:0; }
+  #sp-03 .sp-tagline{ font-size:23px; font-weight:800; margin:0; }
+  #sp-03 .sp-copy{ font-size:15px; line-height:1.9; color:#3a3a3a; margin-bottom:56px; }
+  #sp-03 .sp-features{ display:flex; gap:130px; margin-bottom:40px; }
+  #sp-03 .sp-feature .sp-ico{ width:26px; height:26px; object-fit:contain; display:block; margin-bottom:16px; }
+  #sp-03 .sp-steps-row{ display:flex; gap:0; margin-bottom:40px; }
+  #sp-03 .sp-step{ flex:1; position:relative; padding-right:32px; }
+  #sp-03 .sp-step .num{ display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; background:#1b1b1b; color:#fff; font-size:11px; font-weight:700; border-radius:2px; position:relative; z-index:1; }
+  #sp-03 .sp-step .line{ position:absolute; top:9px; left:18px; right:0; height:1px; background:#d0d0d0; }
+  #sp-03 .sp-step b{ display:block; font-size:18px; font-weight:800; margin:16px 0 12px; line-height:1.4; }
+  #sp-03 .sp-step span:not(.line):not(.num){ display:block; font-size:13.5px; color:#7a7a7a; line-height:1.6; }
+  #sp-03 .sp-feature b{ display:block; font-size:19px; margin-bottom:10px; }
+  #sp-03 .sp-feature span{ display:block; font-size:14px; color:#7a7a7a; line-height:1.6; }
+  #sp-03 .sp-arrows{ display:flex; justify-content:flex-end; gap:14px; }
+  #sp-03 .sp-arrows img{ width:34px; height:34px; border-radius:50%; cursor:pointer; transition:opacity .2s ease; }
+  #sp-03 .sp-arrows img.disabled{ opacity:.35; cursor:default; pointer-events:none; }
+  #sp-03 .sp-tabs span{ cursor:pointer; }
+
+  /* sub_04 threat readiness */
+  #sp-04 .sp-h{ font-size:38px; font-weight:800; margin-bottom:22px; }
+  #sp-04 .sp-copy{ font-size:15px; line-height:1.8; color:#484848; margin-bottom:70px; max-width:900px; }
+  #sp-04 .sp-row{ display:grid; grid-template-columns:340px 1fr; gap:40px; padding:34px 0; border-top:1px solid #ececec; align-items:start; }
+  #sp-04 .sp-row:last-child{ border-bottom:1px solid #ececec; }
+  #sp-04 .sp-row b{ font-size:24px; font-weight:800; }
+  #sp-04 .sp-row .sp-tag{ font-size:12px; color:#9a9a9a; letter-spacing:.04em; margin-bottom:10px; }
+  #sp-04 .sp-row .sp-desc{ font-size:15px; line-height:1.7; color:#333; }
+  #sp-04 .sp-badge{ display:inline-block; margin-top:14px; background:#525252; color:#fff; font-size:12px; padding:7px 14px; border-radius:3px; }
+
+  /* sub_05 audit */
+  #sp-05 .sp-h{ font-size:38px; font-weight:800; margin-bottom:22px; }
+  #sp-05 .sp-copy{ font-size:15px; line-height:1.8; color:#484848; margin-bottom:70px; max-width:900px; }
+  #sp-05 .sp-group{ margin-bottom:60px; }
+  #sp-05 .sp-group-label{ font-size:14px; color:#a5a5a5; margin-bottom:26px; }
+  #sp-05 .sp-badges{ display:flex; gap:90px; }
+  #sp-05 .sp-badge-item{ display:flex; align-items:center; gap:18px; }
+  #sp-05 .sp-badge-icon{ object-fit:contain; display:block; }
+  #sp-05 .sp-badge-icon.isms{ width:134px; height:116px; }
+  #sp-05 .sp-badge-icon.ismsp{ width:164px; height:114px; }
+  #sp-05 .sp-badge-item b{ display:block; font-size:19px; }
+  #sp-05 .sp-badge-item span{ display:block; font-size:13px; color:#7a7a7a; line-height:1.5; }
+  #sp-05 .sp-checks{ display:grid; grid-template-columns:repeat(5,1fr); gap:24px; }
+  #sp-05 .sp-checks b{ display:block; font-size:15px; margin-bottom:10px; }
+  #sp-05 .sp-checks span{ display:block; font-size:13px; color:#7a7a7a; line-height:1.6; }
+
+  /* sub_06 promise */
+  #sp-06 .sp-h{ font-size:38px; font-weight:800; margin-bottom:22px; }
+  #sp-06 .sp-copy{ font-size:15px; line-height:1.8; color:#484848; margin-bottom:70px; max-width:900px; }
+  #sp-06 .sp-promises{ display:grid; grid-template-columns:repeat(3,1fr); gap:60px; }
+  #sp-06 .sp-tag{ font-size:12px; color:#9a9a9a; letter-spacing:.06em; margin-bottom:14px; }
+  #sp-06 .sp-promises b{ display:block; font-size:24px; font-weight:800; margin-bottom:14px; }
+  #sp-06 .sp-promises span{ display:block; font-size:14px; color:#5d5c5c; line-height:1.7; }
+
+  /* sub_07 cta + footer */
+  #sp-07{ padding:100px 130px 0; border-top:none; }
+  .sp-cta{ background:#f4f4f4; border-radius:6px; padding:60px 40px; text-align:center; }
+  .sp-cta .sp-eyebrow{ margin-bottom:10px; }
+  .sp-cta .sp-h{ font-size:28px; font-weight:800; margin-bottom:18px; }
+  .sp-cta .sp-copy{ font-size:14px; color:#6b6b6b; line-height:1.7; margin-bottom:28px; }
+  .sp-cta button{ font-family:inherit; background:#1b1b1b; color:#fff; border:none; border-radius:3px; padding:13px 26px; font-size:14px; cursor:pointer; }
+  .sp-wp{ display:flex; align-items:center; justify-content:space-between; padding:80px 0; flex-wrap:wrap; gap:24px; }
+  .sp-wp .sp-h{ font-size:30px; font-weight:800; line-height:1.4; margin-top:8px; }
+  .sp-wp-btns{ display:flex; gap:12px; }
+  .sp-wp-btns button{ font-family:inherit; font-size:14px; padding:13px 22px; border-radius:3px; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .sp-btn-ico{ width:14px; height:14px; object-fit:contain; display:block; }
+  .sp-wp-btns .primary{ background:#1b1b1b; color:#fff; border:none; }
+  .sp-wp-btns .ghost{ background:#fff; color:#1b1b1b; border:1px solid #ccc; }
+  .sp-footer{ background:#f7f7f7; padding:34px 130px; display:flex; align-items:flex-start; justify-content:space-between; font-size:12px; color:#8a8a8a; margin:0 -130px; flex-wrap:wrap; gap:14px; }
+  .sp-footer .sp-flinks{ display:flex; gap:22px; color:#4d4d4d; font-size:13px; margin-bottom:12px; }
+  .sp-footer .sp-fright{ text-align:right; }
+
+  /* ============ scroll reveal ============ */
+  .reveal{
+    opacity:0;
+    transform:translateY(34px);
+    transition:opacity .85s cubic-bezier(.16,.84,.44,1), transform .85s cubic-bezier(.16,.84,.44,1);
+    will-change:opacity, transform;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  /* ============ modals ============ */
+  #sp-01 .sp-pill{ cursor:pointer; }
+  #sp-01 .sp-linkrow{ cursor:pointer; }
+  .sp-modal{ position:fixed; inset:0; background:rgba(20,20,20,.6); display:none; align-items:center; justify-content:center; z-index:1000; padding:40px; }
+  .sp-modal.open{ display:flex; }
+  .sp-modal-card{ background:#fff; border-radius:14px; width:980px; max-width:100%; max-height:86vh; overflow:auto; padding:44px 48px; position:relative; }
+  .sp-modal-close{ position:absolute; top:28px; right:28px; width:32px; height:32px; border:none; background:none; cursor:pointer; padding:0; z-index:2; }
+  .sp-modal-close img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .sp-modal-title-area{ padding-right:50px; margin-bottom:28px; }
+  .sp-modal-eyebrow{ font-size:13px; color:#9a9a9a; margin:0 0 12px; }
+  .sp-modal-title{ font-size:28px; font-weight:800; margin:0; font-family:'SKT Sans Display','Pretendard',sans-serif; }
+  .sp-modal-contents-img{ display:block; width:100%; height:auto; border-radius:8px; }
+</style>
+</head>
+<body>
+
+<header class="hd" id="siteHeader">
+  <div class="hd-inner">
+    <div class="hd-left">
+      <span class="logo"><b>SK</b><span>telecom</span></span>
+      <div class="sep"></div>
+      <span class="sc">Security Center</span>
+    </div>
+    <div class="hd-right">
+      <nav class="hd-nav">
+        <a href="#sp-01">거버넌스</a>
+        <a href="#sp-02">아키텍쳐</a>
+        <a href="#sp-05">인증・감사</a>
+        <a href="#sp-06">우리의 약속</a>
+      </nav>
+      <div class="hd-divider"></div>
+      <a class="hd-bounty" href="#">버그바운티</a>
+    </div>
+  </div>
+</header>
+
+<div class="sp">
+
+  <section class="hero3">
+    <p class="hero3-eyebrow"><b>SK telecom</b><span class="sep"></span><span>Security Center</span></p>
+    <h1>정보보호,우리의 핵심가치이자<br>고객과의 약속입니다.</h1>
+    <p class="hero3-sub">SK텔레콤은 고객안심을 최우선에 두고,<br>책임있고 투명한 실행을 통해 고객과 사회가<br>신뢰할 수 있는 정보보호 체계를 만들어갑니다.</p>
+
+    <div class="hero3-track-wrap">
+      <div class="hero3-track">
+        <img src="img01.png" alt="우리의 약속으로 이동" data-target="#sp-06">
+        <img src="img02.png" alt="정보보호 거버넌스로 이동" data-target="#sp-01">
+        <img src="img03.png" alt="정보보호 아키텍쳐로 이동" data-target="#sp-02">
+        <img src="img04.png" alt="정보보호 인증・감사로 이동" data-target="#sp-05">
+        <img src="img01.png" alt="우리의 약속으로 이동" data-target="#sp-06">
+        <img src="img02.png" alt="정보보호 거버넌스로 이동" data-target="#sp-01">
+        <img src="img03.png" alt="정보보호 아키텍쳐로 이동" data-target="#sp-02">
+        <img src="img04.png" alt="정보보호 인증・감사로 이동" data-target="#sp-05">
+        <img src="img01.png" alt="" data-target="#sp-06" aria-hidden="true">
+        <img src="img02.png" alt="" data-target="#sp-01" aria-hidden="true">
+        <img src="img03.png" alt="" data-target="#sp-02" aria-hidden="true">
+        <img src="img04.png" alt="" data-target="#sp-05" aria-hidden="true">
+        <img src="img01.png" alt="" data-target="#sp-06" aria-hidden="true">
+        <img src="img02.png" alt="" data-target="#sp-01" aria-hidden="true">
+        <img src="img03.png" alt="" data-target="#sp-02" aria-hidden="true">
+        <img src="img04.png" alt="" data-target="#sp-05" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-01">
+    <div class="sp-left">
+      <p class="sp-eyebrow">정보보호 거버넌스</p>
+      <h2 class="sp-h">기준은 <span class="sp-accent">엄격</span>하게<br>보호는 <span class="sp-accent">철저</span>하게</h2>
+      <p class="sp-lead">SK텔레콤은 의사결정‧정책‧투자‧대응하는문화‧검증의 다섯 축으로 정보보호 거버넌스를 재정립하고, 변화하는 위협 환경에 대응할 수 있는 하나의 통합 운영체계로 작동시키고 있습니다.</p>
+      <div class="sp-list-item"><b>의사 결정</b><span>CEO 직속 CISO‧CPO</span></div>
+      <div class="sp-list-item"><b>정책‧표준</b><span>글로벌 표준 기반 정보보호 정책 체계</span></div>
+      <div class="sp-list-item"><b>자원‧투자</b><span>지속적인 투자</span></div>
+      <div class="sp-list-item"><b>사람‧문화</b><span>전 임직원 보안 실천</span></div>
+      <div class="sp-list-item"><b>검증‧인증</b><span>외부 검증‧인증</span></div>
+    </div>
+    <div class="sp-right">
+      <div class="sp-photo"><img src="sp-photo.png" alt=""></div>
+      <p class="sp-copy">어떤 상황에도 늘 안심할 수 있도록,<br>고객의 신뢰를 지키기 위한 SK텔레콤의 정보보호 활동을 소개합니다.</p>
+      <p class="sp-copy">SK텔레콤은 전사 관점의 위험 관리를 위해 <b>CEO 직속의 CISO 및 CPO</b> 체계를 구축하고, <b>경영진과 이사회에 직접 보고</b>하는 투명한 거버넌스를 확립했습니다.<br><br>CISO(정보보호‧기술적 보호)와 CPO(개인정보보호 정책‧컴플라이언스)는 각 영역에 전담하는 동시에, 서비스 기획부터 운영‧침해 대응에 이르기까지 전 과정을 함께 검증하며 긴밀하게 협력하고 있습니다.</p>
+      <div class="sp-pill" id="btnOrgChart">조직 체계 보기 ↗</div>
+      <p class="sp-copy">모든 임직원이 같은 기준으로 보안 활동을 수행하기 위해 명확한 정책과 절차가 필요합니다. SK텔레콤은 국제 정보보호 표준(ISO/IEC 27002)을 바탕으로 보안 정책을 재정비하여, <b>실행 - 검증 - 개선</b>의 선순환 구조로 운영합니다.</p>
+      <p class="sp-copy">사이버 위협이 정교해지고 서비스 환경이 빠르게 변화할수록 정보보호 역량에 대한 지속적인 투자는 필수적입니다. SK텔레콤은 5년간 약 7,000억 원 규모의 재원을 집중 투자하여 보안 아키텍처 강화, 실시간 운영‧대응 역량 확보, 철저한 고객 보호를 실현해 나갑니다.</p>
+      <p class="sp-culture-eyebrow">OUR SECURITY CULTURE</p>
+      <p class="sp-copy">가장 강력한 보안은 기술을 넘어선 '사람'에게서 시작됩니다. SK텔레콤은 일상의 모든 업무 환경에 'Security &amp; Privacy First' 가치를 깊이 심어갑니다.<br><br>기획 단계의 'Privacy by Design'부터 업무 전반의 '6대 보안 실천 지침' 준수, 그리고 실전 같은 모의훈련까지—우리는 타협 없는 최우선 보안 원칙을 일상에서 실천하고 있습니다.</p>
+      <div class="sp-linkrow" id="btnPrivacyDesign"><span>Privacy by design</span><span>↗</span></div>
+      <div class="sp-linkrow"><span>보안실전 지침 다운로드</span><span>↓</span></div>
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-02">
+    <p class="sp-eyebrow">정보보호 아키텍쳐</p>
+    <h2 class="sp-h"><span class="thin">글로벌 표준 프레임 워크 기반의</span>제로 트러스트 보안 원칙 적용</h2>
+    <p class="sp-copy">'그 어떤 사용자나 시스템도 신뢰하지 않고 매 순간 검증한다'는 제로 트러스트(Zero Trust) 원칙을 기반으로,<br>'식별 - 보호 - 탐지 - 대응 - 복구'의 5단계가 하나의 흐름으로 작동하는 SK텔레콤의 보안 아키텍처를 정의합니다.</p>
+    <div class="sp-steps"><span>식별</span><span>보호</span><span>탐지</span><span>대응</span><span>복구</span></div>
+  </section>
+
+  <section class="sp-sec" id="sp-03">
+    <div class="sp-tabs" id="sp03Tabs">
+      <span class="on" data-panel="0">식별</span><span data-panel="1">보호</span><span>탐지</span><span>대응</span><span>복구</span>
+    </div>
+
+    <div class="sp03-panel" id="sp03Panel0">
+      <div class="sp-head">
+        <p class="sp-eyebrow2">01 Identify</p>
+        <div class="sp-head-row">
+          <div class="sp-big">식별</div>
+          <div class="sp-head-text">
+            <p class="sp-sub">서버 및 SW 보안 가시성 확보</p>
+            <p class="sp-tagline">보호 대상의 가시성 확보가 보안의 출발점입니다.</p>
+          </div>
+        </div>
+      </div>
+      <p class="sp-copy">통신 서비스는 네트워크‧시스템‧데이터‧고객 접점이 복합적으로 연결되어 있어, 보호 대상의 정확한 식별이 보안의 출발점입니다.<br>SK텔레콤은 자산 식별과 위험평가 프로세스를 운영하고 이를 뒷받침할 자동화 기반의 자산관리 시스템을 단계적으로 구축하고 있으며, 공급망 보안관리를 통해 외부 요인으로 인한 보안 위험을 줄이고 있습니다.</p>
+      <div class="sp-features">
+        <div class="sp-feature">
+          <img class="sp-ico" src="icon_1.png" alt="">
+          <b>변화하는 자산의 지속적 가시성 확보</b>
+          <span>자동화 기반 자산관리 시스템 도입<br>식별/위험도 평가/개선조치 연계</span>
+        </div>
+        <div class="sp-feature">
+          <img class="sp-ico" src="icon_2.png" alt="">
+          <b>공급망 보안 관리</b>
+          <span>공급업체 보안역량 평가<br>소프트웨어 구성요소 취약점 관리 체계 강화</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sp03-panel" id="sp03Panel1" style="display:none">
+      <div class="sp-head">
+        <p class="sp-eyebrow2">02 Protect</p>
+        <div class="sp-head-row">
+          <div class="sp-big">보호</div>
+          <div class="sp-head-text">
+            <p class="sp-sub">다중방어체계</p>
+            <p class="sp-tagline">핵심 자산은 겹겹이 보호합니다</p>
+          </div>
+        </div>
+      </div>
+      <p class="sp-copy">보호 대상이 식별되면 필요한 사람과 시스템만 적절한 권한으로 접근하도록 통제하여, 혹시 모를 위험이 안으로 확산되지 않도록 예방합니다.<br>SK텔레콤은 통합 계정 권한 관리, 네트워크 접근 통제, 중요정보 보호, 개발 단계 보안관리를 연계하여 보호 수준을 강화합니다.</p>
+      <div class="sp-steps-row">
+        <div class="sp-step"><span class="line"></span><span class="num">1</span><b>사고 인지</b><span>단말‧시스템 보안관리 강화‧시스템 취약점 예방</span></div>
+        <div class="sp-step"><span class="line"></span><span class="num">2</span><b>계정‧권한 관리 및<br>인증‧접근 통제</b><span>허가된 사용자만 접근‧최소권한 원칙 적용</span></div>
+        <div class="sp-step"><span class="line"></span><span class="num">3</span><b>네트워크 보안</b><span>외부 침입‧접근 차단‧내부망에서 횡적 이동 위험 최소화</span></div>
+        <div class="sp-step"><span class="num">4</span><b>데이터 보호<br>(암호화‧분류)</b><span>주요 데이터 암호화 적용‧중요정보 구분 관리</span></div>
+      </div>
+    </div>
+
+    <div class="sp-arrows">
+      <img id="sp03Prev" src="arrow_left.png" alt="이전">
+      <img id="sp03Next" src="arrow_right.png" alt="다음">
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-04">
+    <h2 class="sp-h">변화하는 위협보다 한발 앞서가겠습니다.</h2>
+    <p class="sp-copy">보안기술은 단순한 도입을 넘어, 변화하는 위협에 신속하게 대응하기 위해 지속적으로 내재화‧고도화되어야 합니다. SK텔레콤은 인증 보안과 AI 기반 AX 위협 대응 기술을 강화하여 고객 보호 중심의 보안 체계를 발전시키고 있습니다.</p>
+    <div class="sp-row">
+      <b>PASSWORDLESS 시스템 추진</b>
+      <div>
+        <p class="sp-tag">PASSWORDLESS 인증 체계 내재화</p>
+        <p class="sp-desc">로그인 방식을 패스워드 기반에서 생체‧인증서 기반으로 전환하고, 국제 표준 인증 체계를 공동 구축하고 있습니다.</p>
+        <span class="sp-badge">FIDO Alliance 이사회 · Good Software 인증 1등급</span>
+      </div>
+    </div>
+    <div class="sp-row">
+      <b>통합 신원관리 체계 강화</b>
+      <div>
+        <p class="sp-tag">인증보안 체계 고도화</p>
+        <p class="sp-desc">사용자‧시스템‧AI 에이전트 등 접근 주체가 확장됨에 따라, 인증‧권한‧감사 체계를 신원 중심으로 통합합니다.</p>
+      </div>
+    </div>
+    <div class="sp-row">
+      <b>생성형 AI 보안 엔진 개발</b>
+      <div>
+        <p class="sp-tag">AX 위험 대응 AI 개발</p>
+        <p class="sp-desc">사내 AI 활용 중 발생할 수 있는 정보 노출‧오남용 위험을 AI로 탐지하고, 안전한 활용 환경을 지원합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-05">
+    <p class="sp-eyebrow">정보보호 인증‧감사</p>
+    <h2 class="sp-h">정보보호 관리 수준을 객관적으로 검증합니다</h2>
+    <p class="sp-copy">정보보호 체계는 구축하는 것만큼 지속적으로 점검하고 개선하는 것이 중요합니다. SK텔레콤은 정보보호 인증‧주요 인프라 평가‧대내외 감사와 자체점검을 통해 관리 수준을 객관적으로 확인하고 있습니다.</p>
+    <div class="sp-group">
+      <p class="sp-group-label">대외 인증</p>
+      <div class="sp-badges">
+        <div class="sp-badge-item"><img class="sp-badge-icon isms" src="sp-badge-icon-isms.png" alt="ISMS"><div><b>ISMS</b><span>정보보호 관리체계 인증</span></div></div>
+        <div class="sp-badge-item"><img class="sp-badge-icon ismsp" src="sp-badge-icon-ismsp.png" alt="ISMS-P"><div><b>ISMS-P</b><span>정보보호 및 개인정보보호 관리체계 인증</span></div></div>
+      </div>
+    </div>
+    <div class="sp-group">
+      <p class="sp-group-label">내부 점검</p>
+      <div class="sp-checks">
+        <div><b>주요정보통신기반시설 점검</b><span>중요 장치시스템 기술적‧관리적‧물리적 보안점검</span></div>
+        <div><b>5G 협의회 이통사 기지국 점검</b><span>기지국 누출 점검</span></div>
+        <div><b>위치정보 관리실태 점검</b><span>위치정보의 보유 및 이용 등에 관한 법률 준수 점검</span></div>
+        <div><b>자체 보안 점검</b><span>정기‧비정기적 내부 점검 활동</span></div>
+        <div><b>외부 감사</b><span>전사 사업연계 외부 점검</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-06">
+    <p class="sp-eyebrow">SK텔레콤의 약속</p>
+    <h2 class="sp-h">고객 신뢰를 위한 지속적인 약속</h2>
+    <p class="sp-copy">위협은 끊임없이 달라지고 서비스 환경도 빠르게 진화합니다. 그렇기에 우리가 만든 보안 체계는 '완료'가 아니라, '계속되는 약속'이어야 합니다. SK텔레콤은 단단한 보안 체계와 실행력을 바탕으로 다음의 세 가지 약속을 흔들림 없이 지키며, 고객과 사회가 신뢰할 수 있는 정보보호 체계를 만들겠습니다.</p>
+    <div class="sp-promises">
+      <div><p class="sp-tag">PROMISE 01</p><b>고객 안심 우선</b><span>보안 의사결정의 기준은 항상 고객의 안심입니다. 고객이 안전하게 통신 서비스를 이용할 수 있는 환경을 끝까지 지키겠습니다.</span></div>
+      <div><p class="sp-tag">PROMISE 02</p><b>책임있는 실행</b><span>변화하는 위협에 대응할 수 있도록 보안 기술과 운영 역량을 꾸준히 강화하며, 일회성이 아닌 지속 가능한 실행을 약속합니다.</span></div>
+      <div><p class="sp-tag">PROMISE 03</p><b>신뢰를 위한 소통</b><span>개선의 과정과 결과를 성실히 설명하고, 고객 신뢰를 높이는 소통을 이어가겠습니다.</span></div>
+    </div>
+  </section>
+
+  <section class="sp-sec" id="sp-07">
+    <div class="sp-cta">
+      <p class="sp-eyebrow">Bug Bounty Program</p>
+      <h2 class="sp-h">외부의 시선으로, 한 번 더 점검 받습니다.</h2>
+      <p class="sp-copy">아무리 튼튼한 장벽도 안에서만 바라보면 빈틈을 놓칠 수 있습니다. SK텔레콤은 외부 보안 전문가들의 눈을 통해 서비스를 끊임없이 검증하고, 사소한 취약점까지 찾아내어 더 완벽한 안심을 만들어갑니다.</p>
+      <button>프로그램 안내 보기</button>
+    </div>
+    <div class="sp-wp">
+      <div>
+        <p class="sp-eyebrow" style="margin-bottom:6px;">SECURITY WHITE PAPER</p>
+        <h3 class="sp-h">더 자세한 내용은<br>보안 백서에서 확인하세요</h3>
+      </div>
+      <div class="sp-wp-btns">
+        <button class="primary">백서 다운로드 <img class="sp-btn-ico" src="icon_download.png" alt=""></button>
+        <button class="ghost">웹에서 바로 보기</button>
+      </div>
+    </div>
+    <div class="sp-footer">
+      <div>
+        <div class="sp-flinks"><span>개인정보처리방침</span><span>T world</span><span>프라이버시센터</span><span>고객센터</span><span>뉴스룸</span></div>
+        <div>COPYRIGHT SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</div>
+      </div>
+      <div class="sp-fright">서울특별시 중구 을지로 65(을지로2가) SK T-타워 SK텔레콤(주)</div>
+    </div>
+  </section>
+
+  <!-- Modal_01: 조직 체계 보기 -->
+  <div class="sp-modal" id="modalOrgChart">
+    <div class="sp-modal-card">
+      <button class="sp-modal-close" data-close><img src="icon_close.png" alt="닫기"></button>
+      <div class="sp-modal-title-area">
+        <p class="sp-modal-eyebrow">CEO 직속 독립 거버넌스 구조</p>
+        <h3 class="sp-modal-title">전사 정보보호 실행 조직 체계</h3>
+      </div>
+      <img class="sp-modal-contents-img" src="contents_modal01.png" alt="전사 정보보호 실행 조직 체계">
+    </div>
+  </div>
+
+  <!-- Modal_02: Privacy by design -->
+  <div class="sp-modal" id="modalPrivacyDesign">
+    <div class="sp-modal-card">
+      <button class="sp-modal-close" data-close><img src="icon_close.png" alt="닫기"></button>
+      <div class="sp-modal-title-area">
+        <p class="sp-modal-eyebrow">CEO 직속 독립 거버넌스 구조</p>
+        <h3 class="sp-modal-title">개인정보보호는 서비스 설계의 기본값입니다.</h3>
+      </div>
+      <img class="sp-modal-contents-img" src="contents_modal02.png" alt="개인정보보호는 서비스 설계의 기본값입니다">
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---- hero image strip: click an image to jump to its matching section ----
+(function(){
+  var track = document.querySelector('.hero3-track');
+  if(!track) return;
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  track.addEventListener('click', function(e){
+    var img = e.target.closest('img[data-target]');
+    if(!img) return;
+    var el = document.querySelector(img.getAttribute('data-target'));
+    if(el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  });
+})();
+
+// ---- GNB: hidden over hero, revealed once sub sections scroll into view ----
+(function(){
+  var header = document.getElementById('siteHeader');
+  var hero = document.querySelector('.hero3');
+  if(!header || !hero) return;
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        header.classList.toggle('visible', !entry.isIntersecting);
+      });
+    }, { threshold: 0, rootMargin: '-70px 0px 0px 0px' });
+    io.observe(hero);
+  } else {
+    window.addEventListener('scroll', function(){
+      header.classList.toggle('visible', window.scrollY > hero.offsetHeight - 70);
+    });
+  }
+})();
+
+// ---- modal layer-popups ----
+(function(){
+  function openModal(modal){
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(modal){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  var pairs = [
+    ['btnOrgChart', 'modalOrgChart'],
+    ['btnPrivacyDesign', 'modalPrivacyDesign']
+  ];
+
+  pairs.forEach(function(pair){
+    var trigger = document.getElementById(pair[0]);
+    var modal = document.getElementById(pair[1]);
+    if(!trigger || !modal) return;
+
+    trigger.addEventListener('click', function(){ openModal(modal); });
+
+    // click on the dimmed background (not the card itself) closes it
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal(modal);
+    });
+
+    // the × button closes it
+    modal.querySelectorAll('[data-close]').forEach(function(btn){
+      btn.addEventListener('click', function(){ closeModal(modal); });
+    });
+  });
+
+  // Esc closes whichever modal is open
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Escape') return;
+    document.querySelectorAll('.sp-modal.open').forEach(closeModal);
+  });
+})();
+
+// ---- scroll reveal (subpage sections) ----
+(function(){
+  var groups = [
+    '#sp-01 .sp-h', '#sp-01 .sp-lead', '#sp-01 .sp-list-item', '#sp-01 .sp-photo',
+    '#sp-01 .sp-copy', '#sp-01 .sp-pill', '#sp-01 .sp-culture-eyebrow', '#sp-01 .sp-linkrow',
+    '#sp-02 .sp-eyebrow', '#sp-02 .sp-h', '#sp-02 .sp-copy', '#sp-02 .sp-steps span',
+    '#sp-03 .sp-tabs', '#sp-03 .sp-eyebrow2', '#sp-03 .sp-head-row', '#sp-03 .sp-copy',
+    '#sp-03 .sp-feature', '#sp-03 .sp-step', '#sp-03 .sp-arrows',
+    '#sp-04 .sp-h', '#sp-04 .sp-copy', '#sp-04 .sp-row',
+    '#sp-05 .sp-eyebrow', '#sp-05 .sp-h', '#sp-05 .sp-copy', '#sp-05 .sp-badge-item', '#sp-05 .sp-checks > div',
+    '#sp-06 .sp-eyebrow', '#sp-06 .sp-h', '#sp-06 .sp-copy', '#sp-06 .sp-promises > div',
+    '#sp-07 .sp-cta', '#sp-07 .sp-wp', '#sp-07 .sp-footer'
+  ];
+
+  var els = [];
+  groups.forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el){ els.push(el); });
+  });
+
+  // stagger elements that share the same parent, so groups (list items,
+  // feature cards, promise columns, etc.) cascade in rather than popping together
+  var counters = [];
+  var parents = [];
+  els.forEach(function(el){
+    el.classList.add('reveal');
+    var pIdx = parents.indexOf(el.parentElement);
+    if(pIdx === -1){ parents.push(el.parentElement); counters.push(0); pIdx = parents.length - 1; }
+    el.style.transitionDelay = (Math.min(counters[pIdx], 6) * 70) + 'ms';
+    counters[pIdx]++;
+  });
+
+  function revealNow(el){ el.classList.add('in-view'); }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          revealNow(entry.target);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(revealNow);
+  }
+
+  // exposed so the sp-03 carousel can force-reveal a panel the instant
+  // it's switched to (it may already be on screen, so no new scroll happens)
+  window.__revealWithin = function(container){
+    if(!container) return;
+    container.querySelectorAll('.reveal').forEach(revealNow);
+  };
+})();
+
+// ---- sp-03 (식별/보호) panel carousel ----
+(function(){
+  var panels = [document.getElementById('sp03Panel0'), document.getElementById('sp03Panel1')];
+  var tabs = document.querySelectorAll('#sp03Tabs span');
+  var prev = document.getElementById('sp03Prev');
+  var next = document.getElementById('sp03Next');
+  if(!panels[0] || !panels[1]) return;
+
+  var idx = 0;
+
+  function render(){
+    panels.forEach(function(p,i){ p.style.display = (i===idx) ? '' : 'none'; });
+    tabs.forEach(function(t){
+      var p = t.getAttribute('data-panel');
+      t.classList.toggle('on', p !== null && Number(p) === idx);
+    });
+    prev.classList.toggle('disabled', idx === 0);
+    next.classList.toggle('disabled', idx === panels.length - 1);
+    if(window.__revealWithin) window.__revealWithin(panels[idx]);
+  }
+
+  prev.addEventListener('click', function(){ if(idx > 0){ idx--; render(); } });
+  next.addEventListener('click', function(){ if(idx < panels.length - 1){ idx++; render(); } });
+  tabs.forEach(function(t){
+    var p = t.getAttribute('data-panel');
+    if(p === null) return;
+    t.addEventListener('click', function(){ idx = Number(p); render(); });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
