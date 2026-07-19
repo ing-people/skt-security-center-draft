@@ -1,0 +1,482 @@
+@font-face {
+  font-family: 'SKTSansTextR';
+  src: url('../../fonts/SKTSans-Text-Regular.otf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'SKTSansTextSB';
+  src: url('../../fonts/SKTSans-Text-SemiBold.otf');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'SKTSansTextB';
+  src: url('../../fonts/SKTSans-Text-Bold.otf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'SKTSansDisplayL';
+  src: url('../../fonts/SKTSans-Display-Light.otf');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'SKTSansDisplayR';
+  src: url('../../fonts/SKTSans-Display-Regular.otf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'SKTSansDisplayB';
+  src: url('../../fonts/SKTSans-Display-Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-display: swap;
+}
+
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'SKTSansDisplayR', sans-serif;
+    font-weight: 400;
+    color: #000000;
+    line-height: 1;
+    background: #ffffff;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+img {
+  width: 100%;
+}
+a{
+  text-decoration: none;
+}
+button {
+    background: none;
+    cursor: pointer;
+}
+
+/* 공통 */
+#wrap {
+    width: 100%;
+    min-width: 1440px;
+}
+
+#wrap strong {
+    font-family: 'SKTSansDisplayB';
+    font-weight: bold; 
+}
+
+.container {
+    /* width: 1440px; */
+    margin: 0 auto;
+}
+
+/* header */
+#header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-width: 1440px;
+    z-index: 1000;
+    background: #fff;
+}
+#header .container {
+    width: 100%;
+    padding: 10px 42px 10px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header-logo {
+    width: 205px;
+    height: 50px;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.header-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    position: relative;
+}
+.header-nav::after{
+    content: '';
+    display: block;
+    width: 1px;
+    height: 10px;
+    background: #D2D2D2;
+    position: absolute;
+    top: 50%;
+    right: -24px;
+    transform: translateY(-50%);
+}
+.header-nav li {
+    width: auto;
+    height: 49px;
+}
+.header-nav li a {
+    font-family: 'Pretendard';
+    font-weight: 600;
+    color: #1b1b1b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.btn-bugbounty {
+    font-family: 'Pretendard';
+    font-weight: 500;
+    color: #1b1b1b;
+    width: 82px;
+    height: 29px;
+    border-radius: 16px;
+    border: 0.8px solid #DDDDDD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+/* main */
+.main {
+    position: relative;
+    padding-bottom: 53px;
+}
+.main-tit-wrap {
+    padding: 196px 0 220px 205px;
+}
+.main-title {
+    font-family: 'SKTSansDisplayR';
+    font-weight: 400;
+    color: #000;
+    font-size: 52px;
+    line-height: 72px;
+    transition: opacity 1.4s ease, transform 1.4s ease;
+}
+/* Hero title fade-in on load: hidden while the page loads (only when JS is on,
+   via the .preload class on <html>), then eases in once loading completes. */
+.preload .main-title {
+    opacity: 0;
+    transform: translateY(24px);
+}
+.preload .main-title.is-loaded {
+    opacity: 1;
+    transform: none;
+}
+.main-tit-wrap2 {
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity .5s ease,
+                transform .5s ease;
+}
+.main-tit-wrap2.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+.main-title2 {
+    font-family: 'SKTSansDisplayR';
+    font-weight: 400;
+    color: #000;
+    font-size: 42px;
+    text-align: center;
+    padding-right: 60px;
+}
+.main-visual {
+    width: 100%;
+    height: 561px;
+    margin: 0 auto;
+    /* overflow: hidden; */
+    position: relative;
+}
+.main-visual img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover;
+    transform-origin: top;
+    filter: grayscale(100%);
+    transition: filter .6s ease;
+}
+.main-visual.active img {
+    filter: grayscale(0%);
+}
+.main-description {
+    font-family: 'SKTSansDisplayR';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 2;
+    color: #383838;
+    position: absolute;
+    top: 288px;
+    right: -160px;
+    width: 270px;
+    opacity: 0;
+}
+.main-visual.active .main-description {
+    opacity: 1;
+    transition: opacity .5s .2s ease;
+}
+
+/* section1 */
+.section1 {
+    padding: 80px 60px 140px;
+    position: relative;
+}
+
+.section1-inner {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 400px;
+}
+
+.section1-left {
+    padding-top: 97px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 70px;
+}
+
+.section1-head {
+    margin-bottom: 84px;
+}
+
+.section1-title {
+    font-family: 'SKTSansDisplayB';
+    font-weight: bold;
+    font-size: 56px;
+    line-height: 72px;
+    vertical-align: middle;
+    margin-bottom: 20px;
+}
+.section1-title strong {
+    color: #3617CE;
+}
+.section1-desc {
+    font-family: 'SKTSansDisplayR';
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 29px;
+}
+.section1-list {
+    display: flex;
+    flex-direction: column;
+    gap : 48px;
+    align-items: start;
+    justify-content: space-between;
+}
+.section1-item {
+    font-size: 20px;
+    height: 32px;
+    line-height: 32px;
+    position: relative;
+}
+.section1-item:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url(../img/icon-arrow.png) no-repeat center / 100%;
+    position: absolute;
+    bottom: -30px;
+    left: 30px;
+}
+.section1-item .section1-label{
+    margin-right: 12px;
+}
+.section1-item  .section1-text{
+    color: #5D5C5C;
+}
+
+
+.section1-right {
+    width: 750px;
+    /* height: 500vh; */
+    margin-top: 100vh;
+}
+.section1-img {
+    width: 750px;
+    margin-bottom: 64px;
+}
+
+.section1-text-wrap p{
+    font-family: 'SKTSansDisplayR';
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 44px;
+    color: #3D3D3D;
+}
+.section1-text-wrap p strong {
+    color: #141414;
+}
+.sec1-text-container {
+    display: flex;
+    flex-direction: column;
+}
+.sec1-text-container1 {
+    margin-bottom: 140px;
+    gap: 60px;
+}
+.sec1-text-container2 {
+    margin-bottom: 40px;
+}
+.sec1-text-label {
+    display: block;
+    font-size: 15px;
+    line-height: 100%;
+    color: #797070;
+    margin-bottom: 27px;
+}
+
+.section1-link {
+    width: 100%;
+    height: 64px;
+}
+.section1-link.section1-link1 {
+    margin-bottom: 12px;
+}
+.section1-link a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.section1-link a .section1-link-text{
+    color: #767676;
+    font-family: 'SKTSansDisplayL';
+    font-weight: 300;
+    line-height: 32px;
+    font-size: 38px;
+}
+.section1-link a .section1-link-icon {
+    width: 28px;
+}
+
+.section1-link.section1-link2 a .section1-link-icon {
+    width: 43px;
+}
+
+
+
+
+/* footer */
+#footer {
+    background: #fff;
+}
+.foot-wrap{
+    width: 100%;
+    margin: 0 auto;
+}
+#footer .inner{
+    padding: 40px 80px;
+}
+.footer-term{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+.footer-border {
+    display: block;
+    width: 100%;
+    border: 1px solid #808080;
+    margin: 17px 0;
+}
+.footer-term li a{
+    font-size: 14px;
+    font-family: 'SKTSansTextSB';
+    font-weight: 600;
+    color: #8D8D8D;
+    cursor: pointer;
+}
+.footer-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.footer-info p{
+    font-weight: 400;
+    font-size: 14px;
+    color: #8D8D8D;
+}
+
+/* ---------- Org-chart modal (from draft-c) ---------- */
+.sp-modal { position: fixed; inset: 0; background: rgba(20,20,20,.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 40px; }
+.sp-modal.open { display: flex; }
+.sp-modal-card { background: #fff; border-radius: 14px; width: 980px; max-width: 100%; max-height: 86vh; overflow: auto; padding: 44px 48px; position: relative; }
+.sp-modal-close { position: absolute; top: 28px; right: 28px; width: 32px; height: 32px; border: none; background: none; cursor: pointer; padding: 0; z-index: 2; }
+.sp-modal-close img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.sp-modal-title-area { padding-right: 50px; margin-bottom: 28px; }
+.sp-modal-eyebrow { font-size: 13px; color: #9a9a9a; margin: 0 0 12px; }
+.sp-modal-title { font-size: 28px; font-weight: 800; margin: 0; font-family: 'SKT Sans Display','Pretendard',sans-serif; }
+.sp-modal-contents-img { display: block; width: 100%; height: auto; border-radius: 8px; }
