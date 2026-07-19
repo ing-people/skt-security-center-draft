@@ -464,3 +464,15 @@ a { color: inherit; text-decoration: none; }
   .identify-panel { padding: 32px 24px; }
   .section { padding: 80px 0; }
 }
+
+/* ---------- Org-chart modal (from draft-c) ---------- */
+.link-pill { cursor: pointer; }
+.sp-modal { position: fixed; inset: 0; background: rgba(20,20,20,.6); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 40px; }
+.sp-modal.open { display: flex; }
+.sp-modal-card { background: #fff; border-radius: 14px; width: 980px; max-width: 100%; max-height: 86vh; overflow: auto; padding: 44px 48px; position: relative; }
+.sp-modal-close { position: absolute; top: 28px; right: 28px; width: 32px; height: 32px; border: none; background: none; cursor: pointer; padding: 0; z-index: 2; }
+.sp-modal-close img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.sp-modal-title-area { padding-right: 50px; margin-bottom: 28px; }
+.sp-modal-eyebrow { font-size: 13px; color: #9a9a9a; margin: 0 0 12px; }
+.sp-modal-title { font-size: 28px; font-weight: 800; margin: 0; font-family: 'SKT Sans Display','Pretendard',sans-serif; }
+.sp-modal-contents-img { display: block; width: 100%; height: auto; border-radius: 8px; }

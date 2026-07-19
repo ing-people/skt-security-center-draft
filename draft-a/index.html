@@ -83,7 +83,7 @@
         <div class="governance-block reveal" data-reveal>
           <p class="body-text-lg">SK텔레콤은 전사 관점의 위험 관리를 위해 <strong>CEO 직속의 CISO 및 CPO</strong> 체계를 구축하고, <strong>경영진과 이사회에 직접 보고</strong>하는 투명한 거버넌스를 확립했습니다.</p>
           <p class="body-text-lg">CISO (정보보호‧기술적 보호)와 CPO(개인정보보호 정책‧컴플라이언스)는 각 영역에 전담하는 동시에, 서비스 기획부터 운영‧침해 대응에 이르기까지 전 과정을 함께 검증하며 긴밀하게 협력하고 있습니다.</p>
-          <button type="button" class="link-pill">조직 체계 보기 <img src="assets/icons/arrow-diag-1.svg" alt=""></button>
+          <button type="button" class="link-pill" id="btnOrgChart">조직 체계 보기 <img src="assets/icons/arrow-diag-1.svg" alt=""></button>
         </div>
 
         <div class="governance-block reveal" data-reveal>
@@ -341,6 +341,33 @@
     </div>
   </div>
 </footer>
+
+<!-- 조직 체계 보기 팝업 (from draft-c) -->
+<div class="sp-modal" id="modalOrgChart" aria-hidden="true">
+  <div class="sp-modal-card" role="dialog" aria-modal="true" aria-labelledby="orgChartTitle">
+    <button class="sp-modal-close" data-close aria-label="닫기"><img src="assets/icons/icon-close.png" alt="닫기"></button>
+    <div class="sp-modal-title-area">
+      <p class="sp-modal-eyebrow">CEO 직속 독립 거버넌스 구조</p>
+      <h3 class="sp-modal-title" id="orgChartTitle">전사 정보보호 실행 조직 체계</h3>
+    </div>
+    <img class="sp-modal-contents-img" src="assets/img/contents_modal01.png" alt="전사 정보보호 실행 조직 체계">
+  </div>
+</div>
+
+<script>
+// 조직 체계 보기 레이어 팝업
+(function () {
+  const trigger = document.getElementById('btnOrgChart');
+  const modal = document.getElementById('modalOrgChart');
+  if (!trigger || !modal) return;
+  const open = () => { modal.classList.add('open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { modal.classList.remove('open'); document.body.style.overflow = ''; };
+  trigger.addEventListener('click', open);
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  modal.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+</script>
 
 <script>
 (() => {
