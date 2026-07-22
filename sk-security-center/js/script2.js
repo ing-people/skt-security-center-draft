@@ -32,15 +32,40 @@ const END_WIDTH = 489;
  * 메인 모션 함수
  */
 const mainMotion = () => {
+    //   setTimeout(()=>{
+
+    //     const mainTitle = document.querySelector(".main-title");
+
+    //     mainTitle.classList.add("show");
+
+    //     mainTitle.querySelectorAll("span")
+    //     .forEach((el,i)=>{
+    //         el.style.transitionDelay = `${i * 0.08}s`;
+    //     });
+
+    // }, 300);
+
       setTimeout(()=>{
 
         const mainTitle = document.querySelector(".main-title");
 
         mainTitle.classList.add("show");
 
-        mainTitle.querySelectorAll("span")
-        .forEach((el,i)=>{
-            el.style.transitionDelay = `${i * 0.03}s`;
+        let delay = 0;
+        const lineDelay = 0.3; // 줄 넘어갈 때 추가 딜레이
+
+        mainTitle.childNodes.forEach(node => {
+
+            if(node.nodeName === "BR"){
+                delay += lineDelay;
+                return;
+            }
+
+            if(node.nodeName === "SPAN"){
+                node.style.transitionDelay = `${delay}s`;
+                delay += 0.08;
+            }
+
         });
 
     }, 300);
