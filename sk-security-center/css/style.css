@@ -893,6 +893,11 @@ a {
     color: #464646;
     margin-bottom: 265px ;
 }
+.section2-desc strong {
+    font-family: 'SKTSansTextR';
+    font-weight: 400; 
+    color: #141414;
+}
 
 .section2-label,
 .section2-tit,
@@ -1042,6 +1047,11 @@ a {
     margin-bottom: 24px;
     word-break: keep-all;
     overflow-wrap: break-word;
+}
+.architecture-desc-text strong {
+    font-family: 'SKTSansTextR';
+    font-weight: 400;
+    color: #141414;
 }
 .architecture-keyword {
     display: flex;
