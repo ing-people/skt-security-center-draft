@@ -32,19 +32,6 @@ const END_WIDTH = 489;
  * 메인 모션 함수
  */
 const mainMotion = () => {
-    //   setTimeout(()=>{
-
-    //     const mainTitle = document.querySelector(".main-title");
-
-    //     mainTitle.classList.add("show");
-
-    //     mainTitle.querySelectorAll("span")
-    //     .forEach((el,i)=>{
-    //         el.style.transitionDelay = `${i * 0.08}s`;
-    //     });
-
-    // }, 300);
-
       setTimeout(()=>{
 
         const mainTitle = document.querySelector(".main-title");
