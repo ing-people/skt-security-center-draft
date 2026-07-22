@@ -137,34 +137,20 @@ const sectionMotion = () => {
  * =========================
  */
 const updateActive = () => {
+    const trigger = window.innerHeight / 2 - 100;
 
-    const center = window.innerHeight / 2;
+    let current = -1;
 
-    let current = 0;
-    let minDistance = Infinity;
-
-
-    section1Txt.forEach((section,index)=>{
-
+    section1Txt.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
-        const sectionCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(sectionCenter-center);
 
-        if(distance < minDistance){
-            minDistance = distance;
+        if (rect.top <= trigger) {
             current = index;
         }
-
     });
 
-
-    navItems.forEach((item,index)=>{
-
-        item.classList.toggle(
-            "active",
-            index === current
-        );
-
+    navItems.forEach((item, index) => {
+        item.classList.toggle("active", index === current);
     });
 
 };
