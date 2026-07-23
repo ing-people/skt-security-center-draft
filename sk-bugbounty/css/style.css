@@ -1,0 +1,255 @@
+@font-face {
+  font-family: 'SKTSansTextR';
+  src: url('../fonts/SKTSansText-Regular.otf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'SKTSansTextB';
+  src: url('../fonts/SKTSansText-Bold.otf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: 'SKTSansDisplayB';
+  src: url('../fonts/SKTSansDisplay-Bold.otf');
+  font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'SKTSansTextR', sans-serif;
+  line-height: 1;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+img {
+  width: 100%;
+}
+a{
+  text-decoration: none;
+}
+
+.mo-ver {
+  display: none !important; 
+}
+/* wrap */
+#wrap {
+  background: #F4F4F5 ;
+}
+
+.inner{
+  width: 1440px;
+  margin: 0 auto;
+}
+/* content */
+#content {
+  width: 1920px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+#content .inner {
+  padding: 70px 120px 111px;
+  position: relative;
+} 
+.bg{
+  width: 100%;
+  height: 900px;
+  background:  url(../img/bg.png) no-repeat center / 1024px 900px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.contents-wrap{
+  position: relative;
+  z-index: 1;
+}
+.logo{
+  width: 234px;
+  height: 60px;
+  padding: 20px 8px;
+  margin: 0 auto 50px;
+}
+
+.notice-text {
+  font-family: 'SKTSansTextB';
+  text-align: center;
+  font-size: 32px;
+  line-height: 60px;
+}
+
+.notice-text span{
+  color: #3617CE;
+}
+.space {
+  height: 60px;
+  border: 0;
+}
+#content .ask-mail{
+  text-align: center;
+  margin-top: 72px;
+}
+#content .ask-mail a{
+  font-family: 'SKTSansTextR';
+  color: #5B5B5F;
+  font-size: 24px;
+  line-height: 40px;
+}
+
+/* footer */
+#footer {
+  background: #fff;
+}
+.foot-wrap{
+  width: 1920px;
+  margin: 0 auto;
+}
+#footer .inner{
+  padding: 40px 120px 55px;
+}
+.footer-term{
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+.footer-term li a{
+  font-size: 14px;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  color: #343434;
+  cursor: pointer;
+}
+.footer-info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-info p{
+  font-size: 14px;
+  font-family: 'Pretendard';
+  font-weight: 400;
+}
+
+
+@media (max-width: 1023px) {
+  .pc-ver {
+    display: none !important;
+  }
+  .mo-ver {
+    display: block !important;
+  }
+  #content {
+    width: 100%;
+  }
+  .inner {
+    width: 100%;
+  }
+  #content .inner {
+    padding: 24px 15px 48px;
+  }
+  .logo {
+    width: 160px;
+    height: 40px;
+    margin-bottom: 30px;
+    padding: 12px 5px;
+  }
+  .notice-text {
+    font-size: 20px;
+    line-height: 33px;
+  }
+  .space{
+    height: 33px;
+  }
+  #content .ask-mail{
+    margin-top: 18px;
+  }
+  #content .ask-mail a{
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .foot-wrap {
+    width: 100%;
+  }
+  #footer .inner {
+    padding: 20px 10px;
+  }
+  .footer-term{
+    gap: 15px;
+  }
+  .footer-term li a {
+    font-size: 12px;
+  }
+  .footer-info p {
+    font-size: 12px;
+  }
+  .footer-info p.footer-copyright{
+    font-size: 10px;
+    margin-top: 32px;
+  }
+}
+
