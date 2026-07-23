@@ -180,6 +180,64 @@ function mainAnimate() {
     requestAnimationFrame(mainAnimate);
 }
 
+// const subTitWrap = document.querySelector(".sub-tit-wrap");
+
+// const subTitObserver = new IntersectionObserver((entries)=>{
+//     entries.forEach(entry=>{
+//         if(entry.isIntersecting){
+//             subTitWrap.classList.add("active");
+//         } 
+//     });
+// },{
+//     threshold: 0.3 // 영역 30% 들어왔을 때
+// });
+
+// subTitObserver.observe(subTitWrap);
+
+const subTitWrap = document.querySelector(".sub-tit-wrap");
+const subTitTexts = document.querySelectorAll(".sub-tit-inner.color .sub-tit-text");
+
+const updateSubTitMotion = () => {
+
+    const rect = subTitWrap.getBoundingClientRect();
+    const sectionHeight = subTitWrap.offsetHeight;
+
+    // 섹션 안에서 시작 위치 / 종료 위치
+    const start = sectionHeight * 0.35; 
+    const end = sectionHeight * 0.1;   // 상단 가까이
+
+
+    let progress = (start - rect.top) / (start - end);
+
+    progress = Math.max(0, Math.min(progress, 1));
+
+
+    subTitTexts.forEach((text, index)=>{
+
+        const section = 1 / subTitTexts.length;
+
+        const startProgress = section * index;
+        const endProgress = section * (index + 1);
+
+
+        let lineProgress =
+            (progress - startProgress) /
+            (endProgress - startProgress);
+
+
+        lineProgress = Math.max(0, Math.min(lineProgress, 1));
+
+
+        const hide = 100 - (lineProgress * 100);
+
+        text.style.clipPath = `inset(0 ${hide}% 0 0)`;
+
+    });
+
+};
+
+
+window.addEventListener("scroll", updateSubTitMotion);
 
 /**
  * =========================
