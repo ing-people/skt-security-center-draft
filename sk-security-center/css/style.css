@@ -762,7 +762,7 @@ a {
 .sec1-text {
     margin-bottom: 80px;
 }
-.sec1-text1, .sec1-text4{
+.sec1-text1, .sec1-text4, .sec1-text5{
     margin-bottom: 24px;
 }
 .sec1-text p {
@@ -778,8 +778,8 @@ a {
     margin-bottom: 40px;
 }
 .sec1-text p strong {
-    font-family: 'SKTSansTextR';
-    font-weight: 400;
+    font-family: 'SKTSansTextSB';
+    font-weight: 600;
     color: #141414;
 }
 
@@ -826,7 +826,7 @@ a {
     display: inline-block;
     height: 52px;
 }
-.section1-link2 {
+.section1-link3 {
     margin-right: 20px;
 }
 .section1-link a {
@@ -1006,7 +1006,7 @@ a {
 
 .section2-description {
     /* padding-right: 114px; */
-    padding-bottom: 260px;
+    /* padding-bottom: 260px; */
 }
 .architecture-desc {
     padding-top: 80px;
@@ -2106,7 +2106,7 @@ body.modal-open {
    .sec1-text p {
         font-size: 14px;
    }
-   .sec1-text1, .sec1-text4 {
+   .sec1-text1, .sec1-text4, .sec1-text5 {
         margin-bottom: 12px;
    }
    .sec1-text p:not(:last-child) {

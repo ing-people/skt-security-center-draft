@@ -228,7 +228,7 @@ const initSection1Nav = () => {
  */
 const updateSection2Active = () => {
 
-    const offset = 500; // header 높이 보정
+    const offset = 70; // header 높이 보정
    let current = -1; // 기본 active 제거
 
     section2Txt.forEach((section,index)=>{
