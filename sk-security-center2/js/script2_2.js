@@ -38,8 +38,19 @@ const accentShapes = document.querySelectorAll(".hero-accent-shape");
 const titleShade = document.querySelector(".hero-title-shade");
 const heroDesc = document.querySelector(".hero-desc-wrap");
 
+const flyItems = [];
+let imageCreated = false;
+let imageStartProgress = 0.92; // 메인 끝나는 시점
+let imageEndProgress = 1;       // 여기까지 모이기
+
 let ticking = false;
 let currentProgress = 0;
+
+
+const targetImgs = document.querySelectorAll(".target-img");
+const heroCircle = document.querySelector(".hero-accent-shape");
+
+let imageMotionStart = false;
 
 const mainMotion = () => {
 
@@ -173,58 +184,104 @@ const mainMotion = () => {
         heroDesc.classList.remove("show");
 
     }
+
+
+    if(progress > 0.92 && !imageMotionStart){
+
+        imageMotionStart = true;
+
+        startImageMotion();
+
+    }
 };
+
+const startImageMotion = () => {
+
+    const startRect = heroCircle.getBoundingClientRect();
+
+    targetImgs.forEach((target, index) => {
+
+        const clone = target.cloneNode(true);
+
+        clone.classList.add("fly-img");
+        document.body.appendChild(clone);
+
+        clone.style.left = startRect.left + startRect.width / 2 + "px";
+        clone.style.top = startRect.top + startRect.height / 2 + "px";
+        clone.style.width = "120px";
+        clone.style.opacity = 1;
+
+        const end = target.getBoundingClientRect();
+
+        // 흩어질 위치
+        // const spreadX = gsap.utils.random(-350, 350);
+        // const spreadY = gsap.utils.random(-220, 220);
+
+        const spread = [
+            { x: 280, y: -120 },
+            { x: 200, y: -180 },
+            { x: 120, y: 150 }
+        ];
+
+        const spreadX = spread[index].x;
+        const spreadY = spread[index].y;
+
+        // 회전
+        const rotation = gsap.utils.random(-180, 180);
+
+        const tl = gsap.timeline();
+
+        // 1. 원에서 튀어나오기
+        tl.to(clone, {
+            x: spreadX,
+            y: spreadY,
+            rotation,
+            scale: 1.3,
+            duration: 0.8,
+            ease: "power3.out"
+        });
+
+        // 2. 공중에서 둥실
+        tl.to(clone, {
+            x: spreadX + gsap.utils.random(-40, 40),
+            y: spreadY + gsap.utils.random(-30, 30),
+            rotation: rotation + gsap.utils.random(-20, 20),
+            duration: 0.6,
+            ease: "sine.inOut"
+        });
+
+        // 3. 제자리로
+        tl.to(clone, {
+            left: end.left,
+            top: end.top,
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 0.6,
+            duration: 1.3,
+            ease: "power4.inOut",
+            onComplete() {
+
+                clone.remove();
+
+                gsap.to(target, {
+                    opacity: 1,
+                    duration: 0.2
+                });
+
+            }
+        });
+
+    });
+
+};
+
 
 function mainAnimate() {
     mainMotion();
+    // updateSubTitMotion(); 
     requestAnimationFrame(mainAnimate);
 }
-
-
-const subTitWrap = document.querySelector(".sub-tit-wrap");
-const subTitTexts = document.querySelectorAll(".sub-tit-inner.color .sub-tit-text");
-
-const updateSubTitMotion = () => {
-
-    // const rect = subTitWrap.getBoundingClientRect();
-    // const sectionHeight = subTitWrap.offsetHeight;
-
-    // // 섹션 안에서 시작 위치 / 종료 위치
-    // const start = sectionHeight * 0.35; 
-    // const end = sectionHeight * 0.1;   // 상단 가까이
-
-
-    // let progress = (start - rect.top) / (start - end);
-
-    // progress = Math.max(0, Math.min(progress, 1));
-
-
-    // subTitTexts.forEach((text, index)=>{
-
-    //     const section = 1 / subTitTexts.length;
-
-    //     const startProgress = section * index;
-    //     const endProgress = section * (index + 1);
-
-
-    //     let lineProgress =
-    //         (progress - startProgress) /
-    //         (endProgress - startProgress);
-
-
-    //     lineProgress = Math.max(0, Math.min(lineProgress, 1));
-
-
-    //     const hide = 100 - (lineProgress * 100);
-
-    //     text.style.clipPath = `inset(0 ${hide}% 0 0)`;
-
-    // });
-
-};
-
-
-window.addEventListener("scroll", updateSubTitMotion);
 
 /**
  * =========================
