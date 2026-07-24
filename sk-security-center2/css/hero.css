@@ -338,3 +338,34 @@
 .sub-tit-wrap.active .sub-tit-inner.color .sub-tit-text{
     clip-path:inset(0 0 0 0);
 } */
+
+
+
+.sub-tit-inner2 .sub-tit-text {
+    color: #303030;
+}
+.sub-tit-inner2 .sub-tit-text img {
+    width: 70px;
+    height: 70px;
+    vertical-align: middle;
+    opacity: 0;
+}
+.sub-tit-inner2 .sub-tit-text img:not(:first-child) {
+    margin-left: -30px;
+}
+.floating-img {
+    width: 70px;
+    height: 70px;
+}
+
+.target-img{
+    opacity:0;
+}
+
+.fly-img{
+    width:120px;
+    position:fixed;
+    z-index:999;
+    pointer-events:none;
+    will-change:transform;
+}
