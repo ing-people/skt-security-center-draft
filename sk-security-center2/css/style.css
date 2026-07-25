@@ -1193,7 +1193,7 @@ h3 .text-inner {
 /* section3 */
 .section3 .container {
     width: 1440px;
-    padding: 86px 100px;
+    padding: 320px 86px 100px;
 }
 .section3-inner {
     display: flex;
