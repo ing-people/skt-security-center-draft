@@ -600,7 +600,7 @@ a {
 .section1 .container {
     width: 1440px;
     margin: 0 auto;
-    padding: 60px 100px 140px;
+    padding: 80px 100px 140px;
 }
 
 
@@ -2289,7 +2289,7 @@ body.modal-open {
         display: none;
     }
     .architecture-desc {
-        padding-top: 80px;
+        padding-top: 60px;
         position: relative;
     }
     .architecture-desc:first-child {
