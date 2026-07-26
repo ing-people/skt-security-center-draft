@@ -1014,7 +1014,7 @@ a {
     /* padding-bottom: 260px; */
 }
 .architecture-desc {
-    padding-top: 80px;
+    padding-top: 60px;
 }
 .architecture-desc-label {
     font-family: 'SKTSansTextR';
@@ -2289,7 +2289,7 @@ body.modal-open {
         display: none;
     }
     .architecture-desc {
-        padding-top: 60px;
+        padding-top: 80px;
         position: relative;
     }
     .architecture-desc:first-child {
