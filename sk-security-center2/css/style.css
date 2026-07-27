@@ -1085,7 +1085,7 @@ h3 .text-inner {
 .section3-cont-wrap {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     gap: 72px;
 }
 .section3-cont {
