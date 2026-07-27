@@ -35,7 +35,12 @@ const mainMotion = () => {
 
 
         if (!mainImg) return;
+        mainImg.classList.add('show')
         mainImg.style.width =  "95%";
+
+        setTimeout(() => {
+            mainImg.classList.add('main-img2');
+        }, 2000)
     }, 500)
 
 
