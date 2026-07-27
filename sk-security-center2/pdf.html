@@ -209,6 +209,64 @@
     document.getElementById('fit-width-btn').addEventListener('click', () => { fitMode = 'width'; queueRenderPage(pageNum); });
     document.getElementById('fit-page-btn').addEventListener('click', () => { fitMode = 'page'; queueRenderPage(pageNum); });
 
+    
+    // 페이지 직접 입력
+    const pageInput = document.getElementById('page-num-input');
+    pageInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        let val = parseInt(pageInput.value);
+        if (val >= 1 && val <= pdfDoc.numPages) {
+          pageNum = val;
+          queueRenderPage(pageNum);
+        } else {
+          pageInput.value = pageNum;
+        }
+      }
+    });
+
+    // 방향키 이동
+    window.addEventListener('keydown', (e) => {
+      if (document.activeElement === pageInput) return;
+      if (e.key === 'ArrowLeft') goToPrevPage();
+      if (e.key === 'ArrowRight') goToNextPage();
+    });
+
+    // 수동 확대/축소 클릭 시 맞춤 모드 해제
+    document.getElementById('zoom-in-btn').addEventListener('click', () => {
+      fitMode = 'custom';
+      scale += 0.15;
+      queueRenderPage(pageNum);
+    });
+
+    document.getElementById('zoom-out-btn').addEventListener('click', () => {
+      if (scale <= 0.3) return;
+      fitMode = 'custom';
+      scale -= 0.15;
+      queueRenderPage(pageNum);
+    });
+
+    // 맞춤 버튼 클릭
+    fitWidthBtn.addEventListener('click', () => {
+      fitMode = 'width';
+      queueRenderPage(pageNum);
+    });
+
+    fitPageBtn.addEventListener('click', () => {
+      fitMode = 'page';
+      queueRenderPage(pageNum);
+    });
+
+    // 브라우저 리사이즈 시 현재 맞춤 모드 유지
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      if (fitMode !== 'custom' && pdfDoc) {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          queueRenderPage(pageNum);
+        }, 100);
+      }
+    });
+
     // 초기 실행
     const targetPdfUrl = getPdfUrlFromQuery();
     document.getElementById('doc-title').innerText = targetPdfUrl.split('/').pop();
