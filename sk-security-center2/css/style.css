@@ -1068,7 +1068,9 @@ h3 .text-inner {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 467px;
+}
+.section3 .section-tit-wrap{
+  margin-bottom: 467px;
 }
 .section3 .section-tit-wrap h3 {
     text-align: center;
