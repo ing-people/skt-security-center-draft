@@ -14,7 +14,7 @@ const sectionEls = [
     document.querySelector(".section6"),
 ];
 
-const section1Txt = document.querySelectorAll(".sec1-text");
+const section1Txt = document.querySelectorAll(".js-anchor");
 const navItems = document.querySelectorAll(".section1-item");
 
 const pcNavItems = document.querySelectorAll(".section1-left .section1-item");
@@ -142,9 +142,7 @@ const sectionMotion = () => {
  * =========================
  */
 const updateActive = () => {
-    const trigger = isMobile()
-        ? 140
-        : window.innerHeight / 2 - 100;
+    const trigger = 100;
 
     let current = -1;
 
@@ -201,16 +199,27 @@ const initSection1Nav = () => {
                         window.scrollY +
                         section1Txt[index].getBoundingClientRect().top - 80;
 
-                    console.log(y)
                     window.scrollTo({
                         top: y,
                         behavior: "smooth",
                     });
                 } else {
-                    section1Txt[index].scrollIntoView({
+
+                    const offset = 10;
+
+                    const y =
+                        window.scrollY +
+                        section1Txt[index].getBoundingClientRect().top -
+                        offset;
+
+                    window.scrollTo({
+                        top: y,
                         behavior: "smooth",
-                        block: "center",
                     });
+                    // section1Txt[index].scrollIntoView({
+                    //     behavior: "smooth",
+                    //     block: "start",
+                    // });
                 }
             });
         });
