@@ -259,13 +259,20 @@ const updateSection2Active = () => {
     });
 
     // 왼쪽 nav active
-    getSection2NavItems().forEach((item, index) => {
-        item.classList.toggle("active", index === current);
-    });
+    section2nav.forEach((item,index)=>{
+        item.classList.toggle(
+            "active",
+            index === current
+        );
 
-    if (isMobile() && current > -1) {
-        moveSection2MobileNav(current);
-    }
+    });
+    // getSection2NavItems().forEach((item, index) => {
+    //     item.classList.toggle("active", index === current);
+    // });
+
+    // if (isMobile() && current > -1) {
+    //     moveSection2MobileNav(current);
+    // }
 
 
     // 오른쪽 content active
@@ -455,8 +462,6 @@ const handleScroll = () => {
     updateActive();
     updateSection2Active();
 };
-
-
 
 /**
  * =========================
