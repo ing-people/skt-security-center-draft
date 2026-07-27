@@ -98,6 +98,10 @@
     const canvas = document.getElementById('pdf-canvas');
     const ctx = canvas.getContext('2d');
     const container = document.getElementById('viewer-container');
+    const fitWidthBtn = document.getElementById('fit-width-btn');
+    const fitPageBtn = document.getElementById('fit-page-btn');
+
+    const DEFAULT_PDF_URL = 'your-wide-document.pdf';
 
     // 🔗 부모로 상태 전송 함수
     function notifyParent() {
