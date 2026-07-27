@@ -226,7 +226,7 @@ const initSection1Nav = () => {
                     });
                 } else {
 
-                    const offset = 10;
+                    const offset = 100;
 
                     const y =
                         window.scrollY +
