@@ -928,7 +928,7 @@ a {
     color: #6550CA;
 }
 #tech .architecture-keyword li div {
-    /* color: #484848; */
+    color: #484848;
 }
 
 /* 모션 */
@@ -1046,7 +1046,6 @@ h3 .text-inner {
     font-size: 16px;
     line-height: 1.8;
     color: #464646;
-    text-align: center;
 }
 .section-tit-wrap p strong {
     color: #141414;
@@ -1064,16 +1063,17 @@ h3 .text-inner {
 .section3-inner > div {
     height: 100%;
 }
-.section-tit-wrap {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
 .section3 .section-tit-wrap{
   margin-bottom: 467px;
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
 }
 .section3 .section-tit-wrap h3 {
     text-align: center;
+}
+.section3 .section-tit-wrap p { 
+    text-align: center; 
 }
 .section3-tit-desc {
     font-size: 14px;
