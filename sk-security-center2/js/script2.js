@@ -48,23 +48,17 @@ const getSection2NavItems = () => {
  */
 const mainMotion = () => {
     setTimeout(() => {
-        mainTit.classList.add('show');
-
+        mainTit.classList.add("show");
 
         if (!mainImg) return;
-        mainImg.classList.add('show')
+
+        mainImg.classList.add("show");
+        mainImg.classList.remove("hide");
+
         setTimeout(() => {
-
-            mainImg.style.width =  "95%";
-            setTimeout(() => {
-                mainImg.classList.add('main-img2');
-            }, 2000)
-        }, 500)
-
-   
-    }, 500)
-
-
+            mainImg.style.width = "95%";
+        }, 500);
+    }, 500);
 }
 
 window.addEventListener("resize", mainMotion);
@@ -78,13 +72,17 @@ const subTitleMotion = () => {
     const trigger = window.innerHeight * 0.4;
 
     if (rect.top <= trigger) {
-        mainImg.classList.add("shrink");
+        mainImg.classList.add("hide");
+        mainImg.style.width = "20%";
         subTitWrap.classList.add("show");
         // 또는
         // mainImg.style.width = window.innerWidth > 1200 ? "70%" : "100%";
     } else {
-        subTitWrap.classList.remove("show");
-        mainImg.classList.remove("shrink");
+        mainImg.classList.remove("hide");
+        setTimeout(() => {
+            mainImg.style.width = "95%";
+        }, 500);
+        mainImg.classList.add('show')
         // 또는
         // mainImg.style.width = window.innerWidth > 1200 ? "95%" : "100%";
     }
