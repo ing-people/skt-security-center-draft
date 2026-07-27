@@ -1,5 +1,5 @@
-const main = document.querySelector(".main");
-const mainTitle2 = document.querySelector(".main-tit-wrap2");
+const mainTit = document.querySelector(".main-tit-wrap");
+const mainImg= document.querySelector(".main-img");
 
 const sectionEls = [
     document.querySelector(".section1"),
@@ -26,218 +26,49 @@ const btnViewWeb = document.querySelector(".btn-view-web");
 const pdfViewer = document.querySelector(".pdf-view-wrap");
 const btnCloseView = document.querySelector(".btn-close-view");
 
-const END_WIDTH = 489;
-
 /**
  * 메인 모션 함수
  */
-const stickyWrap = document.querySelector(".sticky-wrap");
-const movingTitle = document.querySelector(".hero-moving-title");
-const accentWraps = document.querySelectorAll(".hero-accent-wrap");
-const accentShapes = document.querySelectorAll(".hero-accent-shape");
-const titleShade = document.querySelector(".hero-title-shade");
-const heroDesc = document.querySelector(".hero-desc-wrap");
-
-let ticking = false;
-let currentProgress = 0;
-
 const mainMotion = () => {
-
- document.querySelector(".hero-title-wrap").classList.add("show");
-
-    const rect = stickyWrap.getBoundingClientRect();
-    const scrollRange = stickyWrap.offsetHeight - window.innerHeight;
-
-    // let progress = -rect.top / scrollRange;
-    // progress = Math.min(Math.max(progress, 0), 1);
-
-    let targetProgress = -rect.top / scrollRange;
-    targetProgress = Math.min(Math.max(targetProgress, 0), 1);
-
-    // 부드럽게 따라가기
-    currentProgress += (targetProgress - currentProgress) * 0.08;
-
-    const progress = currentProgress;
-
-    // 애니메이션은 90%까지만 진행
-    const animationEnd = 0.9;
-
-    const aniProgress = Math.min(
-        progress / animationEnd,
-        1
-    );
-
-    // 원 축소
-    const startWidth = 21;
-    const endWidth = 6;
-
-    // 원 축소는 처음부터 시작해서 70%에서 완료
-    const shrinkEnd = 0.7;
-
-    const shrinkProgress = Math.min(
-        progress / shrinkEnd,
-        1
-    );
-
-    const width =
-        startWidth - ((startWidth - endWidth) * shrinkProgress);
-
-    accentWraps.forEach((el)=>{
-        el.style.width = `${width}vw`;
-    });
-    // 원 컬러 변경
-    if(progress > 0.7){
-        accentShapes.forEach((el)=>{
-            el.style.backgroundColor = "#000";
-        });
-    }else{
-        accentShapes.forEach((el)=>{
-            el.style.backgroundColor = "#f5f5f5";
-        });
-    }
-
-    // 전체 타이틀 흐름
-    const moveStart = 0.7;
-    const moveEnd = 0.85;  
-
-    if (progress > moveStart) {
-
-        const moveProgress = Math.min(
-            (progress - moveStart) / (moveEnd - moveStart),
-            1
-        );
-
-        const moveDistance =
-            movingTitle.scrollWidth - window.innerWidth + 100;
-
-        movingTitle.style.transform =
-            `translateX(${-moveDistance * moveProgress}px)`;
-
-    } else {
-
-        movingTitle.style.transform = "translateX(0)";
-
-    }
+    setTimeout(() => {
+        mainTit.classList.add('show');
 
 
-    // 원이 된 이후 살짝 작아지고 아래로 이동
-    const afterCircleStart = 0.75;
+        if (!mainImg) return;
+        mainImg.style.width =  "95%";
+    }, 500)
 
-    accentShapes.forEach((el) => {
-        el.classList.toggle("comma", aniProgress > 0.9);
-    });
-    
-    if (aniProgress > afterCircleStart) {
-
-        const afterProgress =
-            (aniProgress - afterCircleStart) / (1 - afterCircleStart);
-
-        // 1 → 0.5 (50% 축소)
-        const scale = 1 - (afterProgress * 0.50);
-
-        // 0 → 20px 아래
-        const translateY = afterProgress * 20;
-           // 0 → 20px 아래
-        const translateX = afterProgress * 20;
-
-        accentShapes.forEach((el)=>{
-            el.style.transform =
-                `translateY(${translateY}px) translateX(-${translateX}px) scale(${scale})`;
-        });
-
-    } else {
-
-        accentShapes.forEach((el)=>{
-            el.style.transform =
-                "translateY(0) scale(1)";
-        });
 
 }
 
-    // 컬러 reveal
-    const maskStart = 0.75;
+window.addEventListener("resize", mainMotion);
 
-    if (aniProgress > maskStart) {
+const subTitWrap = document.querySelector("#main-b .sub-tit-wrap");
 
-        const fillProgress = (aniProgress - maskStart) / (1 - maskStart);
-        const hide = 100 - (fillProgress * 100);
-
-        titleShade.style.clipPath = `inset(0 ${hide}% 0 0)`;
-
-        // 색이 거의 다 채워졌을 때
-        heroDesc.classList.toggle("show", fillProgress > 0.8);
-
-    } else {
-
-        titleShade.style.clipPath = "inset(0 100% 0 0)";
-        heroDesc.classList.remove("show");
-
-    }
-};
-
-function mainAnimate() {
-    mainMotion();
-    requestAnimationFrame(mainAnimate);
-}
-
-// const subTitWrap = document.querySelector(".sub-tit-wrap");
-
-// const subTitObserver = new IntersectionObserver((entries)=>{
-//     entries.forEach(entry=>{
-//         if(entry.isIntersecting){
-//             subTitWrap.classList.add("active");
-//         } 
-//     });
-// },{
-//     threshold: 0.3 // 영역 30% 들어왔을 때
-// });
-
-// subTitObserver.observe(subTitWrap);
-
-const subTitWrap = document.querySelector(".sub-tit-wrap");
-const subTitTexts = document.querySelectorAll(".sub-tit-inner.color .sub-tit-text");
-
-const updateSubTitMotion = () => {
+const subTitleMotion = () => {
+    if (!subTitWrap || !mainImg) return;
 
     const rect = subTitWrap.getBoundingClientRect();
-    const sectionHeight = subTitWrap.offsetHeight;
+    const trigger = window.innerHeight * 0.4;
 
-    // 섹션 안에서 시작 위치 / 종료 위치
-    const start = sectionHeight * 0.35; 
-    const end = sectionHeight * 0.1;   // 상단 가까이
-
-
-    let progress = (start - rect.top) / (start - end);
-
-    progress = Math.max(0, Math.min(progress, 1));
-
-
-    subTitTexts.forEach((text, index)=>{
-
-        const section = 1 / subTitTexts.length;
-
-        const startProgress = section * index;
-        const endProgress = section * (index + 1);
-
-
-        let lineProgress =
-            (progress - startProgress) /
-            (endProgress - startProgress);
-
-
-        lineProgress = Math.max(0, Math.min(lineProgress, 1));
-
-
-        const hide = 100 - (lineProgress * 100);
-
-        text.style.clipPath = `inset(0 ${hide}% 0 0)`;
-
-    });
-
+    if (rect.top <= trigger) {
+        mainImg.classList.add("shrink");
+        subTitWrap.classList.add("show");
+        // 또는
+        // mainImg.style.width = window.innerWidth > 1200 ? "70%" : "100%";
+    } else {
+        subTitWrap.classList.remove("show");
+        mainImg.classList.remove("shrink");
+        // 또는
+        // mainImg.style.width = window.innerWidth > 1200 ? "95%" : "100%";
+    }
 };
 
+window.addEventListener("scroll", subTitleMotion);
+window.addEventListener("resize", subTitleMotion);
 
-window.addEventListener("scroll", updateSubTitMotion);
+subTitleMotion();
+
 
 /**
  * =========================
@@ -510,12 +341,6 @@ const handleScroll = () => {
     // mainMotion();
     sectionMotion();
     updateActive();
-
-    //메인 스크롤이벤트
-    if(!ticking){
-        mainAnimate()
-        ticking = true;
-    }
 };
 
 /**

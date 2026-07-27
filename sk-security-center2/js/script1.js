@@ -39,6 +39,14 @@ const getNavItems = () => {
     return window.innerWidth <= 767 ? moNavItems : pcNavItems;
 };
 
+const section2PcNavItems = document.querySelectorAll(".section2-nav-wrap .nav");
+const section2MoNavItems = document.querySelectorAll(".section2-nav-inner.mo-ver .nav");
+const section2MoNavWrap = document.querySelector(".section2-nav-wrap.mo-ver");
+
+const getSection2NavItems = () => {
+    return isMobile() ? section2MoNavItems : section2PcNavItems;
+};
+
 /**
  * =========================
  * Main Motion
@@ -189,6 +197,18 @@ const moveMobileNav = (index) => {
     });
 };
 
+const moveSection2MobileNav = (index) => {
+    if (!isMobile()) return;
+
+    const activeItem = section2MoNavItems[index];
+    if (!activeItem) return;
+
+
+    section2MoNavWrap.scrollTo({
+        left: activeItem.offsetLeft - 20,
+        behavior: "smooth",
+    });
+};
 
 
 const initSection1Nav = () => {
@@ -220,7 +240,6 @@ const initSection1Nav = () => {
 };
 
 
-
 /**
  * =========================
  * Section2
@@ -240,13 +259,13 @@ const updateSection2Active = () => {
     });
 
     // 왼쪽 nav active
-    section2nav.forEach((item,index)=>{
-        item.classList.toggle(
-            "active",
-            index === current
-        );
-
+    getSection2NavItems().forEach((item, index) => {
+        item.classList.toggle("active", index === current);
     });
+
+    if (isMobile() && current > -1) {
+        moveSection2MobileNav(current);
+    }
 
 
     // 오른쪽 content active
@@ -261,23 +280,39 @@ const updateSection2Active = () => {
 };
 
 
-
-// 클릭 이동
 const initSection2Nav = () => {
 
-    section2nav.forEach((item,index)=>{
-        item.addEventListener("click",(e)=>{
-            e.preventDefault();
-            section2Txt[index]
-                .scrollIntoView({
-                    behavior:"smooth",
-                    block:"center"
-                });
+    [section2PcNavItems, section2MoNavItems].forEach((items) => {
+
+        items.forEach((item, index) => {
+
+            item.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                if (isMobile()) {
+                    const y =
+                        window.scrollY +
+                        section2Txt[index].getBoundingClientRect().top -
+                        80;
+
+                    window.scrollTo({
+                        top: y,
+                        behavior: "smooth",
+                    });
+                } else {
+                    section2Txt[index].scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                }
+            });
+
         });
 
     });
 
 };
+
 
 
 
@@ -430,6 +465,7 @@ const handleScroll = () => {
  */
 const init = () => {
     initSection1Nav();
+    initSection2Nav(); 
     initModal();
     initPdfViewer();
     handleScroll();
