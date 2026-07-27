@@ -999,10 +999,11 @@ a {
 .section2-nav-wrap .nav p {
     font-family: 'SKTSansDisplayR';
     font-weight: 400;
-    font-size: 20px;
+    font-size: 16px;
     line-height: 1.5;
     color: #5D5C5C66;
     transition: .2s;
+	margin-top: 3px;
 }
 .section2-nav-wrap .nav.active p {
     /* order: 1; */
