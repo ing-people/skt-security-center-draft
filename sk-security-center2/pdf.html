@@ -3,16 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF Viewer - Default Fit Page</title>
-  <!-- PDF.js 라이브러리 CDN -->
+  <title>PDF Viewer Child</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: #525659;
@@ -22,8 +17,6 @@
       overflow: hidden;
       color: #f1f1f1;
     }
-
-    /* 상단 툴바 */
     .toolbar {
       height: 48px;
       background-color: #323639;
@@ -31,161 +24,63 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
       z-index: 10;
       user-select: none;
     }
-
-    .toolbar-section {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
+    .toolbar-section { display: flex; align-items: center; gap: 8px; }
     .doc-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: #e8eaed;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px;
+      font-size: 13px; font-weight: 500; color: #e8eaed;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px;
     }
-
-    /* 버튼 기본 스타일 */
     .btn {
-      background: transparent;
-      border: none;
-      color: #e8eaed;
-      height: 32px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 13px;
-      padding: 0 8px;
-      transition: background-color 0.15s ease, color 0.15s ease;
+      background: transparent; border: none; color: #e8eaed; height: 32px;
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 13px; padding: 0 8px;
+      transition: background-color 0.15s ease;
     }
-    .btn:hover {
-      background-color: rgba(255, 255, 255, 0.12);
-    }
-    .btn:active {
-      background-color: rgba(255, 255, 255, 0.22);
-    }
-    .btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-      background: transparent;
-    }
-
-    /* 활성화된 맞춤 버튼 하이라이트 */
-    .btn.active {
-      background-color: #8ab4f8;
-      color: #202124;
-      font-weight: 600;
-    }
-
-    /* 페이지 제어 영역 */
-    .page-control {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: #bdc1c6;
-    }
-
+    .btn:hover { background-color: rgba(255, 255, 255, 0.12); }
+    .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .btn.active { background-color: #8ab4f8; color: #202124; font-weight: 600; }
+    .page-control { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #bdc1c6; }
     .page-input {
-      width: 44px;
-      height: 26px;
-      background-color: #202124;
-      border: 1px solid #5f6368;
-      border-radius: 4px;
-      color: #ffffff;
-      text-align: center;
-      font-size: 13px;
-      outline: none;
+      width: 44px; height: 26px; background-color: #202124; border: 1px solid #5f6368;
+      border-radius: 4px; color: #ffffff; text-align: center; font-size: 13px; outline: none;
     }
-    .page-input:focus {
-      border-color: #8ab4f8;
-    }
-
-    .divider {
-      width: 1px;
-      height: 20px;
-      background-color: #5f6368;
-      margin: 0 6px;
-    }
-
-    /* 메인 뷰포트 영역 */
+    .divider { width: 1px; height: 20px; background-color: #5f6368; margin: 0 6px; }
     .viewer-container {
-      flex: 1;
-      overflow: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      background-color: #525659;
+      flex: 1; overflow: auto; display: flex; justify-content: center; align-items: center; padding: 16px;
     }
-
-    #pdf-canvas {
-      background-color: #ffffff;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-      display: block;
-      margin: auto;
-    }
-
-    .file-btn {
-      font-size: 11px;
-      background: #474b4e;
-      padding: 4px 8px;
-      border-radius: 4px;
-      cursor: pointer;
-      color: #ccc;
-    }
-    .file-btn:hover {
-      background: #5a5e62;
-      color: #fff;
-    }
+    #pdf-canvas { background-color: #ffffff; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); display: block; margin: auto; }
   </style>
 </head>
 <body>
 
-  <!-- 상단 툴바 -->
   <div class="toolbar">
     <div class="toolbar-section">
       <span class="doc-title" id="doc-title">문서 로딩 중...</span>
-      <label class="file-btn" title="내 컴퓨터의 PDF 선택">
-        파일 열기
-        <input type="file" id="file-input" accept="application/pdf" style="display: none;">
-      </label>
     </div>
 
-    <!-- 이전 / 다음 페이지 컨트롤 -->
     <div class="toolbar-section">
-      <button class="btn" id="prev-btn" title="이전 페이지 (◀)" style="width: 32px;" disabled>◀</button>
+      <button class="btn" id="prev-btn" title="이전" style="width: 32px;" disabled>◀</button>
       <div class="page-control">
         <input type="number" id="page-num-input" class="page-input" value="1" min="1">
         <span>/</span>
         <span id="page-count-display">0</span>
       </div>
-      <button class="btn" id="next-btn" title="다음 페이지 (▶)" style="width: 32px;" disabled>▶</button>
+      <button class="btn" id="next-btn" title="다음" style="width: 32px;" disabled>▶</button>
     </div>
 
-    <!-- Zoom 및 폭/페이지 맞춤 컨트롤 -->
     <div class="toolbar-section">
-      <button class="btn" id="zoom-out-btn" title="축소" style="width: 32px;">-</button>
+      <button class="btn" id="zoom-out-btn" style="width: 32px;">-</button>
       <span id="zoom-text" style="font-size: 13px; width: 48px; text-align: center;">100%</span>
-      <button class="btn" id="zoom-in-btn" title="확대" style="width: 32px;">+</button>
+      <button class="btn" id="zoom-in-btn" style="width: 32px;">+</button>
       <div class="divider"></div>
-      
-      <!-- ⭐️ 페이지 맞춤 버튼이 기본 active 상태 -->
-      <button class="btn" id="fit-width-btn" title="가로 폭에 맞춤">너비 맞춤</button>
-      <button class="btn active" id="fit-page-btn" title="한 화면에 페이지 전체가 들어가도록 맞춤">페이지 맞춤</button>
+      <button class="btn" id="fit-width-btn">너비 맞춤</button>
+      <button class="btn active" id="fit-page-btn">페이지 맞춤</button>
     </div>
   </div>
 
-  <!-- 메인 PDF 뷰어 컨테이너 -->
   <div class="viewer-container" id="viewer-container">
     <canvas id="pdf-canvas"></canvas>
   </div>
@@ -198,29 +93,34 @@
     let pageRendering = false;
     let pageNumPending = null;
     let scale = 1.0;
-    
-    // ⭐️ [핵심] 기본 모드를 '페이지 맞춤(page)'으로 설정
-    let fitMode = 'page';
+    let fitMode = 'page'; // 기본: 페이지 맞춤
 
     const canvas = document.getElementById('pdf-canvas');
     const ctx = canvas.getContext('2d');
     const container = document.getElementById('viewer-container');
-    const fitWidthBtn = document.getElementById('fit-width-btn');
-    const fitPageBtn = document.getElementById('fit-page-btn');
 
-    const DEFAULT_PDF_URL = 'your-wide-document.pdf';
-
-    /**
-     * 맞춤 모드 상태에 맞춰 버튼 하이라이트 변경
-     */
-    function updateFitButtonsUI() {
-      fitWidthBtn.classList.toggle('active', fitMode === 'width');
-      fitPageBtn.classList.toggle('active', fitMode === 'page');
+    // 🔗 부모로 상태 전송 함수
+    function notifyParent() {
+      if (window.parent && pdfDoc) {
+        window.parent.postMessage({
+          type: 'PDF_PAGE_CHANGED',
+          currentPage: pageNum,
+          totalPages: pdfDoc.numPages
+        }, '*');
+      }
     }
 
-    /**
-     * PDF 페이지 렌더링
-     */
+    // 🔗 URL 파라미터(?file=경로) 감지
+    function getPdfUrlFromQuery() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('file') || 'your-wide-document.pdf';
+    }
+
+    function updateFitButtonsUI() {
+      document.getElementById('fit-width-btn').classList.toggle('active', fitMode === 'width');
+      document.getElementById('fit-page-btn').classList.toggle('active', fitMode === 'page');
+    }
+
     function renderPage(num) {
       pageRendering = true;
 
@@ -228,20 +128,13 @@
         const unscaledViewport = page.getViewport({ scale: 1.0 });
 
         if (fitMode === 'width') {
-          // 너비 맞춤
           const availableWidth = container.clientWidth - 32;
-          if (availableWidth > 0) {
-            scale = availableWidth / unscaledViewport.width;
-          }
+          if (availableWidth > 0) scale = availableWidth / unscaledViewport.width;
         } else if (fitMode === 'page') {
-          // ⭐️ 페이지 맞춤: 가로/세로 중 한 화면에 딱 들어오는 비율 채택
           const availableWidth = container.clientWidth - 32;
           const availableHeight = container.clientHeight - 32;
-          
           if (availableWidth > 0 && availableHeight > 0) {
-            const scaleX = availableWidth / unscaledViewport.width;
-            const scaleY = availableHeight / unscaledViewport.height;
-            scale = Math.min(scaleX, scaleY);
+            scale = Math.min(availableWidth / unscaledViewport.width, availableHeight / unscaledViewport.height);
           }
         }
 
@@ -251,15 +144,11 @@
 
         document.getElementById('zoom-text').innerText = `${Math.round(scale * 100)}%`;
 
-        const renderContext = {
-          canvasContext: ctx,
-          viewport: viewport
-        };
-
-        const renderTask = page.render(renderContext);
+        const renderTask = page.render({ canvasContext: ctx, viewport: viewport });
 
         renderTask.promise.then(() => {
           pageRendering = false;
+          notifyParent(); // ⭐️ 렌더링 완료 시 부모에게 페이지 번호 전송
           if (pageNumPending !== null) {
             renderPage(pageNumPending);
             pageNumPending = null;
@@ -267,17 +156,15 @@
         });
 
         document.getElementById('page-num-input').value = num;
-        updateButtonStates();
+        document.getElementById('prev-btn').disabled = (pageNum <= 1);
+        document.getElementById('next-btn').disabled = (pageNum >= pdfDoc.numPages);
         updateFitButtonsUI();
       });
     }
 
     function queueRenderPage(num) {
-      if (pageRendering) {
-        pageNumPending = num;
-      } else {
-        renderPage(num);
-      }
+      if (pageRendering) pageNumPending = num;
+      else renderPage(num);
     }
 
     function goToPrevPage() {
@@ -287,125 +174,45 @@
     }
 
     function goToNextPage() {
-      if (pageNum >= pdfDoc.numPages) return;
+      if (!pdfDoc || pageNum >= pdfDoc.numPages) return;
       pageNum++;
       queueRenderPage(pageNum);
     }
 
-    function updateButtonStates() {
-      document.getElementById('prev-btn').disabled = (pageNum <= 1);
-      document.getElementById('next-btn').disabled = (pageNum >= pdfDoc.numPages);
-    }
-
-    /**
-     * PDF 문서 로드
-     */
     function loadPDF(source) {
       pdfjsLib.getDocument(source).promise.then(pdf => {
         pdfDoc = pdf;
         document.getElementById('page-count-display').innerText = pdf.numPages;
         document.getElementById('page-num-input').max = pdf.numPages;
-        
         pageNum = 1;
-        fitMode = 'page'; // ⭐️ 문서가 새로 로드되어도 항상 페이지 맞춤으로 시작
+        fitMode = 'page';
         queueRenderPage(pageNum);
       }).catch(err => {
-        console.error('PDF 로딩 오류:', err);
-        document.getElementById('doc-title').innerText = 'PDF 불러오기 실패';
+        console.error('PDF 로딩 실패:', err);
+        document.getElementById('doc-title').innerText = 'PDF 로딩 실패';
       });
     }
 
-    // --- 이벤트 연동 ---
+    window.addEventListener('message', (event) => {
+      if (!event.data || !event.data.type) return;
 
+      if (event.data.type === 'PREV_PAGE') {
+        goToPrevPage();
+      } else if (event.data.type === 'NEXT_PAGE') {
+        goToNextPage();
+      }
+    });
+
+    // 내부 이벤트 처리
     document.getElementById('prev-btn').addEventListener('click', goToPrevPage);
     document.getElementById('next-btn').addEventListener('click', goToNextPage);
+    document.getElementById('fit-width-btn').addEventListener('click', () => { fitMode = 'width'; queueRenderPage(pageNum); });
+    document.getElementById('fit-page-btn').addEventListener('click', () => { fitMode = 'page'; queueRenderPage(pageNum); });
 
-    // 페이지 직접 입력
-    const pageInput = document.getElementById('page-num-input');
-    pageInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        let val = parseInt(pageInput.value);
-        if (val >= 1 && val <= pdfDoc.numPages) {
-          pageNum = val;
-          queueRenderPage(pageNum);
-        } else {
-          pageInput.value = pageNum;
-        }
-      }
-    });
-
-    // 방향키 이동
-    window.addEventListener('keydown', (e) => {
-      if (document.activeElement === pageInput) return;
-      if (e.key === 'ArrowLeft') goToPrevPage();
-      if (e.key === 'ArrowRight') goToNextPage();
-    });
-
-    // 수동 확대/축소 클릭 시 맞춤 모드 해제
-    document.getElementById('zoom-in-btn').addEventListener('click', () => {
-      fitMode = 'custom';
-      scale += 0.15;
-      queueRenderPage(pageNum);
-    });
-
-    document.getElementById('zoom-out-btn').addEventListener('click', () => {
-      if (scale <= 0.3) return;
-      fitMode = 'custom';
-      scale -= 0.15;
-      queueRenderPage(pageNum);
-    });
-
-    // 맞춤 버튼 클릭
-    fitWidthBtn.addEventListener('click', () => {
-      fitMode = 'width';
-      queueRenderPage(pageNum);
-    });
-
-    fitPageBtn.addEventListener('click', () => {
-      fitMode = 'page';
-      queueRenderPage(pageNum);
-    });
-
-    // 브라우저 리사이즈 시 현재 맞춤 모드 유지
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      if (fitMode !== 'custom' && pdfDoc) {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-          queueRenderPage(pageNum);
-        }, 100);
-      }
-    });
-
-    // 로컬 파일 업로드 테스트
-    document.getElementById('file-input').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file && file.type === 'application/pdf') {
-        document.getElementById('doc-title').innerText = file.name;
-        const fileReader = new FileReader();
-        fileReader.onload = function() {
-          const typedarray = new Uint8Array(this.result);
-          loadPDF(typedarray);
-        };
-        fileReader.readAsArrayBuffer(file);
-      }
-    });
-
-    // 초기 로드
-    function getPdfUrlFromQuery() {
-	  const urlParams = new URLSearchParams(window.location.search);
-	  // ?file=... 파라미터가 있으면 그 값을 쓰고, 없으면 기본 파일 사용
-	  return urlParams.get('file') || 'your-wide-document.pdf'; 
-	}
-
-	// 실행 시 URL에서 전달받은 PDF 파일 경로 추출
-	const targetPdfUrl = getPdfUrlFromQuery();
-
-	// 상단 헤더 타이틀에 파일명 표시
-	document.getElementById('doc-title').innerText = targetPdfUrl.split('/').pop();
-
-	// PDF 로드 실행
-	loadPDF(targetPdfUrl);
+    // 초기 실행
+    const targetPdfUrl = getPdfUrlFromQuery();
+    document.getElementById('doc-title').innerText = targetPdfUrl.split('/').pop();
+    loadPDF(targetPdfUrl);
   </script>
 </body>
 </html>
