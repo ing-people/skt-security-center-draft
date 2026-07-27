@@ -773,15 +773,33 @@
 
             <!-- 웹뷰 -->
             <section class="pdf-view-wrap">
-                <div class="btn-view-web">
-                    <button onclick="scrollViewer(-400)">◀ </button>
-                    <button onclick="scrollViewer(400)"> ▶</button>
-                </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+                <button onclick="scrollViewer(-400)">◀ </button>
+                <button onclick="scrollViewer(400)"> ▶</button>
                 <button class="btn-close-view">
                     <img src="./img/icon-close.png" alt="닫기"/>
                 </button>
-                <iframe id="pdf-container" src="./SKT_정보보호백서_2025.pdf#view=FitH&navpanes=0" title="백서"> </iframe>
+                <div id="pdf-container" style="width: 100%; height: calc(100% - 120px); margin-top: 50px; border: 0;">
+                  <canvas id="pdf-canvas"></canvas>
+                </div>
+                <!--<iframe id="pdf-container" src="./SKT_정보보호백서_2025.pdf#view=FitH&navpanes=0" title="백서"> </iframe>-->
                 <script>
+                  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                
+                  // PDF 불러오기 및 Canvas 렌더링
+                  pdfjsLib.getDocument('./SKT_정보보호백서_2025.pdf#view=FitH&navpanes=0').promise.then(pdf => {
+                    pdf.getPage(1).then(page => {
+                      const viewport = page.getViewport({ scale: 1.5 }); // 비율 조정
+                      const canvas = document.getElementById('pdf-canvas');
+                      const ctx = canvas.getContext('2d');
+                      
+                      canvas.height = viewport.height;
+                      canvas.width = viewport.width;
+                
+                      page.render({ canvasContext: ctx, viewport: viewport });
+                    });
+                  });
+            
                   function scrollViewer(amount) {
                     const container = document.getElementById('pdf-container');
                     container.scrollBy({ left: amount, behavior: 'smooth' });
