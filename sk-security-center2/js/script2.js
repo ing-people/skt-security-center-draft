@@ -21,7 +21,7 @@ const pcNavItems = document.querySelectorAll(".section1-left .section1-item");
 const moNavItems = document.querySelectorAll(".section1-info.mo-ver .section1-item");
 const moNavWrap = document.querySelector(".section1-info.mo-ver");
 
-const section2nav = document.querySelectorAll(".section2-nav-wrap .nav");
+const section2nav = document.querySelectorAll(".section2-nav-wrap.pc-ver .nav");
 const section2Txt = document.querySelectorAll(".architecture-desc");
 
 const openButtons = document.querySelectorAll(".btn-open-modal");
@@ -32,17 +32,15 @@ const pdfViewer = document.querySelector(".pdf-view-wrap");
 const btnCloseView = document.querySelector(".btn-close-view");
 
 const getNavItems = () => {
-    return window.innerWidth <= 767 ? moNavItems : pcNavItems;
+    return isMobile() ? moNavItems : pcNavItems;
 };
 
-const section2PcNavItems = document.querySelectorAll(".section2-nav-wrap .nav");
-const section2MoNavItems = document.querySelectorAll(".section2-nav-inner.mo-ver .nav");
+const section2MoNavItems = document.querySelectorAll(".section2-nav-wrap.mo-ver .nav");
 const section2MoNavWrap = document.querySelector(".section2-nav-wrap.mo-ver");
 
 const getSection2NavItems = () => {
-    return isMobile() ? section2MoNavItems : section2PcNavItems;
+    return isMobile() ? section2MoNavItems : section2nav;
 };
-
 /**
  * 메인 모션 함수
  */
@@ -247,22 +245,13 @@ const updateSection2Active = () => {
         }
 
     });
-
-    // 왼쪽 nav active
-    section2nav.forEach((item,index)=>{
-        item.classList.toggle(
-            "active",
-            index === current
-        );
-
+    getSection2NavItems().forEach((item, index) => {
+        item.classList.toggle("active", index === current);
     });
-    // getSection2NavItems().forEach((item, index) => {
-    //     item.classList.toggle("active", index === current);
-    // });
 
-    // if (isMobile() && current > -1) {
-    //     moveSection2MobileNav(current);
-    // }
+    if (isMobile() && current > -1) {
+        moveSection2MobileNav(current);
+    }
 
 
     // 오른쪽 content active
@@ -277,10 +266,10 @@ const updateSection2Active = () => {
 };
 
 
+
 const initSection2Nav = () => {
 
-    [section2PcNavItems, section2MoNavItems].forEach((items) => {
-
+    [section2nav, section2MoNavItems].forEach((items) => {
         items.forEach((item, index) => {
 
             item.addEventListener("click", (e) => {
