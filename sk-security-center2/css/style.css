@@ -330,7 +330,9 @@ a {
 .type-b #header {
     width: 1440px;
     margin: 0 auto;
-    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    /* position: relative; */
 }
 #main-b.main {
     width: 1440px;
