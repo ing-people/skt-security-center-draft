@@ -1,14 +1,13 @@
 #header .container {
     width: 1440px;
 }
-.type-c #header {
-    top: 0;
-}
 .header-nav::after {
     display: none;
 }
 #main-c {
     height: auto;
+    width: 1440px;
+    margin: 0 auto;
 }
 #main-c .main-hero {
     height: auto;
@@ -19,7 +18,7 @@
     top: 0;
     left: 0;
     transform: none;
-    padding: 167px 0 400px;
+    padding: 167px 0 163px;
     width: 1440px;
     height: auto;
     margin: 0 auto;
@@ -28,15 +27,15 @@
 #main-c .main-title {
     font-family: 'SKTSansDisplayB';
     font-weight: bold;
-    font-size: 128px;
+    font-size: 112px;
     line-height: 1;
     display: inline-block;
     display: flex;
     align-items: center;
 }
-.main-tit {
-    margin-left: 454px;
-}
+
+
+
 #main-c .main-title.main-sub {
     font-size: 64px;
 }
@@ -48,13 +47,22 @@
 }
 
 
-.main-sub1 .char:nth-child(4){
+.main-tit1 {
+    margin-left: 406px;
+}
+.main-tit2 {
+    margin: 31px 0 41px 592px;
+}
+.main-tit3 {
+    margin-left: 170px;
+}
+.main-tit1 .char:nth-child(5){
     margin-left: 20px;
 }
-.main-sub1 .char:nth-child(5){
+.main-tit2 .char:nth-child(2){
     margin-right: 20px;
 }
-.main-sub2 .char:nth-child(4){
+.main-tit3 .char:nth-child(4){
     margin-right: 20px;
 }
 
@@ -77,15 +85,17 @@
     font-size: 48px;
     color: #3617CE;
 }
+.main-desc p {
+    font-size: 20px;
+    line-height: 1.7;
+}
 .main-desc {
-    font-size: 14px;
-    line-height: 1.6;
-
     position: absolute;
+    text-align: right;
 }
 .main-desc1 {
-    top: 210px;
-    left: 336px;
+    top: 310px;
+    left: 81px;
 }
 .main-desc2 {
     top: 360px;
@@ -116,10 +126,9 @@
     justify-content: space-between;
     /* gap: 67px; */
     padding: 11px 0;
-    position: fixed;
-    top: 50%;
+    position: absolute;
+    top: 521px;
     right: 0;
-    transform: translateY(-50%);
     z-index: 999;
 }
 .main-btn-bugbounty span {
@@ -215,7 +224,48 @@
 }
 
 @media (max-width: 767px) {
+    #main-c {
+        width: 100%;
+    }
+    #main-c .main-visual {
+        width: 100%;
+        padding: 236px 0 ;
+    }
+    #main-c .main-visual > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+     }
+    #main-c .main-title{
+        font-size: 34px;
+    }
+    .main-tit1 {
+        margin-left: 57px;
+    }
+    .main-tit2 {
+        margin: 13px 0 14px 131px;
+    }
+    .main-tit3 {
+        margin-left: 20px;
+    }
+    .main-desc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: static;
+        margin: 98px auto 0;
+    }
+
     .main-btn-bugbounty {
-        display: none;
+        width: 24px;
+        height: 112px;
+        top: 629px;
+    }
+    .main-btn-bugbounty .b {
+        font-size: 14px;
+    }
+    .main-btn-bugbounty .txt {
+        font-size: 10px;
     }
 }
