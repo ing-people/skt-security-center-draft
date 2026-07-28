@@ -1519,6 +1519,7 @@ body.modal-open {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    max-width: 948px;
 }
 .modal-top {
     display: flex;
@@ -1647,6 +1648,9 @@ body.modal-open {
 }
 #modal-certify .madal-cont-label {
     width: 109px;
+}
+#modal-guideline .madal-cont-label  {
+    background: #F4F4F4;
 }
 #modal-guideline .modal-cont1-text p {
     font-family: 'SKTSansTextEB';
