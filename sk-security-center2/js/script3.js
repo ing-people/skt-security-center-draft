@@ -113,7 +113,7 @@ const sectionMotion = () => {
  * =========================
  */
 const updateActive = () => {
-    const trigger = 100;
+    const trigger = 120;
 
     let current = -1;
 
