@@ -1203,9 +1203,9 @@ h3 .text-inner {
 }
 .section3-desc-wrap p{
     color: #666;
-    font-size: 16px;
+    font-size: 20px;
     /* margin-bottom: 3px; */
-    line-height: 1.5;
+    line-height: 2;
 }
 .section3-desc-wrap li {
     font-family: 'SKTSansTextL';
@@ -1232,7 +1232,8 @@ h3 .text-inner {
 }
 .section4-cont-wrap {
     display: flex;
-    gap: 74px;
+    justify-content: space-between;
+    gap: 98.5px;
 }
 .section4-cont-wrap li span {
     font-family: 'SKTSansTextSB';
