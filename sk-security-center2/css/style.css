@@ -461,6 +461,7 @@ a {
     position: relative;
     width: 600px;
     height: 700px;
+    z-index: -1;
 }
 
 #main-b .main-visual::before,

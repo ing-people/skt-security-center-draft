@@ -3,7 +3,7 @@ const mainHero = document.querySelector(".main-hero");
 const mainHeroImg = document.querySelector(".main-img");
 const mainVisual = document.querySelector(".main-visual");
 const mainTitWrap = document.querySelector(".main-tit-wrap");
-const mainTit = document.querySelector(".main-tit");
+const mainTit = document.querySelectorAll(".main-tit");
 const mainDesc = document.querySelector(".main-desc");
 /**
  * =========================
@@ -57,8 +57,7 @@ const mainMotion = () => {
     setTimeout(() => {
 
         mainHeroImg.classList.add("show");
-        mainTit.classList.add("show");
-
+  
         // 타이틀 애니메이션이 끝난 후
         setTimeout(() => {
             heroReady = true;
@@ -68,14 +67,34 @@ const mainMotion = () => {
 
 }
 
+    const splitText = () => {
+
+        document.querySelectorAll(".main-tit").forEach((title, lineIndex) => {
+
+            title.innerHTML = title.textContent.replace(/\S/g, "<span class='char'>$&</span>");
+
+            title.querySelectorAll(".char").forEach((char, index) => {
+                char.style.transitionDelay = `${lineIndex * 0.6 + index * 0.04}s`;
+            });
+
+            setTimeout(() => {
+                title.classList.add('show');
+            }, 500)
+
+        });
+        
+    }
+
+
+
 const mainMotionScroll = () => {
 
     const rect = mainHero.getBoundingClientRect();
 
-const scrollRange = mainHero.offsetHeight - window.innerHeight;
+    const scrollRange = mainHero.offsetHeight - window.innerHeight;
 
-let progress = -rect.top / scrollRange;
-progress = Math.max(0, Math.min(progress, 1));
+    let progress = -rect.top / scrollRange;
+    progress = Math.max(0, Math.min(progress, 1));
 
     // 타이틀
     const titleProgress = Math.min(progress / 0.7, 1);
@@ -84,8 +103,10 @@ progress = Math.max(0, Math.min(progress, 1));
     const lineHeight = 96 - (96 - 36) * titleProgress;
     const y = -100 * titleProgress;
 
-    mainTit.style.fontSize = `${fontSize}px`;
-    mainTit.style.lineHeight = `${lineHeight}px`;
+    mainTit.forEach(title => {
+        title.style.fontSize = `${fontSize}px`;
+        title.style.lineHeight = `${lineHeight}px`;
+    });
     mainTitWrap.style.transform = `translateY(${y}px)`;
 
     // Description
@@ -95,9 +116,8 @@ progress = Math.max(0, Math.min(progress, 1));
     mainDesc.style.transform =
         `translateY(${40 - descProgress * 40}px)`;
 
-};
 
-window.addEventListener("resize", mainMotion);
+};
 
 /**
  * =========================
@@ -458,6 +478,7 @@ const handleScroll = () => {
  */
 const init = () => {
     mainMotion();
+    splitText();
     initSection1Nav();
     initSection2Nav(); 
     initModal();

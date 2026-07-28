@@ -44,21 +44,33 @@
     font-size: 70px;
     line-height: 96px;
     text-align: center;
-    opacity: 0;
-    transform:translateY(40px);
+    /* opacity: 0; */
+    /* transform:translateY(40px); */
     z-index: 2;
     position: relative;
 }
-#main-c .main-title.show {
+/* #main-c .main-title.show {
     opacity: 1;
     transform:translateY(0);
     transition:
        transform .5s ease-out .5s,
         opacity .5s linear .5s;
-}
-#main-c .main-title span{
+} */
+/* #main-c .main-title span{
     font-family: 'SKTSansDisplayB';
     font-weight: bold;
+} */
+.main-tit1 .char:not(:nth-child(n+13)) {
+    font-family: 'SKTSansDisplayB';
+    font-weight: bold;
+}
+.main-tit .char{
+    opacity: 0;
+    transition: opacity .4s ease;
+}
+
+.main-tit.show .char{
+    opacity: 1;
 }
 .main-desc p{
     font-family: 'SKTSansDisplayR';
