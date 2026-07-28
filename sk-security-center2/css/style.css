@@ -463,6 +463,27 @@ a {
     height: 700px;
 }
 
+#main-b .main-visual::before,
+#main-b .main-visual::after{
+    content: '';
+    display: block;
+    position: absolute;
+    background: #fff;
+    z-index: 99;
+}
+#main-b .main-visual::before {
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+   
+}
+#main-b .main-visual::after {
+    width: 3px;
+    height: 100%;
+    right: 0;
+    top: 0;
+}
 #main-b .main-visual-img,
 #main-b .main-visual-video{
     position:absolute;
