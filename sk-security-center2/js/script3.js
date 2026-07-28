@@ -1,6 +1,10 @@
 const isMobile = () => window.innerWidth <= 767;
-const mainTit = document.querySelector(".main-tit-wrap");
-const mainDesc = document.querySelector(".main-description");
+const mainHero = document.querySelector(".main-hero");
+const mainHeroImg = document.querySelector(".main-img");
+const mainVisual = document.querySelector(".main-visual");
+const mainTitWrap = document.querySelector(".main-tit-wrap");
+const mainTit = document.querySelector(".main-tit");
+const mainDesc = document.querySelector(".main-desc");
 /**
  * =========================
  * Element
@@ -47,19 +51,51 @@ const getSection2NavItems = () => {
 /**
  * 메인 모션 함수
  */
+let heroReady = false;
 const mainMotion = () => {
+
     setTimeout(() => {
 
-        mainTit.querySelectorAll(".main-title span").forEach((span, index) => {
-            span.style.transitionDelay = `${index * 0.3}s`;
-        });
-
+        mainHeroImg.classList.add("show");
         mainTit.classList.add("show");
 
-        mainDesc.classList.add("show");
- 
+        // 타이틀 애니메이션이 끝난 후
+        setTimeout(() => {
+            heroReady = true;
+        }, 1000);
+
     }, 500);
+
 }
+
+const mainMotionScroll = () => {
+
+    const rect = mainHero.getBoundingClientRect();
+
+const scrollRange = mainHero.offsetHeight - window.innerHeight;
+
+let progress = -rect.top / scrollRange;
+progress = Math.max(0, Math.min(progress, 1));
+
+    // 타이틀
+    const titleProgress = Math.min(progress / 0.7, 1);
+
+    const fontSize = 70 - (70 - 20) * titleProgress;
+    const lineHeight = 96 - (96 - 36) * titleProgress;
+    const y = -100 * titleProgress;
+
+    mainTit.style.fontSize = `${fontSize}px`;
+    mainTit.style.lineHeight = `${lineHeight}px`;
+    mainTitWrap.style.transform = `translateY(${y}px)`;
+
+    // Description
+    const descProgress = Math.max(0, (progress - 0.7) / 0.3);
+
+    mainDesc.style.opacity = descProgress;
+    mainDesc.style.transform =
+        `translateY(${40 - descProgress * 40}px)`;
+
+};
 
 window.addEventListener("resize", mainMotion);
 
@@ -407,7 +443,9 @@ architectureTexts.forEach(text => {
  * =========================
  */
 const handleScroll = () => {
-    // mainMotion();
+    if (heroReady) {
+        mainMotionScroll();
+    }
     sectionMotion();
     updateActive();
     updateSection2Active();
