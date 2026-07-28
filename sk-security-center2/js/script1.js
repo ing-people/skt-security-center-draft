@@ -18,14 +18,14 @@ const sectionEls = [
     document.querySelector(".section6"),
 ];
 
-const section1Txt = document.querySelectorAll(".js-anchor");
+const section1Txt = document.querySelectorAll(".sec1-text");
 const navItems = document.querySelectorAll(".section1-item");
 
 const pcNavItems = document.querySelectorAll(".section1-left .section1-item");
 const moNavItems = document.querySelectorAll(".section1-info.mo-ver .section1-item");
 const moNavWrap = document.querySelector(".section1-info.mo-ver");
 
-const section2nav = document.querySelectorAll(".section2-nav-wrap.pc-ver .nav");
+const section2nav = document.querySelectorAll(".section2-nav-wrap .nav");
 const section2Txt = document.querySelectorAll(".architecture-desc");
 
 const openButtons = document.querySelectorAll(".btn-open-modal");
@@ -36,15 +36,9 @@ const pdfViewer = document.querySelector(".pdf-view-wrap");
 const btnCloseView = document.querySelector(".btn-close-view");
 
 const getNavItems = () => {
-    return isMobile() ? moNavItems : pcNavItems;
+    return window.innerWidth <= 767 ? moNavItems : pcNavItems;
 };
 
-const section2MoNavItems = document.querySelectorAll(".section2-nav-wrap.mo-ver .nav");
-const section2MoNavWrap = document.querySelector(".section2-nav-wrap.mo-ver");
-
-const getSection2NavItems = () => {
-    return isMobile() ? section2MoNavItems : section2nav;
-};
 /**
  * =========================
  * Main Motion
@@ -161,7 +155,9 @@ const sectionMotion = () => {
  * =========================
  */
 const updateActive = () => {
-    const trigger = 100;
+    const trigger = isMobile()
+        ? 140
+        : window.innerHeight / 2 - 100;
 
     let current = -1;
 
@@ -193,18 +189,6 @@ const moveMobileNav = (index) => {
     });
 };
 
-const moveSection2MobileNav = (index) => {
-    if (!isMobile()) return;
-
-    const activeItem = section2MoNavItems[index];
-    if (!activeItem) return;
-
-
-    section2MoNavWrap.scrollTo({
-        left: activeItem.offsetLeft - 20,
-        behavior: "smooth",
-    });
-};
 
 
 const initSection1Nav = () => {
@@ -218,33 +202,23 @@ const initSection1Nav = () => {
                         window.scrollY +
                         section1Txt[index].getBoundingClientRect().top - 80;
 
+                    console.log(y)
                     window.scrollTo({
                         top: y,
                         behavior: "smooth",
                     });
                 } else {
-
-                    const offset = 100;
-
-                    const y =
-                        window.scrollY +
-                        section1Txt[index].getBoundingClientRect().top -
-                        offset;
-
-                    window.scrollTo({
-                        top: y,
+                    section1Txt[index].scrollIntoView({
                         behavior: "smooth",
+                        block: "center",
                     });
-                    // section1Txt[index].scrollIntoView({
-                    //     behavior: "smooth",
-                    //     block: "start",
-                    // });
                 }
             });
         });
     });
 
 };
+
 
 
 /**
@@ -264,13 +238,15 @@ const updateSection2Active = () => {
         }
 
     });
-    getSection2NavItems().forEach((item, index) => {
-        item.classList.toggle("active", index === current);
-    });
 
-    if (isMobile() && current > -1) {
-        moveSection2MobileNav(current);
-    }
+    // 왼쪽 nav active
+    section2nav.forEach((item,index)=>{
+        item.classList.toggle(
+            "active",
+            index === current
+        );
+
+    });
 
 
     // 오른쪽 content active
@@ -285,38 +261,23 @@ const updateSection2Active = () => {
 };
 
 
+
+// 클릭 이동
 const initSection2Nav = () => {
 
-    [section2nav, section2MoNavItems].forEach((items) => {
-        items.forEach((item, index) => {
-
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
-
-                if (isMobile()) {
-                    const y =
-                        window.scrollY +
-                        section2Txt[index].getBoundingClientRect().top -
-                        80;
-
-                    window.scrollTo({
-                        top: y,
-                        behavior: "smooth",
-                    });
-                } else {
-                    section2Txt[index].scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                    });
-                }
-            });
-
+    section2nav.forEach((item,index)=>{
+        item.addEventListener("click",(e)=>{
+            e.preventDefault();
+            section2Txt[index]
+                .scrollIntoView({
+                    behavior:"smooth",
+                    block:"center"
+                });
         });
 
     });
 
 };
-
 
 
 
@@ -460,6 +421,8 @@ const handleScroll = () => {
     updateSection2Active();
 };
 
+
+
 /**
  * =========================
  * Init
@@ -467,7 +430,6 @@ const handleScroll = () => {
  */
 const init = () => {
     initSection1Nav();
-    initSection2Nav(); 
     initModal();
     initPdfViewer();
     handleScroll();
