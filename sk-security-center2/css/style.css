@@ -482,6 +482,9 @@ a {
 #main-b .main-visual-video{
     opacity:0;
     z-index:1;
+    transform:scale(1.01);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
 }
 
 /* 이미지 등장 */
