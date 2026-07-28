@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     transform: none;
-    /* padding: 313px 0 304px; */
+    padding: 313px 0 304px;
     width: 1440px;
     height: auto;
     margin: 0 auto;
@@ -27,10 +27,14 @@
     position: absolute;
     top: 70px;
     right: 0;
-    background: url(../img/main-network.png) no-repeat center / 100%;
+    /* background: url(../img/main-network.png) no-repeat center / 100%; */
     z-index: -1;
     opacity: 0;
 
+}
+dotlottie-wc {
+    width: 100%;
+    height: 100%;
 }
 #main-c .main-img.show {
     opacity: 1;
@@ -48,6 +52,10 @@
     /* transform:translateY(40px); */
     z-index: 2;
     position: relative;
+    transition:
+        font-size 1.2s ease,
+        line-height 1.2s ease,
+        transform 1.2s ease;
 }
 /* #main-c .main-title.show {
     opacity: 1;
@@ -106,15 +114,7 @@
 }
 
 
-#main-c .main-hero{
-    height:150vh;      /* 애니메이션 길이 */
-}
-
 #main-c .main-visual{
-    position:sticky;
-    top:0;
-    height:100vh;
-
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -144,6 +144,19 @@
     opacity:1;
     transform:translateY(0);
 }
+/* 첫번째 줄 */
+#main-c .main-title.move {
+    font-size:20px;
+    line-height:36px;
+    transform:translateY(-100px);
+}
+#main-c .main-title.move span {
+    font-weight: 400;
+    font-family: 'SKTSansDisplayR';
+}
+
+
+
 
 @media (max-width: 767px) {
     #main-c {

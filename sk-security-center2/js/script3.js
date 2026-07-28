@@ -51,17 +51,15 @@ const getSection2NavItems = () => {
 /**
  * 메인 모션 함수
  */
-let heroReady = false;
 const mainMotion = () => {
 
     setTimeout(() => {
 
         mainHeroImg.classList.add("show");
-  
-        // 타이틀 애니메이션이 끝난 후
+    
         setTimeout(() => {
-            heroReady = true;
-        }, 1000);
+            mainAutoMotion();
+        }, 500);
 
     }, 500);
 
@@ -86,36 +84,27 @@ const mainMotion = () => {
     }
 
 
+const mainAutoMotion = () => {
 
-const mainMotionScroll = () => {
+    const titleDuration = 1200;
 
-    const rect = mainHero.getBoundingClientRect();
 
-    const scrollRange = mainHero.offsetHeight - window.innerHeight;
+    // 첫 번째 줄
+    setTimeout(() => {
+        mainTit[0].classList.add("move");
+    }, 1000);
 
-    let progress = -rect.top / scrollRange;
-    progress = Math.max(0, Math.min(progress, 1));
 
-    // 타이틀
-    const titleProgress = Math.min(progress / 0.7, 1);
+    // 두 번째 줄
+    setTimeout(() => {
+        mainTit[1].classList.add("move");
+    }, 1200);
 
-    const fontSize = 70 - (70 - 20) * titleProgress;
-    const lineHeight = 96 - (96 - 36) * titleProgress;
-    const y = -100 * titleProgress;
 
-    mainTit.forEach(title => {
-        title.style.fontSize = `${fontSize}px`;
-        title.style.lineHeight = `${lineHeight}px`;
-    });
-    mainTitWrap.style.transform = `translateY(${y}px)`;
-
-    // Description
-    const descProgress = Math.max(0, (progress - 0.7) / 0.3);
-
-    mainDesc.style.opacity = descProgress;
-    mainDesc.style.transform =
-        `translateY(${40 - descProgress * 40}px)`;
-
+    // 설명 등장
+    setTimeout(() => {
+        mainDesc.classList.add("show");
+    }, 1600);
 
 };
 
@@ -463,9 +452,6 @@ architectureTexts.forEach(text => {
  * =========================
  */
 const handleScroll = () => {
-    if (heroReady) {
-        mainMotionScroll();
-    }
     sectionMotion();
     updateActive();
     updateSection2Active();
