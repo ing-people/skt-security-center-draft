@@ -266,8 +266,8 @@ const initSection1Nav = () => {
  */
 const updateSection2Active = () => {
 
-    const offset = 70; // header 높이 보정
-   let current = -1; // 기본 active 제거
+    const offset = isMobile() ? 170 : 70; // header 높이 보정
+    let current = -1; // 기본 active 제거
 
     section2Txt.forEach((section,index)=>{
         const rect = section.getBoundingClientRect();
@@ -306,10 +306,14 @@ const initSection2Nav = () => {
                 e.preventDefault();
 
                 if (isMobile()) {
-                    const y =
+                    const y = 
+                    index === 0 ?
                         window.scrollY +
                         section2Txt[index].getBoundingClientRect().top -
-                        80;
+                        150 
+                        : window.scrollY +
+                        section2Txt[index].getBoundingClientRect().top -
+                        100;
 
                     window.scrollTo({
                         top: y,
