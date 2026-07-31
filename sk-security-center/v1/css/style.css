@@ -1690,9 +1690,12 @@ body.modal-open {
 
 
 @media (max-width: 767px) {
-    html,
+    html {
+        overflow-x: clip;
+    }
+
     body {
-       overflow-x: clip;
+        overflow-x: visible;
     }
 
     .pc-ver {
