@@ -1707,6 +1707,7 @@ body.modal-open {
     #wrap {
         width: 100%; 
         min-width: auto;
+        overflow-x: clip;
     }
     #header {
         min-width: auto;
