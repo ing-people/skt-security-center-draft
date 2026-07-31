@@ -211,6 +211,11 @@ a {
     align-items: center;
     justify-content: center;
     vertical-align: middle;
+    font-family: 'Pretendard';
+    font-weight: 500;
+    color: #1b1b1b;
+    font-size: 14px;
+    gap: 4px;
 }
 .btn-bugbounty a{
     font-family: 'Pretendard';
@@ -218,7 +223,7 @@ a {
     color: #1b1b1b;
     font-size: 14px;
 }
-.btn-bugbounty a img {
+.btn-bugbounty img {
     width: 12px;
     height: 12px;
     vertical-align: middle;
