@@ -316,10 +316,22 @@ const initSection2Nav = () => {
                         behavior: "smooth",
                     });
                 } else {
-                    section2Txt[index].scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                    });
+                      if (index === 0) {
+                        const y =
+                            window.scrollY +
+                            section2Txt[index].getBoundingClientRect().top -
+                            65;
+
+                        window.scrollTo({
+                            top: y,
+                            behavior: "smooth",
+                        });
+                    } else {
+                        section2Txt[index].scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
                 }
             });
 
