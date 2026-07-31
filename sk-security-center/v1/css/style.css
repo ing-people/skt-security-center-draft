@@ -1690,6 +1690,11 @@ body.modal-open {
 
 
 @media (max-width: 767px) {
+    html,
+    body {
+       overflow-x: clip;
+    }
+
     .pc-ver {
         display: none !important;
     }
@@ -1986,6 +1991,11 @@ body.modal-open {
    .section1-inner {
         display: block;
    }
+   .section1,
+    .section1 .container,
+    .section1-inner {
+        overflow:visible;
+    }
    .section1-left {
         position:relative;
         padding: 0;
@@ -1996,17 +2006,17 @@ body.modal-open {
         margin-bottom: 40px;
         padding:  0 20px;
    }
-   .section1-info {
+  .section1-info.mo-ver  {
         position: sticky;
         top: 70px;
         background: #fff;
         z-index: 99;
 
-          overflow-x:auto;
+        overflow-x:auto;
         overflow-y:hidden;
 
         padding:0 20px;
-        -webkit-overflow-scrolling: touch;
+        /* -webkit-overflow-scrolling: touch; */
    }
    .section1-info::-webkit-scrollbar{
         display:none;
@@ -2020,11 +2030,15 @@ body.modal-open {
         justify-content: start;
         /* width: 200%; */
         width:max-content;
+        padding-right:50vw;
    }
-   .section1-list ::after {
+   /* .section1-list ::after {
         content:"";
         width:100vw;
         flex:none;
+    } */
+    .section1-item {
+        flex:0 0 auto;
     }
    .section1-item:not(:last-child)::after {
         display: none;
