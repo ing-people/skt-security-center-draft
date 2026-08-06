@@ -212,7 +212,7 @@ const moveMobileNav = (index) => {
     if (!activeItem) return;
 
     moNavWrap.scrollTo({
-        left: activeItem.offsetLeft - 20, // padding 만큼
+        left: activeItem.offsetLeft  - 20, // padding 만큼
         behavior: "smooth"
     });
 };
@@ -240,7 +240,7 @@ const initSection1Nav = () => {
                 if ( isMobile()) {
                     const y =
                         window.scrollY +
-                        section1Txt[index].getBoundingClientRect().top - 80;
+                        section1Txt[index].getBoundingClientRect().top - 150;
 
                     window.scrollTo({
                         top: y,
