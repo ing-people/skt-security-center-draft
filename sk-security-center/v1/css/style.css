@@ -986,7 +986,7 @@ h3 .text-inner {
     gap: 74px;
 }
 .section3-cont {
-    /* width: 278px; */
+    width: 364px;
     position: relative;
 }
 /* .section3-cont:not(:first-child):before {
@@ -1027,7 +1027,6 @@ h3 .text-inner {
     font-size: 20px;
     /* margin-bottom: 3px; */
     line-height: 2;
-    letter-spacing: -0.1px;
 }
 .section3-desc-wrap li {
     font-family: 'SKTSansTextL';
