@@ -1409,7 +1409,7 @@ body.modal-open {
 }
 .modal-top {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
     margin-bottom: 32px;
 }
@@ -1431,6 +1431,9 @@ body.modal-open {
     font-size: 32px;
     line-height: 1.19;
     color: #000;
+}
+#modal-guideline .modal-tit-wrap .modal-title {
+    line-height: 1.6;
 }
 #modal-org-chart .modal-cont {
     width: 845px;
