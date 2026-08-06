@@ -1027,6 +1027,7 @@ h3 .text-inner {
     font-size: 20px;
     /* margin-bottom: 3px; */
     line-height: 2;
+    letter-spacing: -0.1px;
 }
 .section3-desc-wrap li {
     font-family: 'SKTSansTextL';
