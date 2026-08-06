@@ -1823,9 +1823,14 @@ body.modal-open {
         text-align: center;
     }
     .btn-bugbounty {
-        position:fixed;
-        top:0;
-        right:-100%;
+        position: absolute;
+        /* top:0;
+        right:-100%; */
+        bottom: 96px;
+        right: 20px;
+        z-index: 10000;
+        font-size: 16px;
+
     }
 
     /* footer */
