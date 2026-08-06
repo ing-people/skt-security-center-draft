@@ -573,6 +573,8 @@ a {
     transition-delay: 1.5s;
 }
 
+
+
 .sec1-text.active span.mo-ver > div  {
  transition-delay: .1s;
 }
