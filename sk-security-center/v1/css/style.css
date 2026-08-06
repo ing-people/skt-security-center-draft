@@ -551,25 +551,31 @@ a {
 }
 
 /* 순차 딜레이 */
-.sec1-text.active span:nth-child(1) > div {
+.sec1-text.active span.pc-ver:nth-child(1) > div  {
+ transition-delay: .1s;
+}
+.sec1-text.active span.pc-ver:nth-child(1) > div {
     transition-delay: .1s;
 }
-.sec1-text.active span:nth-child(2) > div {
+.sec1-text.active span.pc-ver:nth-child(2) > div {
     transition-delay: .5s;
 }
-.sec1-text.active span:nth-child(3) > div {
+.sec1-text.active span.pc-ver:nth-child(3) > div {
     transition-delay: .9s;
 }
-.sec1-text.active span:nth-child(4) > div {
+.sec1-text.active span.pc-ver:nth-child(4) > div {
     transition-delay: 1.1s;
 }
-.sec1-text.active span:nth-child(5) > div {
+.sec1-text.active span.pc-ver:nth-child(5) > div {
     transition-delay: 1.3s;
 }
-.sec1-text.active span:nth-child(6) > div {
+.sec1-text.active span.pc-ver:nth-child(6) > div {
     transition-delay: 1.5s;
 }
 
+.sec1-text.active span.mo-ver > div  {
+ transition-delay: .1s;
+}
 .section1-link {
     border: 1px solid #CFCFCF;
     border-radius: 3px;
@@ -1858,7 +1864,7 @@ body.modal-open {
         padding-bottom: 80px;
     }
     #modal-certify .modal-content .modal-body{
-        padding-bottom: 120px;
+        padding-bottom: 150px;
     }
     .modal-tit-wrap p {
         font-size: 12px;
