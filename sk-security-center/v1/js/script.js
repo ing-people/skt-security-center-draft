@@ -4,6 +4,18 @@ const isMobile = () => window.innerWidth <= 767;
  * Element
  * =========================
  */
+
+const header = document.querySelector("#header");
+const menuBtn = document.querySelector(".header-menu-btn");
+const headerNavLinks = document.querySelectorAll(".header-nav li");
+
+const headerSections = [
+    document.querySelector("#section1"),
+    document.querySelector("#section2"),
+    document.querySelector("#section3"),
+    document.querySelector("#section4"),
+];
+
 const main = document.querySelector(".main");
 const visual = document.querySelector(".main-visual");
 const mainTitle = document.querySelector(".main-title");
@@ -173,7 +185,7 @@ const sectionMotion = () => {
  * =========================
  */
 const updateActive = () => {
-    const trigger = 120;
+    const trigger = 150;
 
     let current = -1;
 
@@ -346,6 +358,89 @@ const initSection2Nav = () => {
 };
 
 
+/**
+ * =========================
+ * Mobile Header Menu
+ * =========================
+ */
+const initMobileMenu = () => {
+
+    if(!header || !menuBtn) return;
+
+    menuBtn.addEventListener("click", () => {
+        header.classList.toggle("active");
+
+    });
+    headerNavLinks.forEach((item,index)=>{
+
+        item.addEventListener("click",(e)=>{
+
+            e.preventDefault();
+            // 클릭 active
+            headerNavLinks.forEach(nav=>{
+                nav.classList.remove("active");
+            });
+
+            item.classList.add("active");
+
+            const target = headerSections[index];
+            if(target){
+                const y =
+                    window.scrollY +
+                    target.getBoundingClientRect().top -
+                    70;
+
+                window.scrollTo({
+                    top:y,
+                    behavior:"smooth"
+                });
+
+            }
+            // 모바일 메뉴 닫기
+            header.classList.remove("active");
+
+        });
+
+    });
+
+
+    window.addEventListener("resize",()=>{
+        if(!isMobile()){
+            header.classList.remove("active");
+        }
+
+    });
+
+};
+
+/**
+ * =========================
+ * Header Active
+ * =========================
+ */
+const updateHeaderActive = () => {
+    let current = -1;
+    sectionEls.forEach((section,index)=>{
+
+        if(!section) return;
+        const rect = section.getBoundingClientRect();
+        if(rect.top <= 150){
+            current = index;
+        }
+
+    });
+
+
+    headerNavLinks.forEach((item,index)=>{
+        item.classList.toggle(
+            "active",
+            index === current
+        );
+
+    });
+
+};
+
 
 
 /**
@@ -486,6 +581,7 @@ const handleScroll = () => {
     sectionMotion();
     updateActive();
     updateSection2Active();
+    updateHeaderActive();
 };
 
 /**
@@ -494,6 +590,7 @@ const handleScroll = () => {
  * =========================
  */
 const init = () => {
+    initMobileMenu();
     initSection1Nav();
     initSection2Nav(); 
     initModal();
