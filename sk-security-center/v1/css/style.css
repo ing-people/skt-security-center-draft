@@ -2446,7 +2446,8 @@ body.modal-open {
         height: auto;
     }
     .section6-cont1{
-        padding: 48px 40px;
+        /* padding: 48px 40px; */
+        padding: 48px 20px;
         align-items: start;
         flex-direction: column;
     }
@@ -2482,8 +2483,11 @@ body.modal-open {
         font-size: 12px;
     }
     .section6-cont1-box p {
-        font-size: 14px;
-        padding: 0 20.5px;
+        /* font-size: 14px; */
+        font-size: 12px;
+        letter-spacing: -0.5px;
+        /* padding: 0 20.5px; */
+        padding: 0 16px;
         width: 100%;
         height: 46px;
         line-height: 46px;
@@ -2503,9 +2507,9 @@ body.modal-open {
     .section6-cont2 {
         flex-direction: column;
         gap: 20px;
-        padding: 0;
         align-items: start;
-        padding: 40px;
+        /* padding: 40px; */
+        padding: 40px 20px;
         border: 0;
     }
 
