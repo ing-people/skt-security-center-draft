@@ -1809,7 +1809,8 @@ body.modal-open {
         color: #5E5E5E;
         font-size: 32px;
     }
-      .header-nav li.active a{
+    .header-nav li:hover a,
+    .header-nav li.active a{
         color: #1B1B1B;
     }
     .header-copyright {
