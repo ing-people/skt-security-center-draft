@@ -1200,7 +1200,8 @@ h3 .text-inner {
     background: #d2d2d2;
     position: absolute;
     top: 50%;
-    left: 180px;
+    /* left: 180px; */
+    left: 240px;
     transform: translateY(-50%);
 }
 .section6-cont1-box span {
@@ -1212,8 +1213,8 @@ h3 .text-inner {
 .section6-cont1-box p {
     font-family: 'SKTSansTextSB';
     font-weight: 600;
-    /* font-size: 20px; */
-    font-size: 18px;
+    font-size: 20px;
+    /* font-size: 18px; */
     color: #666;
     margin-bottom: 0 !important;
 }
@@ -2446,8 +2447,7 @@ body.modal-open {
         height: auto;
     }
     .section6-cont1{
-        /* padding: 48px 40px; */
-        padding: 48px 20px;
+        padding: 48px 40px;
         align-items: start;
         flex-direction: column;
     }
@@ -2483,11 +2483,9 @@ body.modal-open {
         font-size: 12px;
     }
     .section6-cont1-box p {
-        /* font-size: 14px; */
-        font-size: 12px;
+        font-size: 14px;
         letter-spacing: -0.5px;
-        /* padding: 0 20.5px; */
-        padding: 0 16px;
+        padding: 0 20.5px;
         width: 100%;
         height: 46px;
         line-height: 46px;
@@ -2508,8 +2506,7 @@ body.modal-open {
         flex-direction: column;
         gap: 20px;
         align-items: start;
-        /* padding: 40px; */
-        padding: 40px 20px;
+        padding: 40px;
         border: 0;
     }
 
