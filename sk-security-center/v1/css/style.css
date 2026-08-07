@@ -1212,7 +1212,8 @@ h3 .text-inner {
 .section6-cont1-box p {
     font-family: 'SKTSansTextSB';
     font-weight: 600;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 18px;
     color: #666;
     margin-bottom: 0 !important;
 }
