@@ -1200,8 +1200,7 @@ h3 .text-inner {
     background: #d2d2d2;
     position: absolute;
     top: 50%;
-    /* left: 180px; */
-    left: 240px;
+    left: 180px;
     transform: translateY(-50%);
 }
 .section6-cont1-box span {
