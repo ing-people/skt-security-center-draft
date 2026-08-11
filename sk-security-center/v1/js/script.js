@@ -62,31 +62,57 @@ const getSection2NavItems = () => {
  * Main Motion
  * =========================
  */
-const startWidth = visual?.offsetWidth;
-const startHeight = visual?.offsetHeight;
-// const ratio = startHeight / startWidth;
+let startWidth = 0;
+let startHeight = 0;
+
+const mainTitWrap = document.querySelector("#main-a .main-tit-wrap");
+
+// 타이틀 영역만큼 예약 (텍스트 크기는 줄이지 않고 이미지만 제한)
+const getTitleReserve = () => {
+    if (!mainTitWrap) return isMobile() ? 260 : 320;
+
+    const top = parseFloat(getComputedStyle(mainTitWrap).top) || (isMobile() ? 145 : 205);
+    return top + mainTitWrap.offsetHeight + 24;
+};
+
+const captureVisualStartSize = () => {
+    if (!visual) return;
+
+    visual.style.width = "";
+    visual.style.height = "";
+    visual.style.transform = "";
+    visual.style.maxHeight = `${Math.max(80, window.innerHeight - getTitleReserve())}px`;
+
+    startWidth = visual.offsetWidth;
+    startHeight = visual.offsetHeight;
+
+    visual.style.maxHeight = "";
+};
 
 const resizeVisual = (progress) => {
-    // const targetWidth = main.clientWidth;
-
-    // const width = startWidth + (targetWidth - startWidth) * progress;
-
-    // const height = startHeight * (width / startWidth);
-
-    // visual.style.width = `${width}px`;
-    // visual.style.height = `${height}px`;
+    if (!visual || !main || !startWidth || !startHeight) return;
 
     const targetWidth = main.clientWidth;
+    const targetHeight = window.innerHeight;
+    // isMobile()
+    //     ? window.innerHeight
+    //     : startHeight * (targetWidth / startWidth);
 
-    const targetHeight = isMobile()
-        ? window.innerHeight
-        : startHeight * (targetWidth / startWidth);
+    let width = startWidth + (targetWidth - startWidth) * progress;
+    let height = startHeight + (targetHeight - startHeight) * progress;
 
-    const width = startWidth + (targetWidth - startWidth) * progress;
-    const height = startHeight + (targetHeight - startHeight) * progress;
+    // 아래에서 위로 커짐 (translateY로 올리지 않음)
+    // 타이틀이 보이는 동안은 타이틀 영역을 침범하지 않게 이미지 높이만 제한 → 하단 잘림
+    // const startY = Math.max(0, (window.innerHeight - startHeight) * 0.35);
+    // const y = startY * (1 - progress);
+    const titleFade = Math.min(progress / 0.3, 1);
+    const maxHeight = window.innerHeight - getTitleReserve() * (1 - titleFade);
+    height = Math.min(height, Math.max(startHeight * 0.5, maxHeight));
 
     visual.style.width = `${width}px`;
     visual.style.height = `${height}px`;
+    visual.style.maxHeight = "none";
+    visual.style.transform = "";
 };
 
 
@@ -98,6 +124,8 @@ const titleMotion = (progress) => {
 
 
 const mainMotion = () => {
+    if (!main || !visual) return;
+
     const rect = main.getBoundingClientRect();
     const scrollHeight = main.offsetHeight - window.innerHeight;
 
@@ -133,7 +161,15 @@ const mainMotion = () => {
     }
 };
 
+const initVisualMotion = () => {
+    captureVisualStartSize();
+    mainMotion();
 
+    window.addEventListener("resize", () => {
+        captureVisualStartSize();
+        mainMotion();
+    });
+};
 
 /**
  * =========================
@@ -259,10 +295,6 @@ const initSection1Nav = () => {
                         top: y,
                         behavior: "smooth",
                     });
-                    // section1Txt[index].scrollIntoView({
-                    //     behavior: "smooth",
-                    //     block: "start",
-                    // });
                 }
             });
         });
@@ -590,6 +622,7 @@ const handleScroll = () => {
  * =========================
  */
 const init = () => {
+    initVisualMotion();
     initMobileMenu();
     initSection1Nav();
     initSection2Nav(); 

@@ -247,19 +247,36 @@ a {
 #main-a {
     height: 300vh;
 }
-#main-a .main-hero {
+/* #main-a .main-hero {
     position: relative;
     position: sticky;
     top: 0;
     height: 200vh;
+} */
+#main-a .main-hero {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
 }
-#main-a .main-tit-wrap {
-   padding: 205px 0 0 135px;
+/* #main-a .main-tit-wrap {
+    width: 60%;
+   padding: 205px 0 0 0;
+   margin: 0 auto 108px;
    will-change: opacity;
-   /* position: absolute;
-   top: 205px;
-   left: 135px; */
    z-index: 99;
+} */
+#main-a .main-tit-wrap {
+    width: 60%;
+    position: absolute;
+    top: 205px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    will-change: opacity;
+    z-index: 99;
+    pointer-events: none;
 }
 #main-a .main-title {
     line-height: 84px;
@@ -269,32 +286,53 @@ a {
     font-family: 'SKTSansDisplayB';
     font-weight: bold;
 }
-.main-stage {
+/* .main-stage {
     position: sticky;
     top: 0;
-    height: 100vh;
     display: flex;
     align-items: end;
     justify-content: center;
+} */
+.main-stage {
+    position: absolute;
+    inset: 0;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
 }
 #main-a .main-visual {
-    width: 1141px;
-    height: 760px;
+    /* width: 1141px;
+    height: 760px; */
+    width: 60%;
+    height: 32vw;
+    /* 낮은 높이: 텍스트는 유지하고 이미지만 하단 클리핑 */
+    max-height: calc(100vh - 320px);
     margin: 0 auto;
     position: relative;
     /* top: 483px;
     left: 50%;
     transform: translateX(-50%); */
-    transform-origin: center center;
-    will-change: transform;
-    overflow: visible;
+    transform-origin: center bottom;
+    will-change: transform, width, height;
+    overflow: hidden;
     transition: opacity .1s linear;
+}
+@media (max-width: 1440px) { 
+    #main-a .main-tit-wrap {
+        width: 80%;
+    }
+    #main-a .main-visual {
+        width: 80%;
+    }
 }
 
 #main-a .main-visual img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top center; /* 높이 제한 시 하단만 잘림 */
     display: block;
     will-change: opacity, filter;
 }
@@ -1274,7 +1312,7 @@ h3 .text-inner {
     gap: 20px;
 }
 .section6-cont2-btns > div {
-    width: 349px;
+    width: 326px;
     height: 40px;
     border-radius: 3px;
     display: flex;
@@ -2039,20 +2077,32 @@ body.modal-open {
         height: 250vh;
     }
 
-    #main-a .main-hero {
+    /* #main-a .main-hero {
         height: 180vh;
+    } */
+    #main-a .main-hero {
+        height: 100vh;
     }
-    #main-a .main-tit-wrap {
+    /* #main-a .main-tit-wrap {
         padding: 145px 26px 0;
+    } */
+    #main-a .main-tit-wrap {
+        width: calc(100% - 52px);
+        top: 145px;
+        padding: 0;
     }
 
     #main-a .main-title {
         font-size: 36px;
         line-height: 48px;
     }
-    .main-stage {
-        height: 100vh;
+    /* .main-stage {
         align-items: center;
+    } */
+    .main-stage {
+        /* align-items: center; */
+        align-items: flex-end;
+        overflow: hidden;
     }
     #main-a .main-visual {
         /* width: 100vw !important;
@@ -2060,10 +2110,12 @@ body.modal-open {
         width: 60%;
         height: auto;
         aspect-ratio: 1 / 1.15;
+        max-height: calc(100vh - 260px);
 
         margin: 0 auto;
 
-        transform-origin: center center;
+        transform-origin: center bottom;
+        overflow: hidden;
     }
 
 
@@ -2071,6 +2123,7 @@ body.modal-open {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: top center;
     }
 
 
