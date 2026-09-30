@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scope</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <!-- header -->
+  <header class="header">
+    <div class="container">
+      <input class="menu-toggle" id="menu-toggle" type="checkbox" aria-label="메뉴">
+      <a class="logo" href="../index.html">
+        <img src="../img/logo-header.png" alt="Bug Bounty">
+      </a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <a href="rules.html">Rules</a>
+        <a href="scope.html" aria-current="page">Scope</a>
+        <a href="report.html">제보하기</a>
+        <a href="honor.html" style="color: #C1C1C1;">명예의 전당</a>
+      </nav>
+      <a class="security" href="https://security.sktelecom.com/" target="_blank" rel="noopener noreferrer">
+        Security Center
+        <img src="../img/icon-external-link.png" alt="" width="12" height="12">
+      </a>
+      <p class="menu-copy">COPYRIGHT SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
+      <label class="menu-btn" for="menu-toggle">
+        <img class="icon-open" src="../img/icon-menu.png" alt="">
+        <img class="icon-close" src="../img/icon-close.png" alt="">
+      </label>
+    </div>
+  </header>
+  <!-- //header -->
+
+  <!-- contents -->
+  <main class="scope">
+    <div class="container">
+      <h1 class="page-title">테스트 대상은 사전 공지 없이 <br class="br-mo">변경될 수 있으며,<br>참가자는 테스트 전 <span>최신 <br class="br-mo">Scope를 확인</span>해야 합니다.</h1>
+
+      <!-- in scope -->
+      <section class="in-scope">
+        <h2>IN SCOPE</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>구분</th>
+              <th>서비스명</th>
+              <th>대상</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Web</td>
+              <td>SK Telecom</td>
+              <td>www.sktelecom.com</td>
+              <td><a href="https://www.sktelecom.com" target="_blank" rel="noopener noreferrer"><img class="icon-pc" src="../img/icon-external-link-24.png" alt="새 창으로 열기" width="24" height="24"><img class="icon-mo" src="../img/icon-external-link-16.png" alt="새 창으로 열기"></a></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Web</td>
+              <td>SK Telecom Newsroom</td>
+              <td>news.sktelecom.com</td>
+              <td><a href="https://news.sktelecom.com" target="_blank" rel="noopener noreferrer"><img class="icon-pc" src="../img/icon-external-link-24.png" alt="새 창으로 열기" width="24" height="24"><img class="icon-mo" src="../img/icon-external-link-16.png" alt="새 창으로 열기"></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- out of scope -->
+      <section class="out-scope">
+        <h2>OUT OF SCOPE</h2>
+        <div class="out-list">
+          <ul>
+            <li>
+              <strong>영향도 없는 보안 헤더 누락</strong>
+              <p>단순 CSP, HSTS, X-Frame-Options 누락</p>
+            </li>
+            <li>
+              <strong>영향도 없는 버전 정보 노출</strong>
+              <p>서버 배너, 프레임워크 버전 노출만 있는 경우</p>
+            </li>
+            <li>
+              <strong>Self-XSS</strong>
+              <p>본인 계정에서만 실행되고 타인 영향이 없는 경우</p>
+            </li>
+            <li>
+              <strong>Clickjacking</strong>
+              <p>민감 기능 영향이 입증되지 않은 경우</p>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>Open Redirect</strong>
+              <p>계정 탈취, OAuth 탈취 등 실질 영향이 없는 경우</p>
+            </li>
+            <li>
+              <strong>Rate Limit 미흡</strong>
+              <p>계정 탈취, 인증 우회 등 실질 영향이 없는 경우</p>
+            </li>
+            <li>
+              <strong>SPF/DKIM/DMARC 설정 미흡</strong>
+              <p>실제 사칭 또는 계정 영향이 입증되지 않은 경우</p>
+            </li>
+            <li>
+              <strong>TLS 설정 이슈</strong>
+              <p>실질적인 공격 가능성이 낮은 약한 cipher, 단순 설정 권고</p>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <strong>사용자 개입이 과도한 취약점</strong>
+              <p>비현실적인 조건이 필요한 공격</p>
+            </li>
+            <li>
+              <strong>이미 알려진 취약점</strong>
+              <p>패치 예정, 내부 인지, 공개 이슈와 동일한 내용</p>
+            </li>
+            <li>
+              <strong>자동 스캐너 결과</strong>
+              <p>검증되지 않은 취약점 스캐너 원본 결과</p>
+            </li>
+            <li>
+              <strong>루팅/탈옥 기반 모바일 이슈</strong>
+              <p>루팅 또는 탈옥 환경에서만 재현되는 이슈</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+  <!-- //contents -->
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="term">
+        <li><a href="terms.html" target="_blank" rel="noopener noreferrer">이용약관</a></li>
+        <li><a href="https://www.sktelecom.com/view/footer/privacy.do" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></li>
+        <li><a href="https://www.tworld.co.kr/web/home" target="_blank" rel="noopener noreferrer">T world</a></li>
+        <li><a href="https://privacy.sktelecom.com/main.do" target="_blank" rel="noopener noreferrer">프라이버시센터</a></li>
+        <li><a href="https://news.sktelecom.com" target="_blank" rel="noopener noreferrer">뉴스룸</a></li>
+      </ul>
+      <div class="info">
+        <p class="copyright">COPYRIGHT SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
+        <p class="address">서울특별시 중구 을지로 65(을지로2가) SK T-타워 SK텔레콤(주)</p>
+      </div>
+    </div>
+  </footer>
+  <!-- //footer -->
+</body>
+</html>

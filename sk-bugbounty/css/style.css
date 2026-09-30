@@ -1,255 +1,857 @@
-@font-face {
-  font-family: 'SKTSansTextR';
-  src: url('../fonts/SKTSansText-Regular.otf');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'SKTSansTextB';
-  src: url('../fonts/SKTSansText-Bold.otf');
-  font-weight: bold;
-}
-@font-face {
-  font-family: 'SKTSansDisplayB';
-  src: url('../fonts/SKTSansDisplay-Bold.otf');
-  font-weight: bold;
-}
+/* ==========================================================================
+   SK Bug Bounty - style.css
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-display: swap;
-}
+   [목차]  검색: "@@ 번호" 로 이동
+   @@ 1  COMMON    공통  (변수 / 폰트 / 리셋 / header / footer / data-table / notice / page-title)
+   @@ 2  HOME      index.html            (.top .hero .works .before .honor)
+   @@ 3  RULES     pages/rules.html      (.rules)
+   @@ 4  SCOPE     pages/scope.html      (.scope)
+   @@ 5  REPORT    pages/report.html     (.notice.report)
+   @@ 6  FAME      pages/honor.html      (.notice.fame)
+   @@ 7  AGREEMENT pages/terms.html      (.agreement)
 
-@font-face {
-    font-family: 'Pretendard';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-display: swap;
-}
+   [브레이크포인트] 1024px(태블릿) / 860px(소형 태블릿) / 767px(모바일)
+   ========================================================================== */
 
 
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
+/* ==========================================================================
+   @@ 1  COMMON  공통
+   여러 화면에서 함께 쓰는 스타일. 단독 클래스 사용 가능.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1-1. 디자인 토큰 (색상 / 너비 / 폰트)
+   -------------------------------------------------------------------------- */
+:root {
+  --frame: 1920px;                            /* 히어로 프레임 최대 너비 */
+  --container: clamp(1200px, 83.3333vw, 1600px); /* 콘텐츠 너비 */
+  --gutter: 20px;        /* 좌우 여백 */
+
+  --bg: #F4F4F5;         /* 배경 */
+  --text: #191A1E;       /* 본문색 */
+  --black: #000;         /* 검정 */
+  --white: #fff;         /* 흰색 */
+  --gray: #808288;       /* 흐린 글자 */
+  --gray-light: #A5A5A5; /* 푸터, 메뉴 하단 저작권 문구 */
+  --gray-mid: #555555;   /* 보조 설명 글자 */
+  --ink: #1B1B1B;        /* 메뉴 글자 */
+  --muted: #47494D;      /* 표 헤더 글자 */
+  --line: #EAECED;       /* 표 헤더, 구분선 */
+  --point: #553CFF;      /* 포인트색 */
+  --point-deep: #4431E1; /* 진한 포인트색 */
+
+  --font-display: "SKT Sans Display", sans-serif;                 /* 제목 글꼴 */
+  --font-text: "SKT Sans Text", sans-serif;                       /* 본문 글꼴 */
+  --font-ui: Pretendard, "Apple SD Gothic Neo", sans-serif;       /* 메뉴, 푸터 글꼴 */
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* --------------------------------------------------------------------------
+   1-2. 웹폰트
+   -------------------------------------------------------------------------- */
+@font-face { font-family: "SKT Sans Text"; src: url("../fonts/SKTSansText-Light.otf"); font-weight: 350; font-display: block; }
+@font-face { font-family: "SKT Sans Text"; src: url("../fonts/SKTSansText-Regular.otf"); font-weight: 400; font-display: block; }
+@font-face { font-family: "SKT Sans Text"; src: url("../fonts/SKTSansText-Bold.otf"); font-weight: 700; font-display: block; }
+@font-face { font-family: "SKT Sans Display"; src: url("../fonts/SKTSansDisplay-Regular.otf"); font-weight: 400; font-display: block; }
+@font-face { font-family: "SKT Sans Display"; src: url("../fonts/SKTSansDisplay-Bold.otf"); font-weight: 700; font-display: block; }
+
+/* --------------------------------------------------------------------------
+   1-3. 리셋 / 기본 태그
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video { margin: 0; padding: 0; border: 0; font-size: 100%; vertical-align: baseline; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; }
+blockquote::before, blockquote::after, q::before, q::after { content: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+body { overflow-x: hidden; background: var(--bg); color: #18191c; font-family: var(--font-ui); line-height: 1; letter-spacing: 0; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+picture source { display: none; }
+
+/* --------------------------------------------------------------------------
+   1-4. 레이아웃 유틸
+   -------------------------------------------------------------------------- */
+
+/* 콘텐츠 폭 고정 + 가운데 정렬 (모든 페이지) */
+.container { width: min(var(--container), calc(100% - var(--gutter) * 2)); margin-inline: auto; }
+
+/* 모바일에서만 줄바꿈: <br class="br-mo"> (768px 이상에서는 숨김) */
+@media (min-width: 768px) {
+  .br-mo { display: none; }
 }
 
-body {
-  overflow-x: hidden;
-  font-family: 'SKTSansTextR', sans-serif;
-  line-height: 1;
+/* --------------------------------------------------------------------------
+   1-5. HEADER  (모든 페이지 상단 메뉴)
+   wrapper: .header  (배경은 전체 폭, 내용은 안쪽 .container 폭에 맞춤)
+   구성: .container( .logo / .gnb / .security / .menu-toggle(체크박스) / .menu-btn / .menu-copy )
+   모바일(767px 이하)에서는 .menu-toggle 체크 상태로 전체 메뉴를 연다.
+   -------------------------------------------------------------------------- */
+.header { position: relative; z-index: 3; width: 100%; height: 50px; background: linear-gradient(180deg, var(--bg) 66.35%, rgba(255, 255, 255, 0) 100%); }
+.header .container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 100%; }
+
+/* 로고 */
+.header .logo { display: flex; align-items: center; gap: 8px; justify-self: start; color: var(--text); font-size: 14px; font-weight: 600; line-height: 1; letter-spacing: -0.23px; }
+.header .logo img { width: 184px; height: auto; }
+
+/* 메뉴 (Rules / Scope / 제보하기 / 명예의 전당) */
+.header .gnb { display: flex; align-items: center; gap: clamp(8px, 2.8vw, 40px); }
+.header .gnb a { padding: 8px; color: #5E5E5E; font-size: 14px; font-weight: 600; line-height: 1; letter-spacing: -0.23px; white-space: nowrap; }
+.header .gnb a[aria-current="page"] { color: var(--ink); }
+.top .header .gnb a { color: var(--ink); }
+.header .gnb a[aria-disabled="true"] { color: #C1C1C1; pointer-events: none; }
+
+/* Security Center 링크 */
+.header .security { display: inline-flex; align-items: center; justify-self: end; gap: 4px; color: #4d4d4d; font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap; }
+.header .security img { display: block; width: 12px; height: 12px; }
+
+/* 모바일 메뉴 토글 (체크박스는 화면에서 숨기고, 버튼/문구는 모바일에서만 노출) */
+.header .menu-toggle { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+.header .menu-btn { display: none; }
+.header .menu-copy { display: none; }
+
+/* HEADER - 767px 이하 (모바일: 상단 고정 + 햄버거 메뉴) */
+@media (max-width: 767px) {
+  body { padding-top: 56px; }
+  .header { position: fixed; top: 0; right: 0; left: 0; height: 56px; background: var(--bg); }
+  .header .container { display: flex; width: auto; margin-inline: 20px 10px; }
+  .header .gnb,
+  .header .security { display: none; }
+
+  /* 햄버거 버튼 */
+  .header .menu-btn { display: inline-flex; align-items: center; justify-content: center; order: 2; width: 30px; height: 30px; margin-left: auto; }
+  .header .menu-btn img { width: 30px; height: 30px; }
+  .header .menu-btn .icon-close { display: none; }
+
+  /* 메뉴 열림 상태 (체크박스 :checked) */
+  .header .menu-toggle:checked ~ .menu-btn .icon-open { display: none; }
+  .header .menu-toggle:checked ~ .menu-btn .icon-close { display: block; }
+  .header .menu-toggle:checked ~ .gnb { display: flex; position: fixed; z-index: 4; top: 56px; right: 0; bottom: 0; left: 0; flex-direction: column; align-items: flex-start; gap: 47px; padding: 106px 0 0 30px; background: var(--bg); }
+  .header .menu-toggle:checked ~ .gnb a { padding: 0; color: #5E5E5E; font-family: var(--font-display); font-size: 32px; font-weight: 700; }
+  .header .menu-toggle:checked ~ .gnb a:hover,
+  .header .menu-toggle:checked ~ .gnb a[aria-current="page"] { color: var(--ink); }
+  .header .menu-toggle:checked ~ .gnb a[aria-disabled="true"] { color: #C1C1C1; }
+  .header .menu-toggle:checked ~ .security { display: inline-flex; position: fixed; z-index: 5; right: 20px; bottom: 96px; color: var(--ink); font-size: 16px; }
+  .header .menu-toggle:checked ~ .menu-copy { display: block; position: fixed; z-index: 5; right: 0; bottom: 26px; left: 0; color: var(--gray-light); font-size: 10px; text-align: center; }
+
+  /* 메뉴가 열리면 본문 스크롤 잠금 */
+  body:has(.menu-toggle:checked) { overflow: hidden; }
 }
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-img {
-  width: 100%;
-}
-a{
-  text-decoration: none;
+/* --------------------------------------------------------------------------
+   1-6. FOOTER  (모든 페이지 하단)
+   wrapper: .footer
+   구성: .term(이용약관 / 개인정보처리방침 / T world / 프라이버시센터 / 뉴스룸) / .info(.copyright, .address)
+   -------------------------------------------------------------------------- */
+.footer { background: var(--white); }
+.footer .container { padding: clamp(20px, 2.8vw, 40px) 0 clamp(20px, 3.82vw, 55px); }
+.footer .term { display: flex; align-items: center; gap: 40px; margin-bottom: 12px; }
+.footer .term a,
+.footer .info p { font-size: 14px; }
+.footer .term a { color: #666666; font-family: var(--font-text); font-weight: 700; line-height: 100%; }
+.footer .info { display: flex; align-items: center; justify-content: space-between; }
+.footer .info p { color: var(--gray-light); font-weight: 400; line-height: 100%; }
+.footer .copyright { font-family: var(--font-ui); }
+.footer .address { font-family: var(--font-text); }
+
+/* FOOTER - 1024px 이하 */
+@media (max-width: 1024px) {
+  .footer .term { gap: 15px; }
+  .footer .term a,
+  .footer .info p { font-size: 12px; }
+  .footer .info { flex-direction: column; align-items: flex-start; }
+  .footer .address { order: -1; }
+  .footer .copyright { margin-top: 32px; }
 }
 
-.mo-ver {
-  display: none !important; 
-}
-/* wrap */
-#wrap {
-  background: #F4F4F5 ;
+/* FOOTER - 767px 이하 */
+@media (max-width: 767px) {
+  .footer .container { padding: 32px 0 60px; }
+
+  /* 링크 */
+  .footer .term { flex-wrap: wrap; gap: 8px 16px; margin-bottom: 0; }
+  .footer .term a { font-weight: 400; line-height: 100%; vertical-align: middle; }
+
+  /* 주소 / 카피라이트 */
+  .footer .info p { color: #343434; font-family: var(--font-text); font-size: 11px; line-height: 16.5px; vertical-align: middle; }
+  .footer .address { margin-top: 32px; }
+  .footer .copyright { margin-top: 8px; }
 }
 
-.inner{
-  width: 1440px;
-  margin: 0 auto;
-}
-/* content */
-#content {
-  width: 1920px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-#content .inner {
-  padding: 70px 120px 111px;
-  position: relative;
-} 
-.bg{
-  width: 100%;
-  height: 900px;
-  background:  url(../img/bg.png) no-repeat center / 1024px 900px;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.contents-wrap{
-  position: relative;
-  z-index: 1;
-}
-.logo{
-  width: 234px;
-  height: 60px;
-  padding: 20px 8px;
-  margin: 0 auto 50px;
+/* --------------------------------------------------------------------------
+   1-7. DATA TABLE  (표 공통 - scope 페이지, honor 페이지에서 사용)
+   wrapper: .data-table
+   페이지별 차이는 각 섹션에서 ".scope .data-table", ".fame .data-table" 로 덮어쓴다.
+   -------------------------------------------------------------------------- */
+.data-table { width: 100%; margin-top: 16px; border-collapse: separate; border-spacing: 0; }
+.data-table th,
+.data-table td { padding: 0 0 0 24px; overflow-wrap: anywhere; vertical-align: middle; font-size: 16px; font-weight: 400; line-height: 1; text-align: left; background-color: var(--white); }
+
+/* 헤더 셀 */
+.data-table th { height: 50px; background: var(--line); color: var(--muted); }
+.data-table th:first-child { border-radius: 4px 0 0 4px; }
+.data-table th:last-child { border-radius: 0 4px 4px 0; padding-right: 24px; }
+
+/* 1, 2번째 칸은 제목 글꼴 */
+.data-table th:nth-child(1),
+.data-table th:nth-child(2),
+.data-table td:nth-child(1),
+.data-table td:nth-child(2) { font-family: var(--font-display); }
+
+/* 본문 셀 */
+.data-table td { height: 56px; border-bottom: 1px solid var(--line); color: var(--black); }
+
+/* 번호 칸 (첫 번째) */
+.data-table th:first-child,
+.data-table td:first-child { width: 94px; padding-left: 0; text-align: center; }
+.data-table td:first-child { color: var(--gray); }
+.data-table th:nth-child(2),
+.data-table td:nth-child(2) { width: 347px; }
+
+/* 링크 아이콘 칸 (마지막) */
+.data-table td:last-child { width: 72px; padding-right: 24px; text-align: right; }
+.data-table a { display: inline-flex; vertical-align: middle; }
+.data-table img { width: 24px; height: 24px; max-width: none; }
+
+/* 모바일 전용 아이콘은 기본 숨김 (767px 이하에서 각 페이지가 전환) */
+.data-table .icon-mo { display: none; }
+
+/* --------------------------------------------------------------------------
+   1-8. NOTICE  (안내형 페이지 레이아웃 - report, honor 페이지에서 사용)
+   wrapper: .notice  (body에는 .notice-page)
+   구성: .icon / .copy( .kicker, h1, .desc )
+   -------------------------------------------------------------------------- */
+.notice-page { min-height: 100vh; display: flex; flex-direction: column; }
+.notice { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 60px var(--gutter) 92px; text-align: center; }
+.notice .icon { width: 200px; height: 200px; object-fit: contain; }
+.notice .copy { margin-top: 48px; }
+
+/* 영문 소제목 */
+.notice .kicker { color: var(--point-deep); font-family: Inter, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; letter-spacing: 0.8px; }
+.notice h1 { margin-top: 12px; color: var(--text); font-family: var(--font-display); font-weight: 700; font-size: 48px; line-height: 60px; text-align: center; }
+
+/* 설명 문구 */
+.notice .desc { margin-top: 60px; color: var(--text); font-family: var(--font-text); font-weight: 400; font-size: 22px; line-height: 1.55; text-align: center; }
+
+/* NOTICE - 767px 이하 */
+@media (max-width: 767px) {
+  .notice { padding-top: 48px; }
+  .notice .icon { width: 160px; height: 160px; }
+  .notice .copy { width: 100%; margin-top: 20px; }
+  .notice h1 { margin-top: 8px; font-size: 32px; line-height: 48px; }
+  .notice .desc { margin-top: 28px; font-size: 14px; line-height: 24px; }
 }
 
-.notice-text {
-  font-family: 'SKTSansTextB';
-  text-align: center;
-  font-size: 32px;
-  line-height: 60px;
+/* --------------------------------------------------------------------------
+   1-9. PAGE TITLE  (상단 큰 타이틀 - rules, scope 페이지에서 사용)
+   <h1 class="page-title">  강조 텍스트는 <span>
+   -------------------------------------------------------------------------- */
+.page-title { margin: 0; color: var(--black); font-family: var(--font-text); font-size: 40px; font-weight: 700; line-height: 62px; text-align: center; }
+.page-title span { color: var(--point); }
+
+/* PAGE TITLE - 860px 이하 */
+@media (max-width: 860px) {
+  .page-title { font-size: 24px; line-height: 36px; }
 }
 
-.notice-text span{
-  color: #3617CE;
-}
-.space {
-  height: 60px;
-  border: 0;
-}
-#content .ask-mail{
-  text-align: center;
-  margin-top: 72px;
-}
-#content .ask-mail a{
-  font-family: 'SKTSansTextR';
-  color: #5B5B5F;
-  font-size: 24px;
-  line-height: 40px;
-}
-
-/* footer */
-#footer {
-  background: #fff;
-}
-.foot-wrap{
-  width: 1920px;
-  margin: 0 auto;
-}
-#footer .inner{
-  padding: 40px 120px 55px;
-}
-.footer-term{
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  margin-bottom: 10px;
-}
-.footer-term li a{
-  font-size: 14px;
-  font-family: 'Pretendard';
-  font-weight: 500;
-  color: #343434;
-  cursor: pointer;
-}
-.footer-info{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.footer-info p{
-  font-size: 14px;
-  font-family: 'Pretendard';
-  font-weight: 400;
+/* PAGE TITLE - 767px 이하 */
+@media (max-width: 767px) {
+  .page-title { font-family: var(--font-display); line-height: 44px; vertical-align: middle; }
 }
 
 
-@media (max-width: 1023px) {
-  .pc-ver {
-    display: none !important;
-  }
-  .mo-ver {
-    display: block !important;
-  }
-  #content {
-    width: 100%;
-  }
-  .inner {
-    width: 100%;
-  }
-  #content .inner {
-    padding: 24px 15px 48px;
-  }
-  .logo {
-    width: 160px;
-    height: 40px;
-    margin-bottom: 30px;
-    padding: 12px 5px;
-  }
-  .notice-text {
-    font-size: 20px;
-    line-height: 33px;
-  }
-  .space{
-    height: 33px;
-  }
-  #content .ask-mail{
-    margin-top: 18px;
-  }
-  #content .ask-mail a{
-    font-size: 16px;
-    line-height: 24px;
-  }
-  .foot-wrap {
-    width: 100%;
-  }
-  #footer .inner {
-    padding: 20px 10px;
-  }
-  .footer-term{
-    gap: 15px;
-  }
-  .footer-term li a {
-    font-size: 12px;
-  }
-  .footer-info p {
-    font-size: 12px;
-  }
-  .footer-info p.footer-copyright{
-    font-size: 10px;
-    margin-top: 32px;
-  }
+/* ==========================================================================
+   @@ 2  HOME  (index.html)
+   구성 순서: .top(header + hero) -> .works -> .before -> .honor
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   2-1. TOP  첫 화면 영역 (header + hero, 1440px 이상에서 높이 900px)
+   wrapper: .top
+   구성: .stage(모션 무대: .line / .box-1 / .box-3 / .cube-move) / .frame(hero)
+   --u : 시안(1920 x 900) 1px 의 길이. 1440px 이상은 1px 고정, 그 아래는 화면 폭에 비례해 줄어든다.
+        PC 요소는 "시안 좌표 x --u" 로 배치해서 화면이 줄어도 비율이 유지된다.
+   -------------------------------------------------------------------------- */
+.top { --u: min(1px, 0.069444vw); position: relative; display: flex; flex-direction: column; min-height: calc(900 * var(--u)); overflow: hidden; background: var(--bg); }
+.top .frame { position: relative; flex: 1; width: min(100%, var(--frame)); min-height: 0; margin-inline: auto; overflow: hidden; }
+
+/* --------------------------------------------------------------------------
+   2-1a. STAGE  모션 무대 (PC: 시안 1920 x 900 / 모바일: 시안 360 x 782 를 화면 가운데 기준으로 배치)
+   구성: .line(대각선) / .box-1(열린 홈) / .box-3(막힌 박스) / .cube-clip( .cube-move 큐브 )
+   모션: 큐브가 홈 앞에 도착 -> 홈 안으로 밀려 들어감 -> 검게 막힘
+   홈 모양이 큐브 한 면(폭 42)과 같다. .cube-clip 은 움직이지 않고 홈 안쪽 영역만 잘라내며, 큐브는 transform 만 움직인다.
+   --bx / --by : 박스(홈) 위치, --dx / --dy : 큐브가 홈 앞까지 이동하는 거리(시안 px). 모바일 값은 767px 이하 블록에 있다.
+   -------------------------------------------------------------------------- */
+.top .stage { --bx: 1479; --by: 306; --dx: 273; --dy: -176; position: absolute; z-index: 1; top: 0; left: 50%; width: calc(1920 * var(--u)); height: calc(900 * var(--u)); margin-left: calc(-960 * var(--u)); pointer-events: none; user-select: none; }
+.top .stage img { position: absolute; max-width: none; }
+.top .stage .line { position: absolute; top: calc(18.8 * var(--u)); left: calc(890.6 * var(--u)); width: calc(4000 * var(--u)); height: 1px; background: #3F3F3F; transform: rotate(29.55deg); transform-origin: 0 0; }
+.top .stage .box-1 { z-index: 2; top: calc(var(--by) * var(--u)); left: calc(var(--bx) * var(--u)); width: calc(42 * var(--u)); animation: stage-box-1 4.4s forwards; }
+.top .stage .box-3 { z-index: 2; top: calc(var(--by) * var(--u)); left: calc(var(--bx) * var(--u)); width: calc(42 * var(--u)); opacity: 0; animation: stage-box-3 4.4s forwards; }
+/* 박스(홈) 앞 모서리 바깥쪽(홈 안쪽 통로)을 잘라내는 고정 마스크. 바깥 사각형에서 안쪽 다각형을 뺀다(evenodd) */
+.top .stage .cube-clip { position: absolute; z-index: 3; inset: 0; clip-path: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, calc(var(--bx) * var(--u)) calc(var(--by) * var(--u)), calc((var(--bx) + 42) * var(--u)) calc((var(--by) + 24.25) * var(--u)), calc((var(--bx) + 42) * var(--u)) calc((var(--by) + 72.75) * var(--u)), calc((var(--bx) + 43) * var(--u)) calc((var(--by) + 74.482) * var(--u)), calc((var(--bx) + 295) * var(--u)) calc((var(--by) - 71.018) * var(--u)), calc((var(--bx) + 251) * var(--u)) calc((var(--by) - 147.232) * var(--u)), calc((var(--bx) - 1) * var(--u)) calc((var(--by) - 1.732) * var(--u)), calc(var(--bx) * var(--u)) calc(var(--by) * var(--u))); }
+.top .stage .cube-move { top: calc(481 * var(--u)); left: calc(1165 * var(--u)); width: calc(82 * var(--u)); height: calc(97 * var(--u)); will-change: transform, opacity; animation: stage-cube 4.4s forwards; }
+
+/* 큐브: 대기 -> 홈 앞 도착 -> 홈 안으로 이동 -> 페이드아웃 */
+@keyframes stage-cube {
+  0%, 10% { transform: translate(0, 0); opacity: 1; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  55% { transform: translate(calc(var(--dx) * var(--u)), calc(var(--dy) * var(--u))); }
+  60% { transform: translate(calc(var(--dx) * var(--u)), calc(var(--dy) * var(--u))); animation-timing-function: cubic-bezier(0.6, 0, 0.1, 1); }
+  76.8% { opacity: 1; }
+  81.8%, 100% { opacity: 0; }
+  80%, 100% { transform: translate(calc((var(--dx) + 42) * var(--u)), calc((var(--dy) - 24.25) * var(--u))); }
 }
 
+/* 박스(열린 홈): 큐브가 덮으면 숨김 */
+@keyframes stage-box-1 {
+  0%, 76.6% { opacity: 1; }
+  76.7%, 100% { opacity: 0; }
+}
+
+/* 박스(막힌 상태): 큐브 아래에서 먼저 켜지고, 큐브가 사라지면서 드러남 */
+@keyframes stage-box-3 {
+  0%, 76.6% { opacity: 0; }
+  76.7%, 100% { opacity: 1; }
+}
+
+/* 모션 줄이기 설정: 애니메이션 없음 */
+@media (prefers-reduced-motion: reduce) {
+  .top .stage .box-1,
+  .top .stage .box-3,
+  .top .stage .cube-move { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   2-2. HERO  메인 타이틀 영역
+   wrapper: .hero
+   구성: .copy( .eyebrow, h1, .lead )
+   1440px 이하에서는 --u 비율로 여백/제목 크기가 함께 줄어든다.
+   -------------------------------------------------------------------------- */
+.hero { position: relative; z-index: 2; padding: calc(212 * var(--u)) 0 calc(160 * var(--u)); }
+.hero .copy { font-family: var(--font-display); }
+
+/* 텍스트 등장 (모바일 전용): 상자 모션이 끝날 즈음 아래에서 올라옴 */
+@keyframes hero-copy-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .hero .copy { opacity: 0; animation: hero-copy-in 0.7s ease-out 3.5s forwards; }
+}
+
+/* 상단 영문 소제목 */
+.hero .eyebrow { margin: 0; padding-left: 10px; color: var(--point-deep); font-family: var(--font-text); font-weight: 400; font-size: 14px; line-height: 14px; vertical-align: middle; }
+.hero .copy h1 { margin: 0; color: var(--text); font-weight: 700; font-size: calc(128 * var(--u)); line-height: 128%; vertical-align: middle; }
+
+/* 설명 두 줄 (span 단위로 줄바꿈) */
+.hero .lead { margin: 24px 0 0 18px; color: var(--text); font-weight: 400; font-size: max(14px, calc(18 * var(--u))); line-height: 24px; vertical-align: middle; }
+.hero .lead span { display: block; }
+.hero .lead span + span { margin-top: 12px; }
+
+/* TOP / HERO - 767px 이하: 모바일 시안(360 x 782) 기준, 가운데 정렬
+   무대 좌표는 헤더를 포함한 시안 좌표라서 top: -56px */
+@media (max-width: 767px) {
+  .top { --u: 1px; min-height: 0; }
+  .top .stage { --bx: 258; --by: 202; --dx: 142; --dy: -87; top: -56px; width: 360px; height: 782px; margin-left: -180px; }
+  .top .stage .line { top: -476px; left: -1000px; width: 3000px; background: #1E1E1E; transform: rotate(29.97deg); }
+  .top .stage .box-1 { width: 42px; }
+  .top .stage .box-3 { width: 43px; }
+  .top .stage .cube-move { top: 290px; left: 73px; width: 84px; height: 96px; }
+  .top .frame { flex: none; }
+  .hero { padding: 378px 0 98px; text-align: center; }
+  .hero .eyebrow { padding-left: 0; font-size: 12px; font-weight: 600; line-height: 100%; }
+  .hero .copy h1 { margin-top: 8px; font-size: 56px; line-height: 70px; }
+
+  /* 설명: 두 span을 한 문단처럼 이어 붙임 */
+  .hero .lead { margin: 32px 0 0; font-family: var(--font-text); font-size: 14px; line-height: 23.8px; }
+  .hero .lead span { display: inline; }
+  .hero .lead span + span { margin-top: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   2-3. WORKS  "HOW IT WORKS" 4단계 카드
+   wrapper: .works
+   구성: .label / h2 / .list( li > .num, strong, p, img )
+   -------------------------------------------------------------------------- */
+.works { padding: 90px 0 165px; background: var(--bg); font-family: var(--font-display); }
+.works .label { margin: 0; color: var(--point); font-size: 14px; font-weight: 400; line-height: 24px; }
+.works h2 { margin: 16px 0 0; color: var(--text); font-size: 48px; font-weight: 700; line-height: 1; }
+
+/* 카드 4열 */
+.works .list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; margin: 55px 0 0; }
+.works .list li { display: flex; flex-direction: column; height: 463px; padding: 32px; background: var(--white); border-radius: 28px; }
+.works .list .num { display: block; color: var(--black); font-size: 14px; font-weight: 700; line-height: 24px; }
+.works .list strong { display: block; margin-top: 16px; color: var(--black); font-size: 24px; font-weight: 700; line-height: 1; }
+.works .list p { margin-top: 16px; color: var(--black); font-family: var(--font-text); font-size: 16px; font-weight: 400; line-height: 24px; }
+.works .list picture { display: contents; }
+.works .list img { align-self: center; width: 215px; height: 215px; max-width: none; margin-top: auto; object-fit: contain; }
+
+/* WORKS - 1200px 이하: 4열 유지, 카드가 좁아지면 아이콘이 카드 안에서 줄어듦 */
+@media (max-width: 1200px) {
+  .works .list img { width: min(215px, 100%); height: auto; aspect-ratio: 1 / 1; }
+}
+
+/* WORKS - 1024px 이하: 모바일 카드 UI(좌 텍스트 / 우 아이콘)를 2개씩 배치 */
+@media (max-width: 1024px) {
+  .works { padding: 140px 0 clamp(80px, 10.3vw, 148px); }
+  .works h2 { font-size: 32px; }
+  .works .list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+
+  /* 카드: 좌 텍스트 / 우 아이콘(우하단 정렬) */
+  .works .list li { flex-direction: row; align-items: stretch; justify-content: space-between; gap: 16px; height: auto; padding: 24px 20px; border-radius: 16px; }
+  .works .list .copy { min-width: 0; overflow-wrap: anywhere; }
+  .works .list .num { font-family: var(--font-text); font-size: 12px; line-height: 100%; vertical-align: middle; }
+  .works .list strong { display: block; margin-top: 10px; font-size: 18px; line-height: 100%; vertical-align: middle; }
+  .works .list p { margin-top: 10px; font-size: 14px; line-height: 20.8px; vertical-align: middle; }
+  .works .list img { flex: none; align-self: flex-end; width: 80px; height: 80px; margin-top: 0; }
+}
+
+/* WORKS - 860px 이하 */
+@media (max-width: 860px) {
+  .works h2 { font-size: 28px; }
+}
+
+/* WORKS - 767px 이하: 카드는 1열 */
+@media (max-width: 767px) {
+  .works { padding: 48px 0 40px; }
+  .works .label { font-family: var(--font-text); font-size: 12px; line-height: 100%; vertical-align: middle; }
+  .works h2 { margin-top: 8px; font-size: 32px; line-height: 44px; vertical-align: middle; }
+  .works .list { grid-template-columns: 1fr; margin-top: 32px; }
+}
+
+/* --------------------------------------------------------------------------
+   2-4. BEFORE  "BEFORE YOU START" 참여 전 안내 (Rules / Scope 바로가기)
+   wrapper: .before
+   구성: .label / h2 / .desc / .update / .list( li > .copy, .visual )
+   -------------------------------------------------------------------------- */
+.before { padding: 165px 0 330px; background: var(--bg); font-family: var(--font-display); text-align: center; }
+.before .label { margin: 0; color: var(--point); font-size: 14px; font-weight: 400; line-height: 24px; text-transform: uppercase; }
+.before h2 { margin: 16px 0 0; color: var(--black); font-size: 48px; font-weight: 700; line-height: 1; }
+.before h2 span { color: var(--point); }
+.before .desc { margin: 32px 0 0; color: var(--text); font-family: var(--font-text); font-size: 20px; font-weight: 350; line-height: 1.5; }
+.before .update { margin: 24px 0 0; color: var(--point); font-family: var(--font-text); font-size: 14px; font-weight: 350; line-height: 1; }
+
+/* 바로가기 카드 2열 */
+.before .list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px; margin: 64px 0 0; text-align: left; }
+.before .list li { display: flex; align-items: flex-end; justify-content: space-between; height: 220px; padding: 32px; background: var(--white); border-radius: 16px; }
+
+/* 카드 좌측 텍스트 + 버튼 */
+.before .copy { display: flex; flex-direction: column; align-items: flex-start; height: 100%; }
+.before .copy strong { color: var(--black); font-size: 24px; font-weight: 700; line-height: 1; }
+.before .copy p { margin-top: 12px; color: var(--black); font-family: var(--font-text); font-size: 16px; font-weight: 400; line-height: 1; }
+
+/* 바로가기 버튼 */
+.before .copy a { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 120px; height: 48px; margin-top: auto; padding: 12px 16px; border-radius: 16px; background: var(--black); color: var(--white); font-size: 16px; font-weight: 700; line-height: 24px; white-space: nowrap; }
+.before .copy a img { width: 24px; height: 24px; }
+
+/* 카드 우측 일러스트 */
+.before .list picture { display: contents; }
+.before .visual { width: 88px; height: 88px; max-width: none; flex: none; }
+
+/* BEFORE - 1024px 이하 */
+@media (max-width: 1024px) {
+  .before { padding: 140px 0; }
+  .before h2 { font-size: 32px; }
+}
+
+/* BEFORE - 860px 이하 */
+@media (max-width: 860px) {
+  .before h2 { font-size: 28px; }
+  .before .list { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* BEFORE - 767px 이하: 카드 = 타이틀/설명(전체 폭) + 하단 좌 버튼 / 우 아이콘 */
+@media (max-width: 767px) {
+  .before { padding: 40px 0 72px; }
+  .before .label { font-family: var(--font-text); font-size: 12px; line-height: 100%; vertical-align: middle; }
+  .before h2 { margin-top: 8px; font-size: 32px; line-height: 44px; vertical-align: middle; }
+  .before .desc { margin-top: 32px; font-size: 14px; font-weight: 400; line-height: 22.4px; vertical-align: middle; }
+  .before .update { margin-top: 16px; font-size: 12px; font-weight: 400; line-height: 100%; vertical-align: middle; }
+
+  /* 카드: 위 두 줄(타이틀/설명)은 카드 끝까지, 아래 줄은 좌 버튼 + 우 아이콘(우하단)
+     .copy를 display:contents로 풀어서 타이틀/설명/버튼을 카드 그리드의 직접 칸으로 배치 */
+  .before .list { margin-top: 32px; }
+  .before .list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; align-items: end; height: auto; padding: 24px 20px; border-radius: 16px; }
+  .before .copy { display: contents; }
+  .before .copy strong,
+  .before .copy p { grid-column: 1 / -1; }
+  .before .copy strong { font-size: 20px; line-height: 100%; vertical-align: middle; }
+  .before .copy p { margin-top: 8px; color: var(--gray-mid); font-family: var(--font-text); font-size: 14px; font-weight: 400; line-height: 100%; vertical-align: middle; }
+
+  /* 버튼 */
+  .before .copy a { grid-column: 1; justify-self: start; gap: 6px; min-width: 0; height: auto; margin-top: 24px; padding: 12px 14px 12px 16px; border-radius: 12px; font-family: var(--font-text); font-size: 14px; line-height: 100%; vertical-align: middle; white-space: normal; }
+
+  /* 우측 아이콘 */
+  .before .visual { grid-column: 2; grid-row: 3; width: 53px; height: 60px; }
+}
+
+/* --------------------------------------------------------------------------
+   2-5. HONOR  명예의 전당 소개 (홈 하단)
+   wrapper: .honor
+   구성: .wrap( .copy( .kicker + h2 ) + .brand( img 2개 ) ) - 좌 텍스트 / 우 아이콘, 상하 가운데 정렬
+   명예의 전당 "페이지"는 6번 FAME 섹션
+   -------------------------------------------------------------------------- */
+.honor { padding: 40px 0 66px; background: var(--line); font-family: var(--font-text); }
+.honor .wrap { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.honor .kicker { margin: 0; color: var(--point); font-family: var(--font-display); font-size: 14px; font-weight: 400; line-height: 24px; text-transform: uppercase; }
+.honor h2 { margin: 16px 0 0; color: var(--text); font-size: 32px; font-weight: 700; line-height: 44px; }
+.honor h2 em { color: var(--point); font-style: normal; }
+.honor .brand { display: flex; flex: none; align-items: center; gap: 16px; }
+.honor .brand picture { display: contents; }
+.honor .brand img { width: auto; height: 116px; max-width: none; }
+.honor .brand .mark { width: 88px; }
+.honor .brand .word { width: 180px; }
+
+/* HONOR - 860px 이하: 텍스트 아래로 아이콘 */
+@media (max-width: 860px) {
+  .honor .wrap { flex-direction: column; align-items: flex-start; }
+  .honor .brand { order: -1; }
+}
+
+/* HONOR - 767px 이하 */
+@media (max-width: 767px) {
+  .honor { padding: 60px 0; }
+  .honor .br-pc { display: none; }
+
+  /* 로고 뭉치, 텍스트 뭉치 */
+  .honor .wrap { gap: 32px; }
+  .honor .brand { gap: 12px; }
+  .honor .brand img { height: 28px; }
+  .honor .brand .mark { width: 20px; }
+  .honor .brand .word { width: 80px; }
+
+  /* 텍스트 */
+  .honor .kicker { font-size: 12px; line-height: 24px; }
+  .honor h2 { margin-top: 8px; font-family: var(--font-display); font-size: 20px; line-height: 28px; vertical-align: middle; }
+}
+
+
+/* ==========================================================================
+   @@ 3  RULES  (pages/rules.html)
+   wrapper: .rules
+   구성: h1.page-title(공통 1-9) / .lead / .section( h2 + .content )
+         .content 안: .para(문단) / .num(번호 목록) / .dots(점 목록) / .table.ban(금지행위 표)
+         .terms-area > .terms(맨 아래 이용약관 안내 박스, 가운데 정렬)
+   ========================================================================== */
+.rules { padding: 90px 0 96px; background: var(--bg); font-family: var(--font-text); }
+/* 페이지 소개 문구 */
+.rules .lead { margin: 44px 0 0; color: var(--muted); font-size: 24px; font-weight: 400; line-height: 45px; text-align: center; }
+
+/* --- 조항 블록: 좌측 제목(h2) + 우측 내용(.content) 2단 --- */
+.rules .section { display: grid; grid-template-columns: minmax(0, 394fr) minmax(0, 788fr); column-gap: 18px; margin-top: 60px; padding-top: 16px; padding-bottom: 16px; border-top: 1px solid var(--black); }
+.rules .section:first-of-type { margin-top: 160px; }
+.rules .section h2 { margin: 0; color: var(--black); font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1; vertical-align: middle; }
+
+/* --- 내용 영역 (표 너비 계산용 container query 기준) --- */
+.rules .content { container-type: inline-size; }
+.rules .content p { color: var(--black); font-size: 18px; font-weight: 400; line-height: 32px; }
+
+/* 문단 */
+.rules .para + .para { margin-top: 40px; }
+
+/* --- 목록 공통 (.num, .dots) --- */
+.rules .content .num,
+.rules .content .dots { margin: 0; padding: 0; list-style: none; }
+.rules .num li,
+.rules .dots li { position: relative; }
+
+/* 점 목록 위아래 간격 (문단 / 번호 목록 바로 뒤, 번호 목록 바로 앞) */
+.rules .content .para p + .dots,
+.rules .content .para .num + .dots,
+.rules .content .para .dots + .num { margin-top: 12px; }
+
+/* --- 번호 목록: 1. 2. 3. (CSS counter) --- */
+.rules .num,
+.rules .num li { color: var(--black); font-size: 18px; font-weight: 400; line-height: 32px; }
+.rules .num { counter-reset: rule; }
+
+/* 앞 목록에 이어서 번호 매기기 (3번부터) */
+.rules .num-cont { counter-reset: rule 2; }
+.rules .num li { padding-left: 32px; counter-increment: rule; }
+.rules .num li + li { margin-top: 12px; }
+.rules .num li::before { content: counter(rule) "."; position: absolute; left: 0; top: 0; height: 32px; font-weight: 400; line-height: 32px; text-align: left; white-space: nowrap; }
+
+/* --- 점 목록 --- */
+.rules .dots li { padding-left: 32px; color: var(--black); font-size: 18px; font-weight: 700; line-height: 32px; }
+.rules .dots li + li { margin-top: 8px; }
+.rules .dots li > p:first-of-type { margin-top: 12px; }
+.rules .dots li::before { content: ""; position: absolute; left: 13px; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--black); }
+
+/* --- 표 (금지행위 표: .table.ban) --- */
+.rules .table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.rules .content .para > .table { margin-top: 0; }
+.rules .content .ban { margin-top: 30px; table-layout: fixed; }
+.rules .ban th,
+.rules .ban td { height: auto; padding: 16px 0; border-radius: 0; vertical-align: middle; text-align: left; }
+
+/* 첫 칸 폭은 컨테이너 너비에 따라 유동 (container query 단위 cqi) */
+.rules .ban th:first-child,
+.rules .ban td:first-child { width: calc(52px + clamp(100px, calc(100px + (100cqi - 360px) * 140 / 428), 240px)); padding-left: 32px; padding-right: 20px; }
+.rules .ban th:last-child,
+.rules .ban td:last-child { padding-right: 32px; padding-left: 0; }
+.rules .ban th { background: var(--line); color: var(--muted); font-family: var(--font-display); font-weight: 400; font-size: 16px; line-height: 1; }
+.rules .ban th:last-child { font-family: var(--font-text); text-align: center; }
+.rules .ban td { background: var(--white); border-bottom: 1px solid var(--line); color: var(--black); font-weight: 400; font-size: 16px; line-height: 28px; text-align: left; }
+.rules .ban td:first-child { font-family: var(--font-display); }
+
+/* --- 이용약관 안내 박스 (맨 아래, 새 탭으로 약관 페이지 이동) --- */
+.rules .terms-area { margin-top: 40px; text-align: center; }
+.rules .terms { display: inline-block; vertical-align: top; padding: 12px 60px; border-radius: 8px; background: var(--line); color: var(--black); font-size: 18px; font-weight: 400; line-height: 45px; text-align: center; }
+.rules .terms a { font-weight: 700; text-decoration: underline; }
+
+/* RULES - 860px 이하 */
+@media (max-width: 860px) {
+  .rules .section { grid-template-columns: 1fr; row-gap: 16px; }
+  .rules .section:first-of-type { margin-top: 60px; }
+  .rules .terms { padding: 12px 20px; }
+}
+
+/* RULES - 767px 이하 */
+@media (max-width: 767px) {
+  .rules { padding-top: 48px; padding-bottom: 34px; }
+  .rules .lead { margin-top: 24px; font-size: 14px; line-height: 24px; }
+
+  /* 조항 블록 */
+  .rules .section { row-gap: 20px; margin-top: 40px; padding-top: 12px; padding-bottom: 12px; }
+  .rules .section h2 { font-size: 20px; line-height: 40px; }
+
+  /* 숫자 목록 */
+  .rules .num > li { padding-left: 20px; font-size: 14px; line-height: 26px; }
+  .rules .num > li + li { margin-top: 8px; }
+  .rules .num > li::before { height: 26px; font-size: 12px; line-height: 26px; }
+
+  /* 본문 문단 / 문단 묶음(.para) */
+  .rules .content p { font-size: 14px; line-height: 26px; }
+  .rules .para + .para { margin-top: 20px; }
+
+  /* 점 목록 */
+  .rules .dots li { padding-left: 24px; font-size: 14px; line-height: 26px; }
+  .rules .dots li + li { margin-top: 4px; }
+  .rules .dots li > p:first-of-type { margin-top: 4px; }
+  .rules .dots li::before { top: 11px; left: 10px; width: 4px; height: 4px; }
+  .rules .content .para p + .dots,
+  .rules .content .para .num + .dots,
+  .rules .content .para .dots + .num { margin-top: 8px; }
+
+  /* 이용약관 안내 박스 */
+  .rules .terms { padding: 12px 24px; font-size: 14px; font-weight: 400; line-height: 26px; }
+
+  /* 금지행위 표 */
+  .rules .ban th { font-size: 14px; line-height: 100%; }
+  .rules .ban td { font-size: 14px; line-height: 26px; }
+}
+
+
+/* ==========================================================================
+   @@ 4  SCOPE  (pages/scope.html)
+   wrapper: .scope
+   구성: h1.page-title(공통 1-9) / .in-scope( h2 + .data-table ) / .out-scope( h2 + .out-list )
+   표 기본 스타일은 1-7 DATA TABLE, 여기서는 scope 페이지 전용 덮어쓰기만 작성
+   ========================================================================== */
+.scope { padding: 90px 0 96px; background: var(--bg); font-family: var(--font-text); }
+.scope .in-scope,
+.scope .out-scope { margin-top: 60px; }
+
+/* --- IN SCOPE: 테스트 허용 대상 표 --- */
+.scope .in-scope h2 { margin: 0; color: var(--gray); font-size: 14px; font-weight: 400; line-height: 1; }
+
+/* 칸 폭 (구분 / 서비스명) */
+.scope .data-table th:nth-child(2),
+.scope .data-table td:nth-child(2) { width: 88px; }
+.scope .data-table th:nth-child(3),
+.scope .data-table td:nth-child(3) { width: 240px; font-family: var(--font-display); }
+
+/* --- OUT OF SCOPE: 제외 대상 3열 목록 --- */
+.scope .out-scope h2 { margin: 0 0 16px; color: #87868B; font-size: 13px; font-weight: 400; line-height: 13px; }
+.scope .out-list { display: grid; grid-template-columns: repeat(3, calc((100% - 100px) / 3)); gap: 50px; border-top: 1px solid #A2A4AA; padding-top: 35px; }
+.scope .out-list li + li { margin-top: 32px; }
+.scope .out-list strong { display: block; color: var(--black); font-family: var(--font-display); font-size: 20px; font-weight: 400; line-height: 1; }
+.scope .out-list p { margin-top: 4px; color: var(--gray); font-family: var(--font-text); font-size: 16px; font-weight: 400; line-height: 24px; }
+
+/* SCOPE - 860px 이하 */
+@media (max-width: 860px) {
+  .scope .out-list { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* SCOPE - 767px 이하 */
+@media (max-width: 767px) {
+  .scope { padding: 0 0 64px; }
+  .scope .page-title { margin-top: 48px; }
+  .scope .in-scope h2 { font-family: var(--font-display); font-size: 16px; line-height: 40px; vertical-align: middle; }
+
+  /* 표 */
+  .scope .data-table { table-layout: fixed; }
+  .scope .data-table th,
+  .scope .data-table td { height: auto; padding: 16px 8px 16px 0; overflow-wrap: break-word; font-family: var(--font-display); font-size: 12px; }
+  .scope .data-table th:first-child,
+  .scope .data-table td:first-child { width: 46px; padding-left: 20px; }
+  .scope .data-table th:nth-child(2),
+  .scope .data-table td:nth-child(2) { width: 49px; }
+  .scope .data-table th:nth-child(3),
+  .scope .data-table td:nth-child(3) { width: 81px; }
+  .scope .data-table th:last-child,
+  .scope .data-table td:last-child { width: 36px; padding-right: 20px; }
+  .scope .data-table .icon-pc { display: none; }
+  .scope .data-table .icon-mo { display: block; width: 16px; height: 16px; }
+  .scope .out-scope h2 { font-size: 14px; line-height: 1; }
+  .scope .out-list { gap: 32px; padding-top: 32px; }
+  .scope .out-list strong { font-size: 16px; }
+  .scope .out-list p { font-size: 14px; }
+}
+
+
+/* ==========================================================================
+   @@ 5  REPORT  (pages/report.html)
+   wrapper: .report  (main class="notice report")
+   아이콘/제목/설명 레이아웃은 1-8 NOTICE 공통. 여기서는 report 전용 값만 작성
+   ========================================================================== */
+
+/* REPORT - 767px 이하 */
+@media (max-width: 767px) {
+  .report { padding-bottom: 82px; }
+}
+
+
+/* ==========================================================================
+   @@ 6  FAME  명예의 전당 (pages/honor.html)
+   wrapper: .fame  (main class="notice fame")
+   구성: .board( .period + .data-table ) / .board.empty( 표(빈 td) + p.soon )
+   준비 중 표: .board 에 empty 클래스 + 표 뒤에 <p class="soon"><span>COMING SOON</span></p> 필수
+   아이콘/제목/설명 레이아웃은 1-8 NOTICE, 표 기본은 1-7 DATA TABLE 공통
+   ========================================================================== */
+.fame { padding-bottom: 68px; }
+
+/* 표를 감싸는 영역 (콘텐츠 폭 + 상단 여백)
+   상단 여백은 산정 기간(.period) 유무와 상관없이 항상 wrapper가 가진다. (준비 중 표는 .period 없음)
+   .board가 연달아 나올 때는 첫 번째에만 여백을 준다. */
+.fame .board { width: min(var(--container), 100%); margin-top: 94px; text-align: left; }
+.fame .board + .board { margin-top: 0; }
+
+/* 산정 기간 */
+.fame .period { margin: 0 0 16px; color: var(--muted); font-size: 14px; font-weight: 400; line-height: 1; text-align: right; white-space: nowrap; }
+
+/* --- 명예의 전당 표 (공통 .data-table 덮어쓰기) --- */
+.fame .data-table { margin-top: 0; font-family: var(--font-text); }
+.fame .data-table th:last-child,
+.fame .data-table td:last-child { width: auto; font-family: var(--font-text); text-align: left; }
+
+/* --- 준비 중(COMING SOON) 스켈레톤 표 ---
+   사용법 (HTML):
+     1) .board 에 empty 클래스를 붙인다        <div class="board empty">
+     2) 표 뒤에 .soon 태그를 둔다              <p class="soon"><span>COMING SOON</span></p>
+   td 는 비워 둔다. 동그라미/막대는 td::before, 아래 흐림 효과는 .empty::after 가 그린다.
+   (.soon 은 HTML 태그로 직접 써야 문구가 나온다. CSS 는 위치/스타일만 담당) */
+.fame .empty { position: relative; }
+.fame .empty .data-table th { color: var(--gray-mid); }
+
+/* 스켈레톤: 동그라미(번호) / 막대(텍스트) */
+.fame .empty td::before { content: ""; display: inline-block; max-width: 100%; height: 14px; vertical-align: middle; border-radius: 7px; background: linear-gradient(90deg, #EFEFF3 0%, #F8F8FA 40%, #EFEFF3 80%); }
+.fame .empty td:nth-child(1)::before { width: 14px; border-radius: 50%; }
+
+/* 막대 길이 (시안 기준): 행마다 --bar-nick(닉네임 칸) / --bar-site(홈페이지 칸) 값을 지정 */
+.fame .empty tbody tr:nth-child(1) { --bar-nick: 200px; --bar-site: 176px; }
+.fame .empty tbody tr:nth-child(2) { --bar-nick: 163px; --bar-site: 152px; }
+.fame .empty tbody tr:nth-child(3) { --bar-nick: 232px; --bar-site: 145px; }
+.fame .empty tbody tr:nth-child(4) { --bar-nick: 184px; --bar-site: 129px; }
+.fame .empty tbody tr:nth-child(5) { --bar-nick: 132px; --bar-site: 76px; }
+.fame .empty td:nth-child(2)::before { width: var(--bar-nick); }
+.fame .empty td:nth-child(3)::before { width: var(--bar-site); }
+
+/* 아래로 갈수록 배경색으로 흐려지는 그라데이션 */
+.fame .empty::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; height: 200px; background: linear-gradient(180deg, rgba(244, 244, 245, 0) 0%, var(--bg) 92%); pointer-events: none; }
+
+/* COMING SOON 문구 (.board.empty 안에 <p class="soon"><span>COMING SOON</span></p> 필요) */
+.fame .soon { position: absolute; top: 50px; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: center; margin: 0; pointer-events: none; }
+.fame .soon span { color: var(--black); font-family: Inter, sans-serif; font-weight: 700; font-size: 28px; letter-spacing: 2px; text-shadow: 0 10px 8px #00000033; }
+
+/* FAME - 767px 이하 */
+@media (max-width: 767px) {
+  .fame .board { margin-top: 32px; }
+  .fame .period { margin: 0 0 8px; font-size: 12px; }
+
+  /* 표: 고정 폭 표 */
+  .fame .data-table { table-layout: fixed; }
+  .fame .data-table th,
+  .fame .data-table td { height: auto; padding: 16px 8px 16px 0; overflow-wrap: break-word; font-size: 12px; }
+  .fame .data-table td { line-height: 17px; }
+  /* 칸 폭 */
+  .fame .data-table th:first-child,
+  .fame .data-table td:first-child { width: 17.5%; padding: 16px; }
+  .fame .data-table th:nth-child(2),
+  .fame .data-table td:nth-child(2) { width: 36.25%; padding-right: 16px; }
+  .fame .data-table th:last-child,
+  .fame .data-table td:last-child { width: auto; }
+
+  /* 스켈레톤 */
+  .fame .empty::after { height: 138px; }
+  .fame .soon { top: 44px; }
+  .fame .soon span { font-size: 14px; letter-spacing: 1.2px; }
+  .fame .empty td::before { height: 10px; }
+  .fame .empty td:nth-child(1)::before { width: 10px; }
+
+  /* 막대 길이 (모바일 시안 기준) */
+  .fame .empty tbody tr:nth-child(1) { --bar-nick: 60px; --bar-site: 79px; }
+  .fame .empty tbody tr:nth-child(2) { --bar-nick: 80px; --bar-site: 107px; }
+  .fame .empty tbody tr:nth-child(3) { --bar-nick: 100px; --bar-site: 96px; }
+  .fame .empty tbody tr:nth-child(4) { --bar-nick: 127px; --bar-site: 90px; }
+  .fame .empty tbody tr:nth-child(5) { --bar-nick: 90px; --bar-site: 80px; }
+  .fame .empty .data-table th { padding-top: 12px; padding-bottom: 12px; }
+  .fame .empty .data-table td { padding-top: 9px; padding-bottom: 9px; }
+}
+
+
+/* ==========================================================================
+   @@ 7  AGREEMENT  이용약관 (pages/terms.html)
+   wrapper: .agreement
+   구성: h1.page-title(공통 1-9) / .doc( .intro + .article* )
+         .article 안: h2(제 n조) / .para(일반 문단) / .clause(항) / .sub(호 목록) / .table(표)
+   들여쓰기 폭은 --indent 변수 하나로 관리 (.clause, .sub, .table 공통)
+   ========================================================================== */
+.agreement { --indent: 32px; padding: 90px 0 96px; background: var(--bg); font-family: var(--font-text); }
+.agreement .doc { max-width: 900px; margin: 60px auto 0; }
+.agreement .intro { color: var(--black); font-size: 18px; font-weight: 400; line-height: 32px; }
+
+/* --- 조 블록 --- */
+.agreement .article { margin-top: 56px; }
+.agreement .article > * + * { margin-top: 8px; }
+.agreement .article h2 { margin: 0 0 16px; color: var(--black); font-family: var(--font-display); font-size: 22px; font-weight: 700; line-height: 1.4; }
+
+/* 본문 문단 / 항 : 번호는 왼쪽에 걸고 본문은 들여쓰기 유지 */
+.agreement .para,
+.agreement .clause,
+.agreement .sub li { color: var(--black); font-size: 16px; font-weight: 400; line-height: 28px; }
+.agreement .clause { position: relative; padding-left: var(--indent); }
+.agreement .clause .no { position: absolute; top: 0; left: 0; }
+
+/* 호 목록 (1. 2. 3.) - CSS counter */
+.agreement .sub { margin-left: var(--indent); counter-reset: item; }
+.agreement .sub li { position: relative; padding-left: 28px; counter-increment: item; }
+.agreement .sub li + li { margin-top: 4px; }
+.agreement .sub li::before { content: counter(item) "."; position: absolute; top: 0; left: 0; }
+
+/* 표 (금지행위 / 필수 제출 정보) */
+.agreement .table { width: calc(100% - var(--indent)); margin-left: var(--indent); table-layout: fixed; border-collapse: separate; border-spacing: 0; }
+.agreement .table th,
+.agreement .table td { padding: 14px 20px; overflow-wrap: anywhere; vertical-align: top; font-size: 15px; line-height: 24px; text-align: left; }
+.agreement .table th { background: var(--line); color: var(--muted); font-family: var(--font-display); font-weight: 400; }
+.agreement .table th:first-child { border-radius: 4px 0 0 4px; }
+.agreement .table th:last-child { border-radius: 0 4px 4px 0; }
+.agreement .table td { background: var(--white); border-bottom: 1px solid var(--line); color: var(--black); }
+.agreement .table th:first-child,
+.agreement .table td:first-child { width: 30%; }
+
+/* AGREEMENT - 767px 이하 */
+@media (max-width: 767px) {
+  .agreement { --indent: 24px; padding: 48px 0 64px; }
+  .agreement .doc { margin-top: 32px; }
+  .agreement .intro { font-size: 14px; line-height: 24px; }
+  .agreement .article { margin-top: 40px; }
+  .agreement .article h2 { font-size: 18px; }
+  .agreement .para,
+  .agreement .clause,
+  .agreement .sub li { font-size: 14px; line-height: 24px; }
+  .agreement .sub li { padding-left: 24px; }
+  .agreement .table th,
+  .agreement .table td { padding: 10px 12px; font-size: 13px; line-height: 20px; }
+  .agreement .table th:first-child,
+  .agreement .table td:first-child { width: 36%; }
+}

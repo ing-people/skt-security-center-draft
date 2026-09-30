@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>명예의 전당</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="notice-page">
+  <!-- header -->
+  <header class="header">
+    <div class="container">
+      <input class="menu-toggle" id="menu-toggle" type="checkbox" aria-label="메뉴">
+      <a class="logo" href="../index.html">
+        <img src="../img/logo-header.png" alt="Bug Bounty">
+      </a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <a href="rules.html">Rules</a>
+        <a href="scope.html">Scope</a>
+        <a href="report.html">제보하기</a>
+        <a href="honor.html" aria-current="page" style="color: #C1C1C1;">명예의 전당</a>
+      </nav>
+      <a class="security" href="https://security.sktelecom.com/" target="_blank" rel="noopener noreferrer">
+        Security Center
+        <img src="../img/icon-external-link.png" alt="" width="12" height="12">
+      </a>
+      <p class="menu-copy">COPYRIGHT SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
+      <label class="menu-btn" for="menu-toggle">
+        <img class="icon-open" src="../img/icon-menu.png" alt="">
+        <img class="icon-close" src="../img/icon-close.png" alt="">
+      </label>
+    </div>
+  </header>
+  <!-- //header -->
+
+  <!-- contents -->
+  <main class="notice fame">
+    <img class="icon" src="../img/honor-trophy.png" alt="" width="200" height="200">
+    <div class="copy">
+      <p class="kicker">HALL OF FAME</p>
+      <h1>명예의 전당</h1>
+      <div class="desc">
+        <p>SK텔레콤 버그바운티 프로그램을 통해 유효한 취약점을 제보하여 도움을 주신 분들의 명단입니다.</p>
+      </div>
+    </div>
+
+    <div class="board">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>닉네임</th>
+            <th>홈페이지</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>XX대학교 이동통신 연구팀</td>
+            <td>www.sktelecom.com</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>XX대학교 bugbounty team</td>
+            <td>news.sktelecom.com</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>한글로 20자내외면 이정도 길이입니다.</td>
+            <td>pay.sktelecom.com</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>SK텔레콤 버그바운티 신청용 닉네임</td>
+            <td>www.sktair.com</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 준비 중(COMING SOON) 표
+         사용법: 위 표와 같은 마크업으로 작성하고 아래 2가지를 지킨다.
+         1) .board 에 empty 클래스를 붙인다  -> <div class="board empty">
+         2) 표 바로 뒤에 COMING SOON 문구 태그를 둔다  -> <p class="soon"><span>COMING SOON</span></p>
+         td 는 비워 둔다. (회색 동그라미/막대는 CSS 가 자동으로 그림)
+         실제 데이터를 넣을 때는 empty 클래스와 .soon 태그를 함께 제거하고 td 에 내용을 채운다. -->
+    <div class="board empty">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>닉네임</th>
+            <th>홈페이지</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="soon"><span>COMING SOON</span></p>
+    </div>
+  </main>
+  <!-- //contents -->
+
+  <!-- footer -->
+  <footer class="footer">
+    <div class="container">
+      <ul class="term">
+        <li><a href="terms.html" target="_blank" rel="noopener noreferrer">이용약관</a></li>
+        <li><a href="https://www.sktelecom.com/view/footer/privacy.do" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></li>
+        <li><a href="https://www.tworld.co.kr/web/home" target="_blank" rel="noopener noreferrer">T world</a></li>
+        <li><a href="https://privacy.sktelecom.com/main.do" target="_blank" rel="noopener noreferrer">프라이버시센터</a></li>
+        <li><a href="https://news.sktelecom.com" target="_blank" rel="noopener noreferrer">뉴스룸</a></li>
+      </ul>
+      <div class="info">
+        <p class="copyright">COPYRIGHT SK TELECOM CO., LTD. ALL RIGHTS RESERVED.</p>
+        <p class="address">서울특별시 중구 을지로 65(을지로2가) SK T-타워 SK텔레콤(주)</p>
+      </div>
+    </div>
+  </footer>
+  <!-- //footer -->
+</body>
+</html>
