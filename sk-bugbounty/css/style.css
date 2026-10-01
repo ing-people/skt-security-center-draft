@@ -313,13 +313,6 @@ picture source { display: none; }
   76.7%, 100% { opacity: 1; }
 }
 
-/* 모션 줄이기 설정: 애니메이션 없음 */
-@media (prefers-reduced-motion: reduce) {
-  .top .stage .box-1,
-  .top .stage .box-3,
-  .top .stage .cube-move { animation: none; }
-}
-
 /* --------------------------------------------------------------------------
    2-2. HERO  메인 타이틀 영역
    wrapper: .hero
@@ -334,7 +327,7 @@ picture source { display: none; }
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
-@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+@media (max-width: 767px) {
   .hero .copy { opacity: 0; animation: hero-copy-in 0.7s ease-out 3.5s forwards; }
 }
 
